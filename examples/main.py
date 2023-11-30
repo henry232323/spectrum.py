@@ -18,13 +18,12 @@ class MyClient(Client):
         print("We're ready!")
 
 
-myclient = MyClient(
-    token=token,
-    device_id=device_id
-)
-
-
 async def run():
+    myclient = MyClient(
+        token=token,
+        device_id=device_id
+    )
+
     loop = asyncio.get_event_loop()
     asyncio.run_coroutine_threadsafe(myclient.run(), loop)
     await asyncio.Event().wait()

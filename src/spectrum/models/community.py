@@ -154,6 +154,9 @@ class Community:
         self.avatar_url = payload['avatar']
         self.banner_url = payload['banner']
         self.lobbies = tuple(client._replace_lobby(lobby) for lobby in payload['lobbies'])
+        self.forums = tuple(client._replace_forum(forum) for forum in (
+            payload['forum_channel_groups'].values() if isinstance(payload['forum_channel_groups'], dict) else payload[
+                'forum_channel_groups']))
 
     def __repr__(self):
         return f"Community(id={repr(self.id)}, name={repr(self.name)}, slug={repr(self.slug)})"
