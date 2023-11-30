@@ -48,7 +48,7 @@ asyncio.run(run())
 
 ## Authentication
 The bot can be run in a read only state without any authentication. 
-If you want to be able to send messages or read receive messages (and eventually do other things),
+If you want to be able to send messages or read private messages (and eventually do other things),
 you'll need to provide credentials for an RSI account. These can be found in the cookies sent
 with any request to [RSI](https://robertsspaceindustries.com/) when logged in.
 
