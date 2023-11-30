@@ -52,8 +52,8 @@ class Gateway:
         }
 
         self.callbacks = {
-            "message.new": client.on_message_raw,
-            "broadcaster.ready": client.on_ready_raw,
+            "message.new": client._on_message_raw,
+            "broadcaster.ready": client._on_ready_raw,
         }
 
     async def identify(self):

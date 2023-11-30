@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0", "aiohttp", "websockets"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spectrum.py"
+dynamic = ["version"]
+authors = [
+  { name="henry232323" },
+]
+description = "spectrum.py is a [discord.py](https://github.com/Rapptz/discord.py) style proof-of-concept library for making chatbots for Star Citizen's [Spectrum](https://robertsspaceindustries.com/spectrum/community/SC) chat client."
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.10"
+classifiers = [
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python :: 3',
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "spectrum.__version__"}
+
+[project.urls]
+"Homepage" = "http://github.com/henry232323/Spectrum.py"
+"Bug Tracker" = "http://github.com/henry232323/Spectrum.py/issues"

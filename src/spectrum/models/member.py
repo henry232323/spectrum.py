@@ -29,7 +29,15 @@ class Member:
     """
 
     def __init__(self, client: 'client.Client', payload: dict):
-        pass
+        self._client = client
+        self.id = payload["id"]
+        self.displayname = payload["displayname"]
+        self.nickname = payload["nickname"]
+        self.avatar_url = payload["avatar"]
+        self.signature = payload["signature"]
+        self.isGM = payload["isGM"]
+        self.spoken_languages = payload["spoken_languages"]
+        self.meta = payload["meta"]
 
     def __repr__(self):
-        return f"Member()"
+        return f"Member(id=${repr(self.id)}, displayname={repr(self.displayname)}, nickname={repr(self.nickname)})"

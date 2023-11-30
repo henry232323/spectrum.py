@@ -3,8 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-from spectrum import Client
-from src.spectrum.models.message import Message
+from spectrum import Client, Message
 
 load_dotenv()
 token = os.environ.get("RSI_TOKEN")
@@ -25,11 +24,10 @@ myclient = MyClient(
 )
 
 
-async def forever():
+async def run():
     loop = asyncio.get_event_loop()
     asyncio.run_coroutine_threadsafe(myclient.run(), loop)
-    while True:
-        await asyncio.sleep(30)
+    await asyncio.Event().wait()
 
 
-asyncio.run(forever())
+asyncio.run(run())

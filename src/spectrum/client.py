@@ -72,14 +72,14 @@ class Client:
 
         return community
 
-    async def on_message_raw(self, payload: dict):
+    async def _on_message_raw(self, payload: dict):
         self._replace_member(payload['message']['member'])
         asyncio.create_task(self.on_message(Message(self, payload)))
 
     async def on_message(self, message: Message):
         pass
 
-    async def on_ready_raw(self, payload):
+    async def _on_ready_raw(self, payload):
         self._ready_event.set()
         asyncio.create_task(self.on_ready())
 
