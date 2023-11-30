@@ -14,8 +14,13 @@ class WebSocketClosure(Exception):
     pass
 
 
+class ReconnectWebSocket(Exception):
+    pass
+
+
 class InvalidTokenException(Exception):
     pass
+
 
 class Gateway:
     """
@@ -34,6 +39,7 @@ class Gateway:
         self._ws_url = None
         self._client_id = None
         self.socket = None
+        self._running = False
 
         self.cookies = {
             '_rsi_device': self._device_id or "",
@@ -54,6 +60,8 @@ class Gateway:
         self.callbacks = {
             "message.new": client._on_message_raw,
             "broadcaster.ready": client._on_ready_raw,
+            "member.presence.update": client._on_presence_update_raw,
+            "message_lobby.presence.join": client._on_presence_join_raw
         }
 
     async def identify(self):
@@ -71,7 +79,7 @@ class Gateway:
                     raise InvalidTokenException("An invalid token has been passed")
 
         token = body.get("data", {}).get("token")
-        member = body.get("data", {}).get("member")
+        await self._client._on_identify_raw(body.get("data"))
         communities = body.get("data", {}).get("communities", [])
         group_lobbies = body.get("data", {}).get("group_lobbies", [])
         private_lobbies = body.get("data", {}).get("private_lobbies", [])
@@ -84,9 +92,6 @@ class Gateway:
             self._client_id = token_payload['client_id']
         else:
             self._ws_url = str(Gateway.DEFAULT_GATEWAY)
-
-        if member:
-            self._client._replace_member(member)
 
         for community in communities or []:
             self._client._replace_community(community)
@@ -118,18 +123,22 @@ class Gateway:
         lobby = self._client._replace_lobby(lpayload)
         await self.subscribe_to_lobby(lobby)
 
-    async def subscribe_to_lobby(self, lobby: Lobby):
+    async def subscribe_to_key(self, *keys: str):
         await self.socket.send_json(
             {
                 "type": "subscribe",
                 "subscription_keys": [
-                    lobby._subscription_key
+                    *keys
                 ],
                 "subscription_scope": "content"
             }
         )
 
+    async def subscribe_to_lobby(self, lobby: Lobby):
+        await self.subscribe_to_key(lobby.subscription_key)
+
     async def start(self):
+        self._running = True
         await self.identify()
 
         arguments = {
@@ -140,11 +149,17 @@ class Gateway:
                 'x-rsi-token': self._token or ""
             },
         }
-        async with aiohttp.ClientSession() as session:
-            self.socket = await session.ws_connect(str(self._ws_url), **arguments)
 
-            while True:
-                await self.poll_event()
+        async with aiohttp.ClientSession() as session:
+            while self._running:
+                try:
+                    self.socket = await session.ws_connect(str(self._ws_url), **arguments)
+
+                    while True:
+                        await self.poll_event()
+                except ReconnectWebSocket:
+                    print("Websocket closed, reconnecting")
+                    await self.socket.close()
 
     async def poll_event(self) -> None:
         """Polls for a DISPATCH event and handles the general gateway loop.
@@ -167,6 +182,7 @@ class Gateway:
                 raise WebSocketClosure
         except (asyncio.TimeoutError, WebSocketClosure) as e:
             traceback.print_exc()
+            raise ReconnectWebSocket()
 
     # Ensure the keep alive handler is closed
     # if self._keep_alive:
@@ -186,7 +202,6 @@ class Gateway:
     #     raise ConnectionClosed(self.socket, shard_id=self.shard_id, code=code) from None
 
     async def received_message(self, data):
-        # print(data)
         payload = json.loads(data)
         if isinstance(payload, dict):
             callback = self.callbacks.get(payload["type"])

@@ -1,3 +1,4 @@
+from .presence import Presence
 from .. import client
 
 
@@ -38,6 +39,10 @@ class Member:
         self.isGM = payload["isGM"]
         self.spoken_languages = payload["spoken_languages"]
         self.meta = payload["meta"]
+        self.presence = None
+
+        if "presence" in payload:
+            self.presence = Presence(self._client, payload['presence'])
 
     def __repr__(self):
         return f"Member(id={repr(self.id)}, displayname={repr(self.displayname)}, nickname={repr(self.nickname)})"

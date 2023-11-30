@@ -1,4 +1,7 @@
+import asyncio
+
 from . import message
+from .. import client
 
 
 class Lobby:
@@ -52,11 +55,17 @@ class Lobby:
         self.color = payload['color']
         self.icon = payload['icon']
         self.time_created = payload['time_created']
-        self._subscription_key = payload['subscription_key']
+        self.subscription_key = payload['subscription_key']
         self.leader_id = payload['leader_id']
         self.online_members_count = payload['online_members_count']
         self.permissions = payload['permissions']
-        self.members = tuple(client._replace_member(member) for member in (payload['members'] or []))
+        self._members = {member['id']: client._replace_member(member) for member in (payload['members'] or [])}
+
+        asyncio.create_task(self.fetch_presence())
+
+    @property
+    def members(self):
+        return list(self._members.values())
 
     @property
     def community(self):
@@ -79,3 +88,11 @@ class Lobby:
         })
 
         return message.Message(self._client, dict(message=payload['data']))
+
+    async def fetch_presence(self):
+        presences = await self._client._http.fetch_presences(dict(lobby_id=self.id))
+        members = []
+        for presence in presences["data"]:
+            members.append(self._client._replace_member(presence))
+
+        return members
