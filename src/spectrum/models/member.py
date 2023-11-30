@@ -40,4 +40,4 @@ class Member:
         self.meta = payload["meta"]
 
     def __repr__(self):
-        return f"Member(id=${repr(self.id)}, displayname={repr(self.displayname)}, nickname={repr(self.nickname)})"
+        return f"Member(id={repr(self.id)}, displayname={repr(self.displayname)}, nickname={repr(self.nickname)})"
