@@ -215,3 +215,13 @@ class Client:
 
     async def subscribe_to_topic(self, *subscription_keys):
         await self._gateway.subscribe_to_key(*subscription_keys)
+
+    async def fetch_member_by_id(self, member_id):
+        payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
+        member = self._replace_member(payload['data'])
+        return member
+
+    async def fetch_member_by_handle(self, handle):
+        payload = await self._http.fetch_member_by_handle(dict(nickname=handle))
+        member = self._replace_member(payload['data'])
+        return member
