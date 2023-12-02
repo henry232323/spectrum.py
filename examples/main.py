@@ -24,8 +24,7 @@ async def run():
         device_id=device_id
     )
 
-    loop = asyncio.get_event_loop()
-    asyncio.run_coroutine_threadsafe(myclient.run(), loop)
+    asyncio.create_task(myclient.run())
     await asyncio.Event().wait()
 
 
