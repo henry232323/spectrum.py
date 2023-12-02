@@ -26,7 +26,6 @@ class Client:
         self._channels: dict[str, Channel] = {}
         self._threads: dict[str, Thread] = {}
         self._replies: dict[str, Reply] = {}
-        self._roles: dict[str, Role] = {}
         self._gateway: Gateway = Gateway(client=self, token=token, device_id=device_id)
         self._http: HTTP = HTTP(self._gateway, token=token)
         self.me: Member | None = None
@@ -149,21 +148,9 @@ class Client:
 
         return reply
 
-    def get_role(self, role_id: str) -> Role | None:
-        return self._replies.get(role_id)
-
     @property
     def roles(self) -> list[Role]:
-        return list(self._roles.values())
-
-    def _replace_role(self, payload: dict):
-        role = self._roles.get(payload['id'])
-        if role:
-            role.__init__(self, payload)
-        else:
-            self._roles[payload['id']] = role = Role(self, payload)
-
-        return role
+        return [r for community in self._communities.values() for r in community.roles]
 
     async def _on_message_raw(self, payload: dict):
         self._replace_member(payload['message']['member'])
@@ -211,7 +198,7 @@ class Client:
         # {"type":"forum.thread.reply.new","channel_id":3,"label_id":null,"thread_id":396187,"reply_id":6452134}
         thread = self.get_thread(payload["thread_id"])
         if not thread:
-            response = await self._http.fetch_thread(
+            response = await self._http.fetch_thread_nested(
                 {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": payload["reply_id"]})
 
             thread.replies.append(self._replace_reply(response["data"]))
@@ -224,12 +211,26 @@ class Client:
 
     async def _on_forum_thread_new_raw(self, payload):
         # {"type":"forum.thread.new","channel_id":3,"thread_id":396233,"label_id":null,"time_created":1701340775}
-        response = await self._http.fetch_thread(
+        response = await self._http.fetch_thread_nested(
             {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": None})
         thread = self._replace_thread(response["data"])
-        asyncio.create_task(self._on_forum_thread_new(thread))
+        asyncio.create_task(self.on_forum_thread_new(thread))
 
-    async def _on_forum_thread_new(self, thread):
+    async def on_forum_thread_new(self, thread):
+        pass
+
+    async def _on_member_roles_update_raw(self, payload):
+        # {"type": "member.roles.update", "community_id": 1, "member_id": 15013, "roles": ["11", "12", "4", "5", "6"]}
+        community = self.get_community(payload['community_id'])
+        member = self.get_community(payload['member_id'])
+        roles = []
+        for item in payload['roles']:
+            role = community.get_role(item)
+            roles.append(role)
+
+        asyncio.create_task(self.on_member_roles_update(community, member, roles))
+
+    async def on_member_roles_update(self, community, member, roles):
         pass
 
     async def subscribe_to_topic(self, *subscription_keys):
