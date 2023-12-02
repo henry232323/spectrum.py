@@ -69,4 +69,4 @@ class Role(abc.Identifier):
         return self._client.get_community(self.community_id)
 
     def __repr__(self):
-        return f"Role(id={repr(self.id)}, type={repr(self.type)}, name={repr(self.name)})"
+        return f"Role(id={repr(self.id)}, name={repr(self.name)})"

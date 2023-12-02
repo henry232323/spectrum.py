@@ -1,8 +1,10 @@
 import asyncio
+import logging
 import traceback
 
 from .gateway import Gateway
 from .http import HTTP
+from .models import Object
 from .models.channel import Channel
 from .models.community import Community
 from .models.forum import Forum
@@ -17,7 +19,7 @@ from .util import find
 
 
 class Client:
-    def __init__(self, *, token: str = None, device_id: str = None):
+    def __init__(self, *, token: str = None, device_id: str = None, log_handler=logging.getLogger('spectrum.py')):
         self._ready_event = asyncio.Event()
         self._lobbies: dict[int, Lobby] = {}
         self._members: dict[int, Member] = {}
@@ -28,6 +30,7 @@ class Client:
         self._replies: dict[int, Reply] = {}
         self._gateway: Gateway = Gateway(client=self, token=token, device_id=device_id)
         self._http: HTTP = HTTP(self._gateway, token=token)
+        self.log_handler = log_handler
         self.me: Member | None = None
 
     async def run(self):
@@ -222,13 +225,18 @@ class Client:
         # {"type": "member.roles.update", "community_id": 1, "member_id": 15013, "roles": ["11", "12", "4", "5", "6"]}
         community = self.get_community(payload['community_id'])
         member = self.get_community(payload['member_id'])
-        if community and member:
+        if not member:
+            member = Object(self, id=payload['member_id'])
+
+        if community:
             roles = []
             for item in payload['roles']:
                 role = community.get_role(item)
                 roles.append(role)
 
             asyncio.create_task(self.on_member_roles_update(community, member, roles))
+        else:
+            self.log_handler.error("Failed to handle role update", payload)
 
     async def on_member_roles_update(self, community, member, roles):
         pass
