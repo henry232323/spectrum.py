@@ -153,6 +153,8 @@ class Gateway:
             },
         }
 
+        backoff = 1
+
         async with aiohttp.ClientSession() as session:
             while self._running:
                 try:
@@ -163,6 +165,9 @@ class Gateway:
                 except ReconnectWebSocket:
                     print("Websocket closed, reconnecting")
                     await self.socket.close()
+
+                await asyncio.sleep(backoff)
+                backoff *= 2
 
     async def poll_event(self) -> None:
         """Polls for a DISPATCH event and handles the general gateway loop.
