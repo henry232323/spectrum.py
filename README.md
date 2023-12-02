@@ -13,15 +13,10 @@ This example requires `python-dotenv`.
 ```python
 import asyncio
 import os
-
 from dotenv import load_dotenv
-
 from spectrum import Client, Message
 
 load_dotenv()
-token = os.environ.get("RSI_TOKEN")
-device_id = os.environ.get("DEVICE_ID")
-
 
 class MyClient(Client):
     async def on_message(self, message: Message):
@@ -31,15 +26,13 @@ class MyClient(Client):
         print("We're ready!")
 
 
-myclient = MyClient(
-    token=token,
-    device_id=device_id
-)
-
-
 async def run():
-    loop = asyncio.get_event_loop()
-    asyncio.run_coroutine_threadsafe(myclient.run(), loop)
+    myclient = MyClient(
+        token=os.environ.get("RSI_TOKEN"),
+        device_id=os.environ.get("DEVICE_ID")
+    )
+
+    asyncio.create_task(myclient.run())
     await asyncio.Event().wait()
 
 
