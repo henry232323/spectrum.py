@@ -25,3 +25,14 @@ class Forum(abc.Identifier):
     @property
     def community(self):
         return self._client.get_community(self.community_id)
+
+    async def create_channel(self, name: str, description: str, color: str, sort_filter=None,
+                             label_required: bool = False):
+        resp = await self._client._http.create_category(
+            {"community_id": self.community_id, "group_id": self.id, "name": name, "description": description,
+             "color": color, "sort_filter": sort_filter, "label_required": label_required}
+        )
+
+        channel = self._client._replace_channel(resp['data'])
+        self.channels = (*self.channels, channel)
+        return channel

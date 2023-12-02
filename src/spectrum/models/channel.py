@@ -92,6 +92,12 @@ class Channel(abc.Identifier):
         self.label_required = payload["label_required"]
         self.threads_count = payload["threads_count"]
         self.labels = payload["labels"]
+        if payload.get("threads"):
+            self._threads = {thread['id']: client._replace_thread(thread) for thread in payload['threads']}
+
+    @property
+    def threads(self):
+        return list(self._client._threads.values())
 
     @property
     def community(self):
@@ -100,3 +106,82 @@ class Channel(abc.Identifier):
     @property
     def forum(self):
         return self._client.get_forum(self.group_id)
+
+    async def create_thread(
+            self,
+            subject: str,
+            plaintext: str,
+            type="discussion",
+            label_id=None,
+            content_blocks=None,
+            highlight_role_id=None,
+            is_locked=False,
+            is_reply_nesting_disabled=False
+    ):
+        resp = await self._client._http.create_thread(
+            {
+                "type": type,
+                "channel_id": self.id,
+                "label_id": label_id,
+                "subject": subject,
+                "content_blocks": content_blocks or [
+                    {
+                        "id": 1,
+                        "type": "text",
+                        "data": {
+                            "blocks": [
+                                {
+                                    "key": "dr2qu",
+                                    "text": plaintext,
+                                    "type": "unstyled",
+                                    "depth": 0,
+                                    "inlineStyleRanges": [],
+                                    "entityRanges": [],
+                                    "data": {}
+                                }
+                            ],
+                            "entityMap": {}
+                        }
+                    }
+                ],
+                "plaintext": plaintext,
+                "highlight_role_id": highlight_role_id,
+                "is_locked": is_locked,
+                "is_reply_nesting_disabled": is_reply_nesting_disabled
+            }
+        )
+
+        thread = self._client._replace_thread(resp['data'])
+        self.threads[thread.id] = thread
+        return thread
+
+    async def fetch_threads(self, max_count=None, label_id=None):
+        resp = await self._client._http.fetch_threads(
+            {"channel_id": self.id, "page": 1, "sort": "hot", "label_id": label_id})
+        threads_count = resp['data']['threads_count']
+        thread_data = resp['data']['threads']
+        threads = []
+        if max_count and len(threads) >= max_count:
+            for item in thread_data:
+                thread = self._client._http._replace_thread(item)
+                self.threads[item['id']] = thread
+
+            return threads
+
+        page = 2
+
+        while len(threads) <= threads_count:
+            resp = await self._client._http.fetch_threads(
+                {"channel_id": self.id, "page": page, "sort": "hot", "label_id": label_id})
+            thread_data = resp['data']['threads']
+            for item in thread_data:
+                thread = self._client._http._replace_thread(item)
+                self.threads[item['id']] = thread
+
+            page += 1
+            if max_count and len(threads) >= max_count:
+                return threads
+
+        self.threads.clear()
+        for thread in threads:
+            self.threads[thread.id] = thread

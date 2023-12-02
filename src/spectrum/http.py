@@ -4,13 +4,42 @@ import aiohttp
 
 SPECTRUM_API_BASE = "https://robertsspaceindustries.com/api/spectrum/"
 CREATE_MESSAGE_ENDPOINT = "https://robertsspaceindustries.com/api/spectrum/message/create"
+FETCH_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/channel/threads"
+CREATE_REPLY = "https://robertsspaceindustries.com/api/spectrum/forum/thread/reply/create"
+CREATE_THREAD = "https://robertsspaceindustries.com/api/spectrum/forum/thread/create"
 FETCH_PRESENCES_ENDPOINT = "https://robertsspaceindustries.com/api/spectrum/lobby/presences"
-FETCH_THREAD = "https://robertsspaceindustries.com/api/spectrum/forum/thread/nested"
+FETCH_THREAD_NESTED = "https://robertsspaceindustries.com/api/spectrum/forum/thread/nested"
+FETCH_THREAD_CLASSIC = "https://robertsspaceindustries.com/api/spectrum/forum/thread/classic"
 FETCH_HISTORY = "https://robertsspaceindustries.com/api/spectrum/message/history"
 FETCH_MEMBER_BY_ID = "https://robertsspaceindustries.com/api/spectrum/member/info/id"
 FETCH_MEMBER_BY_HANDLE = "https://robertsspaceindustries.com/api/spectrum/member/info/nickname"
 FETCH_MEMBER_ROLES = "https://robertsspaceindustries.com/api/spectrum/member/roles"
 FETCH_MEMBER_COUNTERS = "https://robertsspaceindustries.com/api/spectrum/member/counters"
+FETCH_BROADCAST_MESSAGE_LIST = "https://robertsspaceindustries.com/api/spectrum/broadcast-message/list"
+FETCH_EMOJIS = "https://robertsspaceindustries.com/api/spectrum/community/fetch-emojis"
+FETCH_MOTD = "https://robertsspaceindustries.com/api/spectrum/lobby/getMotd"
+EXTENDED_SEARCH = "https://robertsspaceindustries.com/api/spectrum/search/content/extended"
+ADD_VOTE = "https://robertsspaceindustries.com/api/spectrum/vote/add"
+REMOVE_VOTE = "https://robertsspaceindustries.com/api/spectrum/vote/remove"
+ADD_REACTION = "https://robertsspaceindustries.com/api/spectrum/reaction/add"
+REMOVE_REACTION = "https://robertsspaceindustries.com/api/spectrum/reaction/remove"
+FETCH_ONLINE_MEMBERS_COUNT = "https://robertsspaceindustries.com/api/spectrum/lobby/online-members-count"
+SINK_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/sink"
+PIN_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/pin"
+CLOSE_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/lock"
+DELETE_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/erase"
+CREATE_CATEGORIES_GROUP = "https://robertsspaceindustries.com/api/spectrum/forum/channel/group/create"
+EDIT_CATEGORIES_GROUP = "https://robertsspaceindustries.com/api/spectrum/forum/channel/group/edit"
+CREATE_CATEGORY = "https://robertsspaceindustries.com/api/spectrum/forum/channel/create"
+EDIT_CATEGORY = "https://robertsspaceindustries.com/api/spectrum/forum/channel/edit"
+CREATE_LOBBY = "https://robertsspaceindustries.com/api/spectrum/lobby/create"
+EDIT_LOBBY = "https://robertsspaceindustries.com/api/spectrum/lobby/edit"
+FETCH_COMMUNITY_MEMBERS = "https://robertsspaceindustries.com/api/spectrum/community/members"
+ADD_MEMBER_ROLE = "https://robertsspaceindustries.com/api/spectrum/member/role/add"
+REMOVE_MEMBER_ROLE = "https://robertsspaceindustries.com/api/spectrum/member/role/remove"
+CREATE_ROLE = "https://robertsspaceindustries.com/api/spectrum/role/create"
+MOVE_ROLE = "https://robertsspaceindustries.com/api/spectrum/role/move"
+SEARCH_USERS = "https://robertsspaceindustries.com/api/spectrum/search/member/autocomplete"
 
 
 class HTTP:
@@ -24,11 +53,61 @@ class HTTP:
     async def send_message(self, payload: dict):
         return await self.make_request(CREATE_MESSAGE_ENDPOINT, payload)
 
+    async def send_reply(self, payload: dict):
+        """
+        {"thread_id":"396239","parent_reply_id":"6452173","content_blocks":[{"id":1,"type":"text","data":{"blocks":[{"key":"6eoc5","text":"Replying","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}],"plaintext":"Replying","highlight_role_id":null}
+        {"thread_id":"396239","parent_reply_id":null,"content_blocks":[{"id":1,"type":"text","data":{"blocks":[{"key":"5eehk","text":"Top level reply","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}],"plaintext":"Top level reply","highlight_role_id":null}
+        """
+        return await self.make_request(CREATE_MESSAGE_ENDPOINT, payload)
+
+    async def create_thread(self, payload: dict):
+        """
+        {"type":"discussion","channel_id":"305988","label_id":null,"subject":"Create new thread","content_blocks":[{"id":1,"type":"text","data":{"blocks":[{"key":"dr2qu","text":"New thread","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}],"plaintext":"New thread","highlight_role_id":null,"is_locked":false,"is_reply_nesting_disabled":false}
+        """
+        return await self.make_request(CREATE_THREAD, payload)
+
+    async def sink_threads(self, payload: dict):
+        """
+        {"thread_ids":["396742"]}
+        """
+        return await self.make_request(SINK_THREADS, payload)
+
+    async def pin_threads(self, payload: dict):
+        """
+        {"thread_ids":["396742"]}
+        """
+        return await self.make_request(PIN_THREADS, payload)
+
+    async def close_threads(self, payload: dict):
+        """
+        {"thread_ids":["396742"],"reason":"It's done for"}
+        """
+        return await self.make_request(CLOSE_THREADS, payload)
+
+    async def delete_threads(self, payload: dict):
+        """
+        {"thread_ids":["396742"],"reason":"Its done for"}
+        """
+        return await self.make_request(DELETE_THREADS, payload)
+
+    async def fetch_threads(self, payload: dict):
+        """
+        {"channel_id":"305988","page":1,"sort":"hot","label_id":null}
+        """
+        return await self.make_request(FETCH_THREADS, payload)
+
     async def fetch_presences(self, payload):
         return await self.make_request(FETCH_PRESENCES_ENDPOINT, payload)
 
-    async def fetch_thread(self, payload):
-        return await self.make_request(FETCH_THREAD, payload)
+    async def fetch_thread_nested(self, payload):
+        """ {"slug":"limit-accessibility-to-ships-upon-full-release-of-","sort":"oldest","target_reply_id":"6389016"}
+        sort by oldest, newest, votes
+        """
+        return await self.make_request(FETCH_THREAD_NESTED, payload)
+
+    async def fetch_thread_classic(self, payload):
+        """ {"slug":"limit-accessibility-to-ships-upon-full-release-of-","sort":"oldest","target_reply_id":"6389016"} """
+        return await self.make_request(FETCH_THREAD_CLASSIC, payload)
 
     async def fetch_member_by_id(self, payload):
         """{member_id: "..."}"""
@@ -45,6 +124,115 @@ class HTTP:
     async def fetch_member_counters(self, payload):
         """{"member_id":"67063","community_id":"1"}"""
         return await self.make_request(FETCH_MEMBER_COUNTERS, payload)
+
+    async def fetch_emojis(self, payload):
+        """ {"community_id":"1"} """
+        return await self.make_request(FETCH_EMOJIS, payload)
+
+    async def add_vote(self, payload):
+        """
+        {"entity_type":"forum_thread_reply","entity_id":"6385009"}
+        {"entity_type":"forum_thread","entity_id":"391573"}
+        """
+        return await self.make_request(ADD_VOTE, payload)
+
+    async def remove_vote(self, payload):
+        """
+        {"entity_type":"forum_thread_reply","entity_id":"6385009"}
+        {"entity_type":"forum_thread","entity_id":"391573"}
+        """
+        return await self.make_request(REMOVE_VOTE, payload)
+
+    async def add_reaction(self, payload):
+        """
+        {"reaction_type":":-1:","entity_type":"forum_thread","entity_id":"391573"}
+        """
+        return await self.make_request(ADD_REACTION, payload)
+
+    async def remove_reaction(self, payload):
+        """
+        {"entity_type":"forum_thread_reply","entity_id":"6385009"}
+        {"entity_type":"forum_thread","entity_id":"391573"}
+        """
+        return await self.make_request(REMOVE_REACTION, payload)
+
+    async def fetch_online_count(self, payload):
+        """
+        {"community_id":"100987"}
+        """
+        return await self.make_request(FETCH_ONLINE_MEMBERS_COUNT, payload)
+
+    async def create_categories_group(self, payload):
+        """
+        {"community_id":"100987","name":"More Categories"}
+        """
+        return await self.make_request(CREATE_CATEGORIES_GROUP, payload)
+
+    async def edit_categories_group(self, payload):
+        """
+        {"group_id":"112656","name":"More Categories 2"}
+        """
+        return await self.make_request(EDIT_CATEGORIES_GROUP, payload)
+
+    async def create_category(self, payload):
+        """
+        {"community_id":"100987","group_id":"102761","name":"Cool category","description":"For things","color":"FF6262","sort_filter":null,"label_required":0}
+        """
+        return await self.make_request(CREATE_CATEGORY, payload)
+
+    async def edit_category(self, payload):
+        """
+        {"channel_id":"335429","group_id":"112656","name":"Cool category 1","description":"For things 2","color":"63A3E6","sort_filter":null,"label_required":0,"permissions":{"660853":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":null,"moderate":null},"660854":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":true,"moderate":null},"660855":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":null,"moderate":null},"660856":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":null,"moderate":null},"660857":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":null,"moderate":null},"660858":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":null,"moderate":null},"660859":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":null,"moderate":null},"727710":{"read":null,"create_thread":null,"create_thread_reply":null,"manage":null,"moderate":null}},"labels":[{"id":null,"name":"Epic tag"}]}
+        """
+        return await self.make_request(EDIT_CATEGORY, payload)
+
+    async def create_lobby(self, payload):
+        """
+        {"community_id":"100987","name":"poggerslob","description":"123","color":"C197C8","type":"public"}
+        """
+        return await self.make_request(CREATE_LOBBY, payload)
+
+    async def edit_lobby(self, payload):
+        """
+        {"lobby_id":"5852041","name":"poggerslob","description":"123123","color":"C197C8","type":"public","permissions":{"660853":{"read":null,"send_message":null,"manage":null,"moderate":null,"set_motd":null},"660854":{"read":null,"send_message":null,"manage":true,"moderate":null,"set_motd":true},"660855":{"read":null,"send_message":null,"manage":null,"moderate":null,"set_motd":null},"660856":{"read":null,"send_message":null,"manage":null,"moderate":null,"set_motd":null},"660857":{"read":null,"send_message":null,"manage":null,"moderate":null,"set_motd":null},"660858":{"read":null,"send_message":null,"manage":null,"moderate":null,"set_motd":null},"660859":{"read":null,"send_message":null,"manage":null,"moderate":null,"set_motd":null},"727710":{"read":null,"send_message":null,"manage":null,"moderate":null,"set_motd":null}}}
+        """
+        return await self.make_request(EDIT_LOBBY, payload)
+
+    async def fetch_community_members(self, payload):
+        """
+        {"community_id":"100987","page":1,"pagesize":12,"sort":"displayname","sort_descending":0}
+        """
+        return await self.make_request(FETCH_COMMUNITY_MEMBERS, payload)
+
+    async def add_member_role(self, payload):
+        """
+        {"member_id":"2291348","role_id":"727710"}
+        """
+        return await self.make_request(ADD_MEMBER_ROLE, payload)
+
+    async def remove_member_role(self, payload):
+        """
+        {"member_id":"2291348","role_id":"727710"}
+        """
+        return await self.make_request(REMOVE_MEMBER_ROLE, payload)
+
+    async def create_role(self, payload):
+        """
+        {"community_id":"100987","name":"New role","description":"With perms","permissions":{"global":{"manage_roles":false,"kick_members":false,"embed_link":false,"upload_media":false,"mention":false,"reaction":false,"vote":false,"read_erased":false},"message_lobby":{"read":true,"send_message":false,"manage":false,"moderate":false,"set_motd":false},"forum_channel":{"read":false,"create_thread":false,"create_thread_reply":false,"manage":false,"moderate":false},"custom_emoji":{"create":false,"remove":false}},"visible":1,"highlightable":0,"tracked":0,"color":"919191"}
+        """
+        return await self.make_request(CREATE_ROLE, payload)
+
+    async def move_role(self, payload):
+        """
+        {"community_id":"100987","source_role_id":"660855","target_role_id":"660857"}
+        """
+        return await self.make_request(MOVE_ROLE, payload)
+
+    async def search_users(self, payload):
+        """
+        {"community_id":null,"text":"nate4313","ignore_self":true}
+        """
+        return await self.make_request(SEARCH_USERS, payload)
 
     async def make_request(self, endpoint, payload):
         await self._gateway._client._ready_event.wait()

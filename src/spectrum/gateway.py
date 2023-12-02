@@ -63,7 +63,8 @@ class Gateway:
             "message.new": client._on_message_raw,
             "broadcaster.ready": client._on_ready_raw,
             "member.presence.update": client._on_presence_update_raw,
-            "message_lobby.presence.join": client._on_presence_join_raw
+            "message_lobby.presence.join": client._on_presence_join_raw,
+            "member.roles.update": client._on_member_roles_update_raw,
         }
 
     async def identify(self):

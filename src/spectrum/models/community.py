@@ -1,5 +1,7 @@
 from . import member, abc
+from .role import Role
 from .. import client
+from ..util import find
 
 
 class Community(abc.Identifier):
@@ -111,7 +113,10 @@ class Community(abc.Identifier):
         self.name = payload['name']
         self.avatar_url = payload['avatar']
         self.banner_url = payload['banner']
-        self.roles = tuple(client._replace_role(role) for role in payload['roles'])
+        self._roles = {}
+        for role in payload['roles']:
+            self._replace_role(role)
+
         self.lobbies = tuple(client._replace_lobby(lobby) for lobby in payload['lobbies'])
         self.forums = tuple(client._replace_forum(forum) for forum in (
             payload['forum_channel_groups'].values() if isinstance(payload['forum_channel_groups'], dict) else payload[
@@ -120,5 +125,28 @@ class Community(abc.Identifier):
     def __repr__(self):
         return f"Community(id={repr(self.id)}, name={repr(self.name)}, slug={repr(self.slug)})"
 
-    async def get_role(self, member: member.Member):
-        await self._client._http.fetch_member_roles({"member_id": member.id, "community_id": self.id})
+    async def fetch_role(self, member: member.Member):
+        roles = await self._client._http.fetch_member_roles({"member_id": member.id, "community_id": self.id})
+        return [find(self.roles, r) for r in roles['data']]
+
+    async def create_category_group(self, name: str):
+        resp = await self._client._http.create_categories_group(
+            {"community_id": self.id, "name": name}
+        )
+
+        forum = self._client._replace_forum(resp['data'])
+        self.forums = (*self.forums, forum)
+
+        return forum
+
+    def get_role(self, role_id: str) -> Role | None:
+        return self._roles.get(role_id)
+
+    def _replace_role(self, payload: dict):
+        role = self._roles.get(payload['id'])
+        if role:
+            role.__init__(self, payload)
+        else:
+            self._roles[payload['id']] = role = Role(self, payload)
+
+        return role
