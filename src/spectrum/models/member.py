@@ -47,3 +47,16 @@ class Member(abc.Identifier):
 
     def __repr__(self):
         return f"Member(id={repr(self.id)}, displayname={repr(self.displayname)}, nickname={repr(self.nickname)})"
+
+    async def get_dm(self):
+        lobby = self._client.get_pm(self.id)
+        if lobby:
+            return lobby
+
+        response = await self._client._http.fetch_lobby_info({"member_id": self.id})
+        lobby = self._client._replace_lobby(response['data'])
+        return lobby
+
+    async def send(self, content: str):
+        lobby = await self.get_dm()
+        return await lobby.send(content)
