@@ -1,4 +1,7 @@
-class Forum:
+from . import abc
+
+
+class Forum(abc.Identifier):
     """
     {
         "0": {

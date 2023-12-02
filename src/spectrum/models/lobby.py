@@ -1,10 +1,10 @@
 import asyncio
 
-from . import message
+from . import message, abc
 from .. import client
 
 
-class Lobby:
+class Lobby(abc.Identifier):
     """
     {
         "id": "22066",

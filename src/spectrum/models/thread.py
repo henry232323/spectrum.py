@@ -1,4 +1,7 @@
-class Thread:
+from . import abc
+
+
+class Thread(abc.Identifier):
     """
     {
         "data": {

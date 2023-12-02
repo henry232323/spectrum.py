@@ -1,4 +1,7 @@
-class Channel:
+from . import abc
+
+
+class Channel(abc.Identifier):
     """
         {
             "0": {
