@@ -1,8 +1,9 @@
+from . import abc
 from .presence import Presence
 from .. import client
 
 
-class Member:
+class Member(abc.Identifier):
     """
     {
       id: "4136837",

@@ -1,7 +1,8 @@
+from . import member, abc
 from .. import client
 
 
-class Community:
+class Community(abc.Identifier):
     """
 {
   "0": {
@@ -97,50 +98,7 @@ class Community:
       },
     },
     "roles": [
-      {
-        "id": "1",
-        "community_id": "1",
-        "type": "admin",
-        "order": 0,
-        "visible": false,
-        "highlightable": true,
-        "tracked": false,
-        "name": "admin",
-        "description": "Spectrum Administrator",
-        "color": "FF6262",
-        "member_count": null,
-        "members_count": null,
-        "permissions": {
-          "global": {
-            "manage_roles": true,
-            "kick_members": true,
-            "embed_link": true,
-            "upload_media": true,
-            "mention": true,
-            "reaction": true,
-            "vote": true,
-            "read_erased": true
-          },
-          "message_lobby": {
-            "read": true,
-            "send_message": true,
-            "manage": true,
-            "moderate": true,
-            "set_motd": true
-          },
-          "forum_channel": {
-            "read": true,
-            "create_thread": true,
-            "create_thread_reply": true,
-            "manage": true,
-            "moderate": true
-          },
-          "custom_emoji": {
-            "create": true,
-            "remove": true
-          }
-        }
-      },
+      Role
     ]
   }
 }
@@ -153,6 +111,7 @@ class Community:
         self.name = payload['name']
         self.avatar_url = payload['avatar']
         self.banner_url = payload['banner']
+        self.roles = tuple(client._replace_role(role) for role in payload['roles'])
         self.lobbies = tuple(client._replace_lobby(lobby) for lobby in payload['lobbies'])
         self.forums = tuple(client._replace_forum(forum) for forum in (
             payload['forum_channel_groups'].values() if isinstance(payload['forum_channel_groups'], dict) else payload[
@@ -160,3 +119,6 @@ class Community:
 
     def __repr__(self):
         return f"Community(id={repr(self.id)}, name={repr(self.name)}, slug={repr(self.slug)})"
+
+    async def get_role(self, member: member.Member):
+        await self._client._http.fetch_member_roles({"member_id": member.id, "community_id": self.id})

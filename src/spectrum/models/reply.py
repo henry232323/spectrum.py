@@ -1,4 +1,7 @@
-class Reply:
+from . import abc
+
+
+class Reply(abc.Identifier):
     """
     {
         "id": "6446399",

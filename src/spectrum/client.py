@@ -11,6 +11,7 @@ from .models.member import Member
 from .models.message import Message
 from .models.presence import Presence
 from .models.reply import Reply
+from .models.role import Role
 from .models.thread import Thread
 from .util import find
 
@@ -25,6 +26,7 @@ class Client:
         self._channels: dict[str, Channel] = {}
         self._threads: dict[str, Thread] = {}
         self._replies: dict[str, Reply] = {}
+        self._roles: dict[str, Role] = {}
         self._gateway: Gateway = Gateway(client=self, token=token, device_id=device_id)
         self._http: HTTP = HTTP(self._gateway, token=token)
         self.me: Member | None = None
@@ -147,6 +149,22 @@ class Client:
 
         return reply
 
+    def get_role(self, role_id: str) -> Role | None:
+        return self._replies.get(role_id)
+
+    @property
+    def roles(self) -> list[Role]:
+        return list(self._roles.values())
+
+    def _replace_role(self, payload: dict):
+        role = self._roles.get(payload['id'])
+        if role:
+            role.__init__(self, payload)
+        else:
+            self._roles[payload['id']] = role = Role(self, payload)
+
+        return role
+
     async def _on_message_raw(self, payload: dict):
         self._replace_member(payload['message']['member'])
         asyncio.create_task(self.on_message(Message(self, payload)))
@@ -155,9 +173,10 @@ class Client:
         pass
 
     async def _on_identify_raw(self, payload):
-        self.me = self._replace_member(payload["member"])
+        if payload.get("member"):
+            self.me = self._replace_member(payload["member"])
 
-        if "friends" in payload:
+        if payload.get("friends"):
             for friend in payload["friends"] or []:
                 self._replace_member(friend)
 

@@ -1,8 +1,8 @@
-from . import lobby
+from . import lobby, abc
 from .. import client
 
 
-class Message:
+class Message(abc.Identifier):
     """
     ```json
     {
