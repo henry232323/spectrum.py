@@ -81,9 +81,9 @@ class Channel(abc.Identifier):
 
     def __init__(self, client, payload):
         self._client = client
-        self.id = payload["id"]
-        self.community_id = payload["community_id"]
-        self.group_id = payload["group_id"]
+        self.id = int(payload["id"])
+        self.community_id = int(payload["community_id"])
+        self.group_id = int(payload["group_id"])
         self.order = payload["order"]
         self.name = payload["name"]
         self.description = payload["description"]

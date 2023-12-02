@@ -181,11 +181,11 @@ class Thread(abc.Identifier):
 
     def __init__(self, client, payload):
         self._client = client
-        self.id = payload["id"]
+        self.id = int(payload["id"])
         self.time_created = payload["time_created"]
         self.time_modified = payload["time_modified"]
-        self.channel_id = payload["channel_id"]
-        self.label_id = payload["label_id"]
+        self.channel_id = int(payload["channel_id"])
+        self.label_id = int(payload["label_id"])
         self.type = payload["type"]
         self.slug = payload["slug"]
         self.subject = payload["subject"]
@@ -195,13 +195,13 @@ class Thread(abc.Identifier):
         self.is_sinked = payload["is_sinked"]
         self.is_erased = payload["is_erased"]
         self.erased_by = payload["erased_by"]
-        self.tracked_post_role_id = payload["tracked_post_role_id"]
-        self.content_reply_id = payload["content_reply_id"]
+        self.tracked_post_role_id = int(payload["tracked_post_role_id"])
+        self.content_reply_id = int(payload["content_reply_id"])
         self.annotation_plaintext = payload["annotation_plaintext"]
         self.subscription_key = payload["subscription_key"]
         self.content_blocks = payload["content_blocks"]
-        self.highlight_role_id = payload["highlight_role_id"]
-        self.community_id = payload["community_id"]
+        self.highlight_role_id = int(payload["highlight_role_id"])
+        self.community_id = int(payload["community_id"])
         self.member = self._client._replace_member(payload["member"])
         self.replies_count = payload["replies_count"]
         self.views_count = payload["views_count"]

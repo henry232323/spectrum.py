@@ -4,4 +4,4 @@ class Presence:
         self._client = client
         self.status = payload["status"]
         self.info = payload["info"]
-        self.since = payload["since"]
+        self.since = payload.get("since")

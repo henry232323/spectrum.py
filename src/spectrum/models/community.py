@@ -108,7 +108,7 @@ class Community(abc.Identifier):
 
     def __init__(self, client: 'client.Client', payload: dict):
         self._client = client
-        self.id = payload['id']
+        self.id = int(payload["id"])
         self.slug = payload['slug']
         self.name = payload['name']
         self.avatar_url = payload['avatar']
@@ -125,9 +125,13 @@ class Community(abc.Identifier):
     def __repr__(self):
         return f"Community(id={repr(self.id)}, name={repr(self.name)}, slug={repr(self.slug)})"
 
+    @property
+    def roles(self) -> list[Role]:
+        return list(self._roles.values())
+
     async def fetch_role(self, member: member.Member):
         roles = await self._client._http.fetch_member_roles({"member_id": member.id, "community_id": self.id})
-        return [find(self.roles, r) for r in roles['data']]
+        return [find(self._roles.values(), r) for r in roles['data']]
 
     async def create_category_group(self, name: str):
         resp = await self._client._http.create_categories_group(
@@ -140,13 +144,13 @@ class Community(abc.Identifier):
         return forum
 
     def get_role(self, role_id: str) -> Role | None:
-        return self._roles.get(role_id)
+        return self._roles.get(int(role_id))
 
     def _replace_role(self, payload: dict):
-        role = self._roles.get(payload['id'])
+        role = self.get_role(payload['id'])
         if role:
             role.__init__(self, payload)
         else:
-            self._roles[payload['id']] = role = Role(self, payload)
+            self._roles[int(payload['id'])] = role = Role(self, payload)
 
         return role

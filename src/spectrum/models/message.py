@@ -66,10 +66,10 @@ class Message(abc.Identifier):
         self.id = payload['message']['id']
         self.time_created = payload['message']['time_created']
         self.time_modified = payload['message']['time_modified']
-        self._member_id = payload['message']['member_id']
+        self._member_id = int(payload['message']['member_id'])
         # self.is_erased = payload['message']['is_erased']
         # self.erased_by = payload['message']['erased_by']
-        self._lobby_id = payload['message']['lobby_id']
+        self._lobby_id = int(payload['message']['lobby_id'])
         self.content = payload['message']['plaintext']
 
     @property

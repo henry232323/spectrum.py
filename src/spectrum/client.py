@@ -19,13 +19,13 @@ from .util import find
 class Client:
     def __init__(self, *, token: str = None, device_id: str = None):
         self._ready_event = asyncio.Event()
-        self._lobbies: dict[str, Lobby] = {}
-        self._members: dict[str, Member] = {}
-        self._communities: dict[str, Community] = {}
-        self._forums: dict[str, Forum] = {}
-        self._channels: dict[str, Channel] = {}
-        self._threads: dict[str, Thread] = {}
-        self._replies: dict[str, Reply] = {}
+        self._lobbies: dict[int, Lobby] = {}
+        self._members: dict[int, Member] = {}
+        self._communities: dict[int, Community] = {}
+        self._forums: dict[int, Forum] = {}
+        self._channels: dict[int, Channel] = {}
+        self._threads: dict[int, Thread] = {}
+        self._replies: dict[int, Reply] = {}
         self._gateway: Gateway = Gateway(client=self, token=token, device_id=device_id)
         self._http: HTTP = HTTP(self._gateway, token=token)
         self.me: Member | None = None
@@ -36,115 +36,115 @@ class Client:
         except Exception as e:
             traceback.print_exc()
 
-    def get_member(self, member_id: str) -> Lobby | None:
-        return self._members.get(member_id)
+    def get_member(self, member_id: str | int) -> Lobby | None:
+        return self._members.get(int(member_id))
 
     @property
     def members(self) -> list[Member]:
         return list(self._members.values())
 
     def _replace_member(self, payload: dict):
-        member = self._members.get(payload['id'])
+        member = self.get_member(payload['id'])
         if member:
             member.__init__(self, payload)
         else:
-            self._members[payload['id']] = member = Member(self, payload)
+            self._members[int(payload['id'])] = member = Member(self, payload)
 
         return member
 
-    def get_lobby(self, lobby_id: str) -> Lobby | None:
-        return self._lobbies.get(lobby_id)
+    def get_lobby(self, lobby_id: str | int) -> Lobby | None:
+        return self._lobbies.get(int(lobby_id))
 
     @property
     def lobbies(self) -> list[Lobby]:
         return list(self._lobbies.values())
 
     def _replace_lobby(self, payload: dict):
-        lobby = self._lobbies.get(payload['id'])
+        lobby = self.get_lobby(payload['id'])
         if lobby:
             lobby.__init__(self, payload)
         else:
-            self._lobbies[payload['id']] = lobby = Lobby(self, payload)
+            self._lobbies[int(payload['id'])] = lobby = Lobby(self, payload)
 
         return lobby
 
-    def get_community(self, community_id: str) -> Community | None:
-        return self._communities.get(community_id)
+    def get_community(self, community_id: int | str) -> Community | None:
+        return self._communities.get(int(community_id))
 
     @property
     def communities(self) -> list[Community]:
         return list(self._communities.values())
 
     def _replace_community(self, payload: dict):
-        community = self._communities.get(payload['id'])
+        community = self.get_community(payload['id'])
         if community:
             community.__init__(self, payload)
         else:
-            self._communities[payload['id']] = community = Community(self, payload)
+            self._communities[int(payload['id'])] = community = Community(self, payload)
 
         return community
 
-    def get_forum(self, forum_id: str) -> Forum | None:
-        return self._forums.get(forum_id)
+    def get_forum(self, forum_id: str | int) -> Forum | None:
+        return self._forums.get(int(forum_id))
 
     @property
     def forums(self) -> list[Forum]:
         return list(self._forums.values())
 
     def _replace_forum(self, payload: dict):
-        forum = self._forums.get(payload['id'])
+        forum = self.get_forum(payload['id'])
         if forum:
             forum.__init__(self, payload)
         else:
-            self._forums[payload['id']] = forum = Forum(self, payload)
+            self._forums[int(payload['id'])] = forum = Forum(self, payload)
 
         return forum
 
-    def get_channel(self, channel_id: str) -> Channel | None:
-        return self._channels.get(channel_id)
+    def get_channel(self, channel_id: str | int) -> Channel | None:
+        return self._channels.get(int(channel_id))
 
     @property
     def channels(self) -> list[Channel]:
         return list(self._channels.values())
 
     def _replace_channel(self, payload: dict):
-        channel = self._channels.get(payload['id'])
+        channel = self.get_channel(payload['id'])
         if channel:
             channel.__init__(self, payload)
         else:
-            self._channels[payload['id']] = channel = Channel(self, payload)
+            self._channels[int(payload['id'])] = channel = Channel(self, payload)
 
         return channel
 
-    def get_thread(self, thread_id: str) -> Thread | None:
-        return self._threads.get(thread_id)
+    def get_thread(self, thread_id: str | int) -> Thread | None:
+        return self._threads.get(int(thread_id))
 
     @property
     def threads(self) -> list[Thread]:
         return list(self._threads.values())
 
     def _replace_thread(self, payload: dict):
-        thread = self._threads.get(payload['id'])
+        thread = self.get_thread(int(payload['id']))
         if thread:
             thread.__init__(self, payload)
         else:
-            self._threads[payload['id']] = thread = Thread(self, payload)
+            self._threads[int(payload['id'])] = thread = Thread(self, payload)
 
         return thread
 
-    def get_reply(self, reply_id: str) -> Reply | None:
-        return self._replies.get(reply_id)
+    def get_reply(self, reply_id: str | int) -> Reply | None:
+        return self._replies.get(int(reply_id))
 
     @property
     def replies(self) -> list[Reply]:
         return list(self._replies.values())
 
     def _replace_reply(self, payload: dict):
-        reply = self._replies.get(payload['id'])
+        reply = self.get_reply(payload['id'])
         if reply:
             reply.__init__(self, payload)
         else:
-            self._replies[payload['id']] = reply = Reply(self, payload)
+            self._replies[int(payload['id'])] = reply = Reply(self, payload)
 
         return reply
 
@@ -176,7 +176,6 @@ class Client:
 
     async def _on_presence_update_raw(self, payload):
         # {"type": "member.presence.update", "member_id": 2280259}
-
         member = self.get_member(payload["member_id"])
         if member:
             member.presence = presence = Presence(self, payload["presence"])
@@ -188,7 +187,7 @@ class Client:
     async def _on_presence_join_raw(self, payload):
         member = self.get_member(payload["member_id"])
         if member:
-            member.presence = presence = Presence(self, payload['presence'])
+            member.presence = presence = Presence(self, payload['member']['presence'])
             asyncio.create_task(self.on_presence_join(member, presence))
 
     async def on_presence_join(self, member, presence):
@@ -223,12 +222,13 @@ class Client:
         # {"type": "member.roles.update", "community_id": 1, "member_id": 15013, "roles": ["11", "12", "4", "5", "6"]}
         community = self.get_community(payload['community_id'])
         member = self.get_community(payload['member_id'])
-        roles = []
-        for item in payload['roles']:
-            role = community.get_role(item)
-            roles.append(role)
+        if community and member:
+            roles = []
+            for item in payload['roles']:
+                role = community.get_role(item)
+                roles.append(role)
 
-        asyncio.create_task(self.on_member_roles_update(community, member, roles))
+            asyncio.create_task(self.on_member_roles_update(community, member, roles))
 
     async def on_member_roles_update(self, community, member, roles):
         pass
