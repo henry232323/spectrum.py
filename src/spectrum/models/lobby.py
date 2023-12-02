@@ -47,16 +47,16 @@ class Lobby(abc.Identifier):
 
     def __init__(self, client: 'client.Client', payload: dict):
         self._client = client
-        self.id = payload['id']
+        self.id = int(payload["id"])
         self.type = payload['type']
-        self.community_id = payload['community_id']
+        self.community_id = int(payload['community_id']) if payload['community_id'] else None
         self.name = payload['name']
         self.description = payload['description']
         self.color = payload['color']
         self.icon = payload['icon']
         self.time_created = payload['time_created']
         self.subscription_key = payload['subscription_key']
-        self.leader_id = payload['leader_id']
+        self.leader_id = int(payload['leader_id']) if payload['leader_id'] else None
         self.online_members_count = payload['online_members_count']
         self.permissions = payload['permissions']
         self._members = {member['id']: client._replace_member(member) for member in (payload['members'] or [])}

@@ -32,7 +32,7 @@ class Member(abc.Identifier):
 
     def __init__(self, client: 'client.Client', payload: dict):
         self._client = client
-        self.id = payload["id"]
+        self.id = int(payload["id"])
         self.displayname = payload["displayname"]
         self.nickname = payload["nickname"]
         self.avatar_url = payload["avatar"]

@@ -234,6 +234,12 @@ class HTTP:
         """
         return await self.make_request(SEARCH_USERS, payload)
 
+    async def fetch_motd(self, payload):
+        """
+        {"lobby_id":"7"}
+        """
+        return await self.make_request(FETCH_MOTD, payload)
+
     async def make_request(self, endpoint, payload):
         await self._gateway._client._ready_event.wait()
         headers = {

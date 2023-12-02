@@ -89,8 +89,8 @@ class Reply(abc.Identifier):
 
     def __init__(self, client, payload):
         self._client = client
-        self.id = payload["id"]
-        self.thread_id = payload["thread_id"]
+        self.id = int(payload["id"])
+        self.thread_id = int(payload["thread_id"])
         self.time_created = payload["time_created"]
         self.time_modified = payload["time_modified"]
         self.content_blocks = payload["content_blocks"]

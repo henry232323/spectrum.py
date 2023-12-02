@@ -50,8 +50,8 @@ class Role(abc.Identifier):
     """
     def __init__(self, client, payload):
         self._client = client
-        self.id = payload["id"]
-        self.community_id = payload["community_id"]
+        self.id = int(payload["id"])
+        self.community_id = int(payload["community_id"])
         self.type = payload["type"]
         self.order = payload["order"]
         self.visible = payload["visible"]
@@ -67,3 +67,6 @@ class Role(abc.Identifier):
     @property
     def community(self):
         return self._client.get_community(self.community_id)
+
+    def __repr__(self):
+        return f"Role(id={repr(self.id)}, type={repr(self.type)}, name={repr(self.name)})"
