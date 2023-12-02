@@ -22,6 +22,8 @@ class Client:
     def __init__(self, *, token: str = None, device_id: str = None, log_handler=logging.getLogger('spectrum.py')):
         self._ready_event = asyncio.Event()
         self._lobbies: dict[int, Lobby] = {}
+        self._private_messages: dict[int, Lobby] = {}
+        self._group_messages: dict[int, Lobby] = {}
         self._members: dict[int, Member] = {}
         self._communities: dict[int, Community] = {}
         self._forums: dict[int, Forum] = {}
@@ -62,12 +64,36 @@ class Client:
     def lobbies(self) -> list[Lobby]:
         return list(self._lobbies.values())
 
+    @property
+    def private_messages(self) -> dict[int, Lobby]:
+        return self._private_messages.copy()
+
+    def get_pm(self, id):
+        return self._private_messages.get(int(id))
+
+    @property
+    def group_messages(self) -> list[Lobby]:
+        return list(self._group_messages.values())
+
+    def get_group_message(self, id):
+        return self._group_messages.get(int(id))
+
     def _replace_lobby(self, payload: dict):
         lobby = self.get_lobby(payload['id'])
         if lobby:
             lobby.__init__(self, payload)
         else:
             self._lobbies[int(payload['id'])] = lobby = Lobby(self, payload)
+
+        if lobby.type == "private":
+            for member in lobby.members:
+                if member.id != self.me.id:
+                    self._private_messages[member.id] = lobby
+
+        if lobby.type == "group":
+            for member in lobby.members:
+                if member.id != self.me.id:
+                    self._group_messages[lobby.id] = lobby
 
         return lobby
 
