@@ -16,10 +16,12 @@ from .models.presence import Presence
 from .models.reply import Reply
 from .models.role import Role
 from .models.thread import Thread
-from .util import find
+from .util import find, event_dispatch, register_callback
+from .util.event_dispatch import EventDispatchType
 
 
-class Client:
+@event_dispatch
+class Client(EventDispatchType):
     def __init__(self, *, token: str = None, device_id: str = None, log_handler=logging.getLogger('spectrum.py')):
         self._ready_event = asyncio.Event()
         self._lobbies: dict[int, Lobby] = {}
@@ -182,6 +184,7 @@ class Client:
     def roles(self) -> list[Role]:
         return [r for community in self._communities.values() for r in community.roles]
 
+    @register_callback('message.new')
     async def _on_message_raw(self, payload: dict):
         self._replace_member(payload['message']['member'])
         asyncio.create_task(self.on_message(Message(self, payload)))
@@ -189,6 +192,7 @@ class Client:
     async def on_message(self, message: Message):
         pass
 
+    @register_callback('identify')
     async def _on_identify_raw(self, payload):
         if payload.get("member"):
             self.me = self._replace_member(payload["member"])
@@ -197,6 +201,7 @@ class Client:
             for friend in payload["friends"] or []:
                 self._replace_member(friend)
 
+    @register_callback('broadcaster.ready')
     async def _on_ready_raw(self, payload):
         self._ready_event.set()
         asyncio.create_task(self.on_ready())
@@ -204,6 +209,7 @@ class Client:
     async def on_ready(self):
         pass
 
+    @register_callback('member.presence.update')
     async def _on_presence_update_raw(self, payload):
         # {"type": "member.presence.update", "member_id": 2280259}
         member = self.get_member(payload["member_id"])
@@ -214,6 +220,7 @@ class Client:
     async def on_presence_update(self, member, presence: Presence):
         pass
 
+    @register_callback('message_lobby.presence.join')
     async def _on_presence_join_raw(self, payload):
         member = self.get_member(payload["member_id"])
         if member:
@@ -239,6 +246,7 @@ class Client:
     async def on_forum_thread_reply(self, reply):
         pass
 
+    @register_callback('thread.new')
     async def _on_forum_thread_new_raw(self, payload):
         # {"type":"forum.thread.new","channel_id":3,"thread_id":396233,"label_id":null,"time_created":1701340775}
         response = await self._http.fetch_thread_nested(
@@ -249,6 +257,7 @@ class Client:
     async def on_forum_thread_new(self, thread):
         pass
 
+    @register_callback('member.roles.update')
     async def _on_member_roles_update_raw(self, payload):
         # {"type": "member.roles.update", "community_id": 1, "member_id": 15013, "roles": ["11", "12", "4", "5", "6"]}
         community = self.get_community(payload['community_id'])
@@ -264,7 +273,7 @@ class Client:
 
             asyncio.create_task(self.on_member_roles_update(community, member, roles))
         else:
-            self.log_handler.error("Failed to handle role update", payload)
+            self.log_handler.error(f"Failed to handle role update: {payload}")
 
     async def on_member_roles_update(self, community, member, roles):
         pass
@@ -281,3 +290,11 @@ class Client:
         payload = await self._http.fetch_member_by_handle(dict(nickname=handle))
         member = self._replace_member(payload['data'])
         return member
+
+    @register_callback("unhandled_event")
+    async def _on_unhandled_event_raw(self, payload):
+        self.log_handler.info("Received unhandled event of type %s", payload['type'])
+        asyncio.create_task(self.on_unhandled_event(payload))
+
+    async def on_unhandled_event(self, payload):
+        pass
