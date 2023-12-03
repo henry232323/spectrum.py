@@ -381,7 +381,6 @@ class Client(EventDispatchType):
     async def _on_unhandled_event_raw(self, payload):
         self.log_handler.info("Received unhandled event of type %s", payload['type'])
         asyncio.create_task(self.on_unhandled_event(payload))
-        print("Unhandled event", payload)
 
     async def on_unhandled_event(self, payload):
         pass

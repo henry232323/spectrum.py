@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0", "aiohttp", "websockets"]
+requires = ["setuptools>=61.0", "aiohttp"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -22,5 +22,5 @@ classifiers = [
 version = {attr = "spectrum.__version__"}
 
 [project.urls]
-"Homepage" = "http://github.com/henry232323/Spectrum.py"
-"Bug Tracker" = "http://github.com/henry232323/Spectrum.py/issues"
+"Homepage" = "http://github.com/henry232323/spectrum.py"
+"Bug Tracker" = "http://github.com/henry232323/spectrum.py/issues"
