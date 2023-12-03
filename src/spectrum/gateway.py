@@ -59,16 +59,8 @@ class Gateway:
         if self._token:
             self.headers['X-Rsi-Token'] = self._token
 
-        self.callbacks = {
-            "message.new": client._on_message_raw,
-            "broadcaster.ready": client._on_ready_raw,
-            "member.presence.update": client._on_presence_update_raw,
-            "message_lobby.presence.join": client._on_presence_join_raw,
-            "member.roles.update": client._on_member_roles_update_raw,
-        }
-
     async def identify(self):
-        print("Identifying")
+        self._client.log_handler.info("Identifying")
         async with aiohttp.ClientSession() as session:
             async with session.post(
                     self.IDENTIFY_URL,
@@ -82,13 +74,14 @@ class Gateway:
                     raise InvalidTokenException("An invalid token has been passed")
 
         token = body.get("data", {}).get("token")
-        await self._client._on_identify_raw(body.get("data", {}))
+        identify_callback = self._client._get_event_callback("identify")
+        await identify_callback(body.get("data", {}))
         communities = body.get("data", {}).get("communities", [])
         group_lobbies = body.get("data", {}).get("group_lobbies", [])
         private_lobbies = body.get("data", {}).get("private_lobbies", [])
 
         if token:
-            print("Successfully identified")
+            self._client.log_handler.info("Successfully identified")
             self._ws_url = Gateway.DEFAULT_GATEWAY.with_query(token=token)
             parts = base64.b64decode(token.split(".")[1], validate=True).decode("utf-8")
             token_payload = json.loads(parts)
@@ -115,7 +108,7 @@ class Gateway:
 
         asyncio.create_task(self.ready_tasks(tasks))
 
-        print("Finished identifying")
+        self._client.log_handler.info("Finished identifying")
 
     async def ready_tasks(self, tasks):
         await self._client._ready_event.wait()
@@ -162,7 +155,7 @@ class Gateway:
                     while True:
                         await self.poll_event()
                 except ReconnectWebSocket:
-                    print("Websocket closed, reconnecting")
+                    self._client.log_handler.info("Websocket closed, reconnecting")
                     await self.socket.close()
 
                 await asyncio.sleep(backoff)
@@ -211,6 +204,4 @@ class Gateway:
     async def received_message(self, data):
         payload = json.loads(data)
         if isinstance(payload, dict):
-            callback = self.callbacks.get(payload["type"])
-            if callback:
-                asyncio.create_task(callback(payload))
+            await self._client._dispatch_event(payload['type'], payload)

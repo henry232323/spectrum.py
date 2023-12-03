@@ -81,6 +81,8 @@ class Embed:
     sizes: dict[str, ImageSizeData]
     provider_icon: Optional[str] = None
     embed_code: Optional[str] = None
+    embed_width: Optional[int] = None
+    gifv: Optional = None
 
     def __post_init__(self):
         self.time_fetched = datetime.utcfromtimestamp(self.time_fetched)
