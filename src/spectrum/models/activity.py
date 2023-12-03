@@ -14,3 +14,4 @@ class Activity:
 
     def __post_init__(self):
         self.highlight_role_id = int(self.highlight_role_id)
+        self.time_created = datetime.utcfromtimestamp(self.time_created)

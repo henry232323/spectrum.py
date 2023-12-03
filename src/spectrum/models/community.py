@@ -1,3 +1,5 @@
+from typing import Optional
+
 from . import member, abc
 from .role import Role
 from .. import client
@@ -143,7 +145,7 @@ class Community(abc.Identifier):
 
         return forum
 
-    def get_role(self, role_id: str) -> Role | None:
+    def get_role(self, role_id: str) -> Optional[Role]:
         return self._roles.get(int(role_id))
 
     def _replace_role(self, payload: dict):
