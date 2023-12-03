@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from . import lobby, abc
+from .content import ContentState
 from .. import client
 
 
@@ -73,7 +74,8 @@ class Message(abc.Identifier):
         # self.is_erased = payload['message']['is_erased']
         # self.erased_by = payload['message']['erased_by']
         self._lobby_id = int(payload['message']['lobby_id'])
-        self.content = payload['message']['plaintext']
+        self.plaintext = payload['message']['plaintext']
+        self.content_state = ContentState(**payload['message']['content_state'])
 
     @property
     def author(self):
@@ -84,4 +86,4 @@ class Message(abc.Identifier):
         return self._client.get_lobby(self._lobby_id)
 
     def __repr__(self):
-        return f"Message(id={repr(self.id)}, content={repr(self.content)}, author={repr(self.author)}, lobby={repr(self.lobby)})"
+        return f"Message(id={repr(self.id)}, plaintext={repr(self.plaintext)}, author={repr(self.author)}, lobby={repr(self.lobby)})"

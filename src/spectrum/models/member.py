@@ -1,4 +1,5 @@
 from . import abc
+from .badge import Badge
 from .presence import Presence
 from .. import client
 
@@ -41,6 +42,7 @@ class Member(abc.Identifier):
         self.spoken_languages = payload["spoken_languages"]
         self.meta = payload["meta"]
         self.presence = None
+        self.badges = [Badge(**badge) for badge in payload.get("badges")] if payload.get("badges") else []
 
         if "presence" in payload:
             self.presence = Presence(self._client, payload['presence'])
