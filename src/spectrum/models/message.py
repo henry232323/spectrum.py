@@ -1,6 +1,7 @@
 from datetime import datetime
+from typing import Optional
 
-from . import lobby, abc
+from . import lobby, abc, member
 from .content import ContentState, Media
 from .. import client
 
@@ -110,22 +111,22 @@ class Message(abc.Identifier):
 
     def __init__(self, client: 'client.Client', payload: dict):
         self._client = client
-        self.id = payload['message']['id']
-        self.time_created = datetime.utcfromtimestamp(payload['message']['time_created'])
-        self.time_modified = datetime.utcfromtimestamp(payload['message']['time_modified']) if payload['message'][
+        self.id: int = int(payload['message']['id'])
+        self.time_created: datetime = datetime.utcfromtimestamp(payload['message']['time_created'])
+        self.time_modified: datetime = datetime.utcfromtimestamp(payload['message']['time_modified']) if payload['message'][
             'time_modified'] else None
-        self._member_id = int(payload['message']['member_id'])
+        self._member_id: int = int(payload['message']['member_id'])
         # self.is_erased = payload['message']['is_erased']
         # self.erased_by = payload['message']['erased_by']
-        self._lobby_id = int(payload['message']['lobby_id'])
-        self.plaintext = payload['message']['plaintext']
-        self.content_state = ContentState(**payload['message']['content_state'])
-        self.media = None
+        self._lobby_id: int = int(payload['message']['lobby_id'])
+        self.plaintext: str = payload['message']['plaintext']
+        self.content_state: ContentState = ContentState(**payload['message']['content_state'])
+        self.media: Optional[Media] = None
         if 'media' in payload['message']:
             self.media = Media(**payload['message']['media'])
 
     @property
-    def author(self):
+    def author(self) -> 'member.Member':
         return self._client.get_member(self._member_id)
 
     @property
