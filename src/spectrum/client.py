@@ -42,7 +42,7 @@ class Client:
         except Exception as e:
             traceback.print_exc()
 
-    def get_member(self, member_id: str | int) -> Optional[Lobby]:
+    def get_member(self, member_id: str | int) -> Optional[Member]:
         return self._members.get(int(member_id))
 
     @property
@@ -228,7 +228,8 @@ class Client:
         thread = self.get_thread(payload["thread_id"])
         if not thread:
             response = await self._http.fetch_thread_nested(
-                {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": payload["reply_id"]})
+                {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": payload["reply_id"]}
+            )
 
             thread.replies.append(self._replace_reply(response["data"]))
 

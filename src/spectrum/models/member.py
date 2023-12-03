@@ -1,4 +1,6 @@
-from . import abc
+from typing import Optional
+
+from . import abc, lobby, message
 from .badge import Badge
 from .presence import Presence
 from .. import client
@@ -33,16 +35,16 @@ class Member(abc.Identifier):
 
     def __init__(self, client: 'client.Client', payload: dict):
         self._client = client
-        self.id = int(payload["id"])
-        self.displayname = payload["displayname"]
-        self.nickname = payload["nickname"]
-        self.avatar_url = payload["avatar"]
-        self.signature = payload["signature"]
-        self.isGM = payload["isGM"]
-        self.spoken_languages = payload["spoken_languages"]
-        self.meta = payload["meta"]
-        self.presence = None
-        self.badges = [Badge(**badge) for badge in payload.get("badges")] if payload.get("badges") else []
+        self.id: int = int(payload["id"])
+        self.displayname: str = payload["displayname"]
+        self.nickname: str = payload["nickname"]
+        self.avatar_url: str = payload["avatar"]
+        self.signature: str = payload["signature"]
+        self.isGM: bool = payload["isGM"]
+        self.spoken_languages: list[str] = payload["spoken_languages"]
+        self.meta: dict = payload["meta"]
+        self.presence: Optional[Presence] = None
+        self.badges: list[Badge] = [Badge(**badge) for badge in payload.get("badges")] if payload.get("badges") else []
 
         if "presence" in payload:
             self.presence = Presence(self._client, payload['presence'])
@@ -50,7 +52,7 @@ class Member(abc.Identifier):
     def __repr__(self):
         return f"Member(id={repr(self.id)}, displayname={repr(self.displayname)}, nickname={repr(self.nickname)})"
 
-    async def get_dm(self):
+    async def get_dm(self) -> 'lobby.Lobby':
         lobby = self._client.get_pm(self.id)
         if lobby:
             return lobby
@@ -59,6 +61,6 @@ class Member(abc.Identifier):
         lobby = self._client._replace_lobby(response['data'])
         return lobby
 
-    async def send(self, content: str):
+    async def send(self, content: str) -> 'message.Message':
         lobby = await self.get_dm()
         return await lobby.send(content)
