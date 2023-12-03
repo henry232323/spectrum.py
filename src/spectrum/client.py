@@ -13,21 +13,25 @@ from .models.lobby import Lobby
 from .models.member import Member
 from .models.message import Message
 from .models.presence import Presence
+from .models.reaction import Reaction
 from .models.reply import Reply
 from .models.role import Role
 from .models.thread import Thread
 from .util import find, event_dispatch, register_callback
 from .util.event_dispatch import EventDispatchType
+from .util.limited_size_dict import LimitedSizeDict
 
 
 @event_dispatch
 class Client(EventDispatchType):
-    def __init__(self, *, token: str = None, device_id: str = None, log_handler=logging.getLogger('spectrum.py')):
+    def __init__(self, *, token: str = None, device_id: str = None, log_handler=logging.getLogger('spectrum.py'),
+                 message_cache_size=500):
         self._ready_event = asyncio.Event()
         self._lobbies: dict[int, Lobby] = {}
         self._private_messages: dict[int, Lobby] = {}
         self._group_messages: dict[int, Lobby] = {}
         self._members: dict[int, Member] = {}
+        self._messages: dict[int, Message] = LimitedSizeDict(size_limit=message_cache_size)
         self._communities: dict[int, Community] = {}
         self._forums: dict[int, Forum] = {}
         self._channels: dict[int, Channel] = {}
@@ -164,6 +168,22 @@ class Client(EventDispatchType):
 
         return thread
 
+    def get_message(self, message_id: str | int) -> Optional[Message]:
+        return self._messages.get(int(message_id))
+
+    @property
+    def messages(self) -> list[Message]:
+        return list(self._messages.values())
+
+    def _replace_message(self, payload: dict):
+        message = self.get_message(int(payload['id']))
+        if message:
+            message.__init__(self, payload)
+        else:
+            self._messages[int(payload['id'])] = message = Message(self, payload)
+
+        return message
+
     def get_reply(self, reply_id: str | int) -> Optional[Reply]:
         return self._replies.get(int(reply_id))
 
@@ -187,9 +207,27 @@ class Client(EventDispatchType):
     @register_callback('message.new')
     async def _on_message_raw(self, payload: dict):
         self._replace_member(payload['message']['member'])
-        asyncio.create_task(self.on_message(Message(self, payload)))
+        message = self._replace_message(payload['message'])
+        asyncio.create_task(self.on_message(message))
 
     async def on_message(self, message: Message):
+        pass
+
+    @register_callback('message.edit')
+    async def _on_message_edit_raw(self, payload: dict):
+        self._replace_member(payload['message']['member'])
+        message = self._replace_message(payload['message'])
+        asyncio.create_task(self.on_message_edit(message))
+
+    async def on_message_edit(self, message: Message):
+        pass
+
+    @register_callback('member.update')
+    async def _on_member_update_raw(self, payload: dict):
+        member = self._replace_member(payload['member'])
+        asyncio.create_task(self.on_member_update(member))
+
+    async def on_member_update(self, member: Member):
         pass
 
     @register_callback('identify')
@@ -228,6 +266,54 @@ class Client(EventDispatchType):
             asyncio.create_task(self.on_presence_join(member, presence))
 
     async def on_presence_join(self, member, presence):
+        pass
+
+    @register_callback('message_lobby.presence.leave')
+    async def _on_presence_leave_raw(self, payload):
+        member = self.get_member(payload["member_id"])
+        if member:
+            member.presence = None
+            asyncio.create_task(self.on_presence_leave(member))
+
+    async def on_presence_leave(self, member):
+        pass
+
+    @register_callback('reaction.add')
+    async def _on_reaction_add_raw(self, payload):
+        member = self.get_member(payload["reaction"]["member"]["id"])
+        if member:
+            asyncio.create_task(self.on_reaction_add(member, reaction=Reaction(self, payload['reaction'])))
+
+    async def on_reaction_add(self, member: Member, reaction: Reaction):
+        pass
+
+    @register_callback('reaction.remove')
+    async def _on_reaction_remove_raw(self, payload):
+        member = self.get_member(payload["reaction"]["member"]["id"])
+        if member:
+            asyncio.create_task(self.on_reaction_remove(member, reaction=Reaction(self, payload['reaction'])))
+
+    async def on_reaction_remove(self, member: Member, reaction: Reaction):
+        pass
+
+    @register_callback('message_lobby.typing.end')
+    async def _on_typing_end_raw(self, payload):
+        member = self.get_member(payload["member_id"])
+        lobby = self.get_lobby(payload["lobby_id"])
+        if member and lobby:
+            asyncio.create_task(self.on_typing_end(lobby, member))
+
+    async def on_typing_end(self, lobby: Lobby, member: Member):
+        pass
+
+    @register_callback('message_lobby.typing.start')
+    async def _on_typing_start_raw(self, payload):
+        member = self.get_member(payload["member_id"])
+        lobby = self.get_lobby(payload["lobby_id"])
+        if member and lobby:
+            asyncio.create_task(self.on_typing_start(lobby, member))
+
+    async def on_typing_start(self, lobby: Lobby, member: Member):
         pass
 
     async def _on_forum_thread_reply_raw(self, payload):
@@ -295,6 +381,7 @@ class Client(EventDispatchType):
     async def _on_unhandled_event_raw(self, payload):
         self.log_handler.info("Received unhandled event of type %s", payload['type'])
         asyncio.create_task(self.on_unhandled_event(payload))
+        print("Unhandled event", payload)
 
     async def on_unhandled_event(self, payload):
         pass

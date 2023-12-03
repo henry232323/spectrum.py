@@ -111,19 +111,19 @@ class Message(abc.Identifier):
 
     def __init__(self, client: 'client.Client', payload: dict):
         self._client = client
-        self.id: int = int(payload['message']['id'])
-        self.time_created: datetime = datetime.utcfromtimestamp(payload['message']['time_created'])
-        self.time_modified: datetime = datetime.utcfromtimestamp(payload['message']['time_modified']) if payload['message'][
+        self.id: int = int(payload['id'])
+        self.time_created: datetime = datetime.utcfromtimestamp(payload['time_created'])
+        self.time_modified: datetime = datetime.utcfromtimestamp(payload['time_modified']) if payload[
             'time_modified'] else None
-        self._member_id: int = int(payload['message']['member_id'])
-        # self.is_erased = payload['message']['is_erased']
-        # self.erased_by = payload['message']['erased_by']
-        self._lobby_id: int = int(payload['message']['lobby_id'])
-        self.plaintext: str = payload['message']['plaintext']
-        self.content_state: ContentState = ContentState(**payload['message']['content_state'])
+        self._member_id: int = int(payload['member_id'])
+        # self.is_erased = payload['is_erased']
+        # self.erased_by = payload['erased_by']
+        self._lobby_id: int = int(payload['lobby_id'])
+        self.plaintext: str = payload['plaintext']
+        self.content_state: ContentState = ContentState(**payload['content_state'])
         self.media: Optional[Media] = None
-        if 'media' in payload['message']:
-            self.media = Media(**payload['message']['media'])
+        if payload.get('media'):
+            self.media = Media(**payload['media'])
 
     @property
     def author(self) -> 'member.Member':

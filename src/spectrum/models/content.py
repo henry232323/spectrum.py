@@ -82,6 +82,7 @@ class Embed:
     provider_icon: Optional[str] = None
     embed_code: Optional[str] = None
     embed_width: Optional[int] = None
+    embed_height: Optional[int] = None
     gifv: Optional = None
 
     def __post_init__(self):
