@@ -1,6 +1,8 @@
 from datetime import datetime
 
 from . import abc
+from .activity import Activity
+from .content import ContentBlock
 
 
 class Thread(abc.Identifier):
@@ -186,29 +188,36 @@ class Thread(abc.Identifier):
         self.id = int(payload["id"])
         self.time_created = datetime.utcfromtimestamp(payload["time_created"])
         self.time_modified = datetime.utcfromtimestamp(payload["time_modified"]) if payload["time_modified"] else None
+
         self.channel_id = int(payload["channel_id"])
+        self.community_id = int(payload["community_id"])
         self.label_id = int(payload["label_id"])
+
         self.type = payload["type"]
         self.slug = payload["slug"]
         self.subject = payload["subject"]
+
         self.is_locked = payload["is_locked"]
         self.is_reply_nesting_disabled = payload["is_reply_nesting_disabled"]
         self.is_pinned = payload["is_pinned"]
         self.is_sinked = payload["is_sinked"]
         self.is_erased = payload["is_erased"]
         self.erased_by = payload["erased_by"]
+
         self.tracked_post_role_id = int(payload["tracked_post_role_id"])
         self.content_reply_id = int(payload["content_reply_id"])
+
         self.annotation_plaintext = payload["annotation_plaintext"]
         self.subscription_key = payload["subscription_key"]
-        self.content_blocks = payload["content_blocks"]
+        self.content_blocks = [ContentBlock(**data) for data in payload["content_blocks"]]
         self.highlight_role_id = int(payload["highlight_role_id"])
-        self.community_id = int(payload["community_id"])
+
         self.member = self._client._replace_member(payload["member"])
+
         self.replies_count = payload["replies_count"]
         self.views_count = payload["views_count"]
         self.latest = payload["latest"]
-        self.latest_activity = payload["latest_activity"]
+        self.latest_activity = Activity(**payload["latest_activity"])
         self.newest_unread = payload["newest_unread"]
         self.last_read = payload["last_read"]
         self.last_marker = payload["last_marker"]
@@ -218,7 +227,7 @@ class Thread(abc.Identifier):
         self.children_replies_references = payload["children_replies_references"]
         self.notification_subscription = payload["notification_subscription"]
         self.aspect = payload["aspect"]
-        self.nested_replies_ids = payload["nested_replies_ids"]
+        self.nested_replies_ids = [int(x) for x in payload["nested_replies_ids"]]
         self.replies = payload["replies"]
 
     @property
