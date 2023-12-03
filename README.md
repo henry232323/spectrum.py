@@ -5,7 +5,7 @@ for Star Citizen's [Spectrum](https://robertsspaceindustries.com/spectrum/commun
 
 ## Installation
 ```shell
-python -m pip install git+https://github.com/henry232323/Spectrum.py
+python -m pip install git+https://github.com/henry232323/spectrum.py
 ```
 
 ## Example
