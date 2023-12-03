@@ -1,4 +1,5 @@
 from . import abc
+from .permissions import Permissions
 
 
 class Role(abc.Identifier):
@@ -48,6 +49,7 @@ class Role(abc.Identifier):
         }
     },
     """
+
     def __init__(self, client, payload):
         self._client = client
         self.id = int(payload["id"])
@@ -62,7 +64,7 @@ class Role(abc.Identifier):
         self.color = payload["color"]
         self.member_count = payload["member_count"]
         self.members_count = payload["members_count"]
-        self.permissions = payload["permissions"]
+        self.permissions = Permissions.from_payload(payload["permissions"])
 
     @property
     def community(self):
