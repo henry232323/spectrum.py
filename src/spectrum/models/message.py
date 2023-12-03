@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from . import lobby, abc
 from .. import client
 
@@ -64,8 +66,9 @@ class Message(abc.Identifier):
     def __init__(self, client: 'client.Client', payload: dict):
         self._client = client
         self.id = payload['message']['id']
-        self.time_created = payload['message']['time_created']
-        self.time_modified = payload['message']['time_modified']
+        self.time_created = datetime.utcfromtimestamp(payload['message']['time_created'])
+        self.time_modified = datetime.utcfromtimestamp(payload['message']['time_modified']) if payload['message'][
+            'time_modified'] else None
         self._member_id = int(payload['message']['member_id'])
         # self.is_erased = payload['message']['is_erased']
         # self.erased_by = payload['message']['erased_by']
