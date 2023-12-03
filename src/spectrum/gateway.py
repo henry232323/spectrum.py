@@ -154,9 +154,8 @@ class Gateway:
         }
 
         backoff = 1
-
-        async with aiohttp.ClientSession() as session:
-            while self._running:
+        while self._running:
+            async with aiohttp.ClientSession() as session:
                 try:
                     self.socket = await session.ws_connect(str(self._ws_url), **arguments)
 

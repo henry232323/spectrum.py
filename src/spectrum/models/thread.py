@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from . import abc
 
 
@@ -182,8 +184,8 @@ class Thread(abc.Identifier):
     def __init__(self, client, payload):
         self._client = client
         self.id = int(payload["id"])
-        self.time_created = payload["time_created"]
-        self.time_modified = payload["time_modified"]
+        self.time_created = datetime.utcfromtimestamp(payload["time_created"])
+        self.time_modified = datetime.utcfromtimestamp(payload["time_modified"]) if payload["time_modified"] else None
         self.channel_id = int(payload["channel_id"])
         self.label_id = int(payload["label_id"])
         self.type = payload["type"]

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from . import abc
 
 
@@ -91,8 +93,8 @@ class Reply(abc.Identifier):
         self._client = client
         self.id = int(payload["id"])
         self.thread_id = int(payload["thread_id"])
-        self.time_created = payload["time_created"]
-        self.time_modified = payload["time_modified"]
+        self.time_created = datetime.utcfromtimestamp(payload["time_created"])
+        self.time_modified = datetime.utcfromtimestamp(payload["time_modified"]) if payload["time_modified"] else None
         self.content_blocks = payload["content_blocks"]
         self.is_erased = payload["is_erased"]
         self.erased_by = payload["erased_by"]
