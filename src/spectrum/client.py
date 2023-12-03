@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import sys
 import traceback
 from typing import Optional
 
@@ -22,9 +23,12 @@ from .util.event_dispatch import EventDispatchType
 from .util.limited_size_dict import LimitedSizeDict
 
 
+log = logging.getLogger(__name__)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
 @event_dispatch
 class Client(EventDispatchType):
-    def __init__(self, *, token: str = None, device_id: str = None, log_handler=logging.getLogger('spectrum.py'),
+    def __init__(self, *, token: str = None, device_id: str = None, log_handler=log,
                  message_cache_size=500):
         self._ready_event = asyncio.Event()
         self._lobbies: dict[int, Lobby] = {}
@@ -359,6 +363,7 @@ class Client(EventDispatchType):
 
             asyncio.create_task(self.on_member_roles_update(community, member, roles))
         else:
+            print(self.communities)
             self.log_handler.error(f"Failed to handle role update: {payload}")
 
     async def on_member_roles_update(self, community, member, roles):

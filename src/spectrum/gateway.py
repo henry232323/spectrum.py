@@ -1,6 +1,7 @@
 import asyncio
 import base64
 import json
+import logging
 import traceback
 
 import aiohttp
@@ -21,6 +22,7 @@ class ReconnectWebSocket(Exception):
 class InvalidTokenException(Exception):
     pass
 
+log = logging.getLogger(__name__)
 
 class Gateway:
     """
@@ -60,7 +62,7 @@ class Gateway:
             self.headers['X-Rsi-Token'] = self._token
 
     async def identify(self):
-        self._client.log_handler.info("Identifying")
+        log.info("Identifying")
         async with aiohttp.ClientSession() as session:
             async with session.post(
                     self.IDENTIFY_URL,
@@ -81,7 +83,7 @@ class Gateway:
         private_lobbies = body.get("data", {}).get("private_lobbies", [])
 
         if token:
-            self._client.log_handler.info("Successfully identified")
+            log.info("Successfully identified")
             self._ws_url = Gateway.DEFAULT_GATEWAY.with_query(token=token)
             parts = base64.b64decode(token.split(".")[1], validate=True).decode("utf-8")
             token_payload = json.loads(parts)
@@ -108,7 +110,7 @@ class Gateway:
 
         asyncio.create_task(self.ready_tasks(tasks))
 
-        self._client.log_handler.info("Finished identifying")
+        log.info("Finished identifying")
 
     async def ready_tasks(self, tasks):
         await self._client._ready_event.wait()
@@ -155,7 +157,7 @@ class Gateway:
                     while True:
                         await self.poll_event()
                 except ReconnectWebSocket:
-                    self._client.log_handler.info("Websocket closed, reconnecting")
+                    log.info("Websocket closed, reconnecting")
                     await self.socket.close()
 
                 await asyncio.sleep(backoff)
