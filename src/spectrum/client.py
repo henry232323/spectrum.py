@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import traceback
+from typing import Optional
 
 from .gateway import Gateway
 from .http import HTTP
@@ -33,7 +34,7 @@ class Client:
         self._gateway: Gateway = Gateway(client=self, token=token, device_id=device_id)
         self._http: HTTP = HTTP(self._gateway, token=token)
         self.log_handler = log_handler
-        self.me: Member | None = None
+        self.me: Optional[Member] = None
 
     async def run(self):
         try:
@@ -41,7 +42,7 @@ class Client:
         except Exception as e:
             traceback.print_exc()
 
-    def get_member(self, member_id: str | int) -> Lobby | None:
+    def get_member(self, member_id: str | int) -> Optional[Lobby]:
         return self._members.get(int(member_id))
 
     @property
@@ -57,7 +58,7 @@ class Client:
 
         return member
 
-    def get_lobby(self, lobby_id: str | int) -> Lobby | None:
+    def get_lobby(self, lobby_id: str | int) -> Optional[Lobby]:
         return self._lobbies.get(int(lobby_id))
 
     @property
@@ -97,7 +98,7 @@ class Client:
 
         return lobby
 
-    def get_community(self, community_id: int | str) -> Community | None:
+    def get_community(self, community_id: int | str) -> Optional[Community]:
         return self._communities.get(int(community_id))
 
     @property
@@ -113,7 +114,7 @@ class Client:
 
         return community
 
-    def get_forum(self, forum_id: str | int) -> Forum | None:
+    def get_forum(self, forum_id: str | int) -> Optional[Forum]:
         return self._forums.get(int(forum_id))
 
     @property
@@ -129,7 +130,7 @@ class Client:
 
         return forum
 
-    def get_channel(self, channel_id: str | int) -> Channel | None:
+    def get_channel(self, channel_id: str | int) -> Optional[Channel]:
         return self._channels.get(int(channel_id))
 
     @property
@@ -145,7 +146,7 @@ class Client:
 
         return channel
 
-    def get_thread(self, thread_id: str | int) -> Thread | None:
+    def get_thread(self, thread_id: str | int) -> Optional[Thread]:
         return self._threads.get(int(thread_id))
 
     @property
@@ -161,7 +162,7 @@ class Client:
 
         return thread
 
-    def get_reply(self, reply_id: str | int) -> Reply | None:
+    def get_reply(self, reply_id: str | int) -> Optional[Reply]:
         return self._replies.get(int(reply_id))
 
     @property
