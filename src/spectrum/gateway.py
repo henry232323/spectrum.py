@@ -85,10 +85,11 @@ class Gateway:
         if token:
             log.info("Successfully identified")
             self._ws_url = Gateway.DEFAULT_GATEWAY.with_query(token=token)
-            parts = base64.b64decode(token.split(".")[1], validate=True).decode("utf-8")
+            parts = base64.b64decode(token.split(".")[1] + "==", validate=False).decode("utf-8")
             token_payload = json.loads(parts)
             self._client_id = token_payload['client_id']
         else:
+            log.info("Connecting without identification")
             self._ws_url = str(Gateway.DEFAULT_GATEWAY)
 
         for community in communities or []:
