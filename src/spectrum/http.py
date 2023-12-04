@@ -2,45 +2,45 @@ import asyncio
 
 import aiohttp
 
-SPECTRUM_API_BASE = "https://robertsspaceindustries.com/api/spectrum/"
-CREATE_MESSAGE_ENDPOINT = "https://robertsspaceindustries.com/api/spectrum/message/create"
-FETCH_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/channel/threads"
-CREATE_REPLY = "https://robertsspaceindustries.com/api/spectrum/forum/thread/reply/create"
-CREATE_THREAD = "https://robertsspaceindustries.com/api/spectrum/forum/thread/create"
-FETCH_PRESENCES_ENDPOINT = "https://robertsspaceindustries.com/api/spectrum/lobby/presences"
-FETCH_THREAD_NESTED = "https://robertsspaceindustries.com/api/spectrum/forum/thread/nested"
-FETCH_THREAD_CLASSIC = "https://robertsspaceindustries.com/api/spectrum/forum/thread/classic"
-FETCH_HISTORY = "https://robertsspaceindustries.com/api/spectrum/message/history"
-FETCH_MEMBER_BY_ID = "https://robertsspaceindustries.com/api/spectrum/member/info/id"
-FETCH_MEMBER_BY_HANDLE = "https://robertsspaceindustries.com/api/spectrum/member/info/nickname"
-FETCH_MEMBER_ROLES = "https://robertsspaceindustries.com/api/spectrum/member/roles"
-FETCH_MEMBER_COUNTERS = "https://robertsspaceindustries.com/api/spectrum/member/counters"
-FETCH_BROADCAST_MESSAGE_LIST = "https://robertsspaceindustries.com/api/spectrum/broadcast-message/list"
-FETCH_EMOJIS = "https://robertsspaceindustries.com/api/spectrum/community/fetch-emojis"
-FETCH_MOTD = "https://robertsspaceindustries.com/api/spectrum/lobby/getMotd"
-EXTENDED_SEARCH = "https://robertsspaceindustries.com/api/spectrum/search/content/extended"
-ADD_VOTE = "https://robertsspaceindustries.com/api/spectrum/vote/add"
-REMOVE_VOTE = "https://robertsspaceindustries.com/api/spectrum/vote/remove"
-ADD_REACTION = "https://robertsspaceindustries.com/api/spectrum/reaction/add"
-REMOVE_REACTION = "https://robertsspaceindustries.com/api/spectrum/reaction/remove"
-FETCH_ONLINE_MEMBERS_COUNT = "https://robertsspaceindustries.com/api/spectrum/lobby/online-members-count"
-SINK_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/sink"
-PIN_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/pin"
-CLOSE_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/lock"
-DELETE_THREADS = "https://robertsspaceindustries.com/api/spectrum/forum/thread/bulk/erase"
-CREATE_CATEGORIES_GROUP = "https://robertsspaceindustries.com/api/spectrum/forum/channel/group/create"
-EDIT_CATEGORIES_GROUP = "https://robertsspaceindustries.com/api/spectrum/forum/channel/group/edit"
-CREATE_CATEGORY = "https://robertsspaceindustries.com/api/spectrum/forum/channel/create"
-EDIT_CATEGORY = "https://robertsspaceindustries.com/api/spectrum/forum/channel/edit"
-CREATE_LOBBY = "https://robertsspaceindustries.com/api/spectrum/lobby/create"
-EDIT_LOBBY = "https://robertsspaceindustries.com/api/spectrum/lobby/edit"
-FETCH_COMMUNITY_MEMBERS = "https://robertsspaceindustries.com/api/spectrum/community/members"
-ADD_MEMBER_ROLE = "https://robertsspaceindustries.com/api/spectrum/member/role/add"
-REMOVE_MEMBER_ROLE = "https://robertsspaceindustries.com/api/spectrum/member/role/remove"
-CREATE_ROLE = "https://robertsspaceindustries.com/api/spectrum/role/create"
-MOVE_ROLE = "https://robertsspaceindustries.com/api/spectrum/role/move"
-SEARCH_USERS = "https://robertsspaceindustries.com/api/spectrum/search/member/autocomplete"
-FETCH_LOBBY_INFO = "https://robertsspaceindustries.com/api/spectrum/lobby/info"
+SPECTRUM_API_BASE = "https://robertsspaceindustries.com/"
+CREATE_MESSAGE_ENDPOINT = "/api/spectrum/message/create"
+FETCH_THREADS = "/api/spectrum/forum/channel/threads"
+CREATE_REPLY = "/api/spectrum/forum/thread/reply/create"
+CREATE_THREAD = "/api/spectrum/forum/thread/create"
+FETCH_PRESENCES_ENDPOINT = "/api/spectrum/lobby/presences"
+FETCH_THREAD_NESTED = "/api/spectrum/forum/thread/nested"
+FETCH_THREAD_CLASSIC = "/api/spectrum/forum/thread/classic"
+FETCH_HISTORY = "/api/spectrum/message/history"
+FETCH_MEMBER_BY_ID = "/api/spectrum/member/info/id"
+FETCH_MEMBER_BY_HANDLE = "/api/spectrum/member/info/nickname"
+FETCH_MEMBER_ROLES = "/api/spectrum/member/roles"
+FETCH_MEMBER_COUNTERS = "/api/spectrum/member/counters"
+FETCH_BROADCAST_MESSAGE_LIST = "/api/spectrum/broadcast-message/list"
+FETCH_EMOJIS = "/api/spectrum/community/fetch-emojis"
+FETCH_MOTD = "/api/spectrum/lobby/getMotd"
+EXTENDED_SEARCH = "/api/spectrum/search/content/extended"
+ADD_VOTE = "/api/spectrum/vote/add"
+REMOVE_VOTE = "/api/spectrum/vote/remove"
+ADD_REACTION = "/api/spectrum/reaction/add"
+REMOVE_REACTION = "/api/spectrum/reaction/remove"
+FETCH_ONLINE_MEMBERS_COUNT = "/api/spectrum/lobby/online-members-count"
+SINK_THREADS = "/api/spectrum/forum/thread/bulk/sink"
+PIN_THREADS = "/api/spectrum/forum/thread/bulk/pin"
+CLOSE_THREADS = "/api/spectrum/forum/thread/bulk/lock"
+DELETE_THREADS = "/api/spectrum/forum/thread/bulk/erase"
+CREATE_CATEGORIES_GROUP = "/api/spectrum/forum/channel/group/create"
+EDIT_CATEGORIES_GROUP = "/api/spectrum/forum/channel/group/edit"
+CREATE_CATEGORY = "/api/spectrum/forum/channel/create"
+EDIT_CATEGORY = "/api/spectrum/forum/channel/edit"
+CREATE_LOBBY = "/api/spectrum/lobby/create"
+EDIT_LOBBY = "/api/spectrum/lobby/edit"
+FETCH_COMMUNITY_MEMBERS = "/api/spectrum/community/members"
+ADD_MEMBER_ROLE = "/api/spectrum/member/role/add"
+REMOVE_MEMBER_ROLE = "/api/spectrum/member/role/remove"
+CREATE_ROLE = "/api/spectrum/role/create"
+MOVE_ROLE = "/api/spectrum/role/move"
+SEARCH_USERS = "/api/spectrum/search/member/autocomplete"
+FETCH_LOBBY_INFO = "/api/spectrum/lobby/info"
 
 
 class HTTP:
@@ -49,7 +49,7 @@ class HTTP:
         self._token = token
 
         loop = asyncio.get_event_loop()
-        self._session = aiohttp.ClientSession(loop=loop)
+        self._session = aiohttp.ClientSession(loop=loop, base_url=SPECTRUM_API_BASE)
 
     async def send_message(self, payload: dict):
         return await self.make_request(CREATE_MESSAGE_ENDPOINT, payload)
@@ -247,7 +247,7 @@ class HTTP:
         """
         return await self.make_request(FETCH_LOBBY_INFO, payload)
 
-    async def make_request(self, endpoint, payload):
+    async def make_request(self, endpoint: str, payload: dict):
         await self._gateway._client._ready_event.wait()
         headers = {
             **self._gateway.headers,
