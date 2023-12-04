@@ -1,6 +1,6 @@
 from typing import Optional
 
-from . import abc, lobby, message
+from . import abc, lobby, message, community
 from .badge import Badge
 from .presence import Presence
 from .. import client
@@ -58,9 +58,15 @@ class Member(abc.Identifier):
             return lobby
 
         response = await self._client._http.fetch_lobby_info({"member_id": self.id})
-        lobby = self._client._replace_lobby(response['data'])
+        lobby = self._client._replace_lobby(response)
         return lobby
 
     async def send(self, content: str) -> 'message.Message':
         lobby = await self.get_dm()
         return await lobby.send(content)
+
+    async def fetch_roles(self, community: 'community.Community'):
+        await community.fetch_roles(self)
+
+    async def fetch_counters(self, community: 'community.Community'):
+        await community.fetch_counters(self)

@@ -2,6 +2,8 @@ import asyncio
 
 import aiohttp
 
+from spectrum.errors import HTTPError, exception_map
+
 SPECTRUM_API_BASE = "https://robertsspaceindustries.com/"
 CREATE_MESSAGE_ENDPOINT = "/api/spectrum/message/create"
 FETCH_THREADS = "/api/spectrum/forum/channel/threads"
@@ -263,4 +265,8 @@ class HTTP:
                 headers=headers,
                 cookies=self._gateway.cookies
         ) as resp:
-            return await resp.json()
+            response = await resp.json()
+            if response.get('success'):
+                return response['data']
+            else:
+                raise exception_map.get(response['code'], HTTPError)(response['msg'])

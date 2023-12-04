@@ -22,9 +22,9 @@ from .util import find, event_dispatch, register_callback
 from .util.event_dispatch import EventDispatchType
 from .util.limited_size_dict import LimitedSizeDict
 
-
 log = logging.getLogger(__name__)
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+
 
 @event_dispatch
 class Client(EventDispatchType):
@@ -328,7 +328,7 @@ class Client(EventDispatchType):
                 {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": payload["reply_id"]}
             )
 
-            thread.replies.append(self._replace_reply(response["data"]))
+            thread.replies.append(self._replace_reply(response))
 
         reply = find(thread.replies, payload["reply_id"])
         asyncio.create_task(self.on_forum_thread_reply(reply))
@@ -341,7 +341,7 @@ class Client(EventDispatchType):
         # {"type":"forum.thread.new","channel_id":3,"thread_id":396233,"label_id":null,"time_created":1701340775}
         response = await self._http.fetch_thread_nested(
             {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": None})
-        thread = self._replace_thread(response["data"])
+        thread = self._replace_thread(response)
         asyncio.create_task(self.on_forum_thread_new(thread))
 
     async def on_forum_thread_new(self, thread):
@@ -374,12 +374,12 @@ class Client(EventDispatchType):
 
     async def fetch_member_by_id(self, member_id):
         payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
-        member = self._replace_member(payload['data']['member'])
+        member = self._replace_member(payload['member'])
         return member
 
     async def fetch_member_by_handle(self, handle):
         payload = await self._http.fetch_member_by_handle(dict(nickname=handle))
-        member = self._replace_member(payload['data']['member'])
+        member = self._replace_member(payload['member'])
         return member
 
     @register_callback("unhandled_event")
@@ -389,3 +389,25 @@ class Client(EventDispatchType):
 
     async def on_unhandled_event(self, payload):
         pass
+
+    async def sink_threads(self, *threads):
+        return await self._http.sink_threads({
+            "thread_ids": [t.id for t in threads]
+        })
+
+    async def pin_threads(self, *threads):
+        return await self._http.pin_threads({
+            "thread_ids": [t.id for t in threads]
+        })
+
+    async def close_threads(self, *threads, reason: str = None):
+        return await self._http.close_threads({
+            "thread_ids": [t.id for t in threads],
+            "reason": reason
+        })
+
+    async def delete_threads(self, *threads, reason: str = None):
+        return await self._http.delete_threads({
+            "thread_ids": [t.id for t in threads],
+            "reason": reason
+        })

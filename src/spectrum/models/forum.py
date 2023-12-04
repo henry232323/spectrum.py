@@ -33,6 +33,6 @@ class Forum(abc.Identifier):
              "color": color, "sort_filter": sort_filter, "label_required": label_required}
         )
 
-        channel = self._client._replace_channel(resp['data'])
+        channel = self._client._replace_channel(resp)
         self.channels = (*self.channels, channel)
         return channel

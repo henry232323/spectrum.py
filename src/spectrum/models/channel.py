@@ -151,15 +151,15 @@ class Channel(abc.Identifier):
             }
         )
 
-        thread = self._client._replace_thread(resp['data'])
+        thread = self._client._replace_thread(resp)
         self.threads[thread.id] = thread
         return thread
 
     async def fetch_threads(self, max_count=None, label_id=None):
         resp = await self._client._http.fetch_threads(
             {"channel_id": self.id, "page": 1, "sort": "hot", "label_id": label_id})
-        threads_count = resp['data']['threads_count']
-        thread_data = resp['data']['threads']
+        threads_count = resp['threads_count']
+        thread_data = resp['threads']
         threads = []
         if max_count and len(threads) >= max_count:
             for item in thread_data:
@@ -173,7 +173,7 @@ class Channel(abc.Identifier):
         while len(threads) <= threads_count:
             resp = await self._client._http.fetch_threads(
                 {"channel_id": self.id, "page": page, "sort": "hot", "label_id": label_id})
-            thread_data = resp['data']['threads']
+            thread_data = resp['threads']
             for item in thread_data:
                 thread = self._client._http._replace_thread(item)
                 self.threads[item['id']] = thread
