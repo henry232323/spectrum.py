@@ -58,8 +58,8 @@ class Lobby(abc.Identifier):
         self.time_created = datetime.utcfromtimestamp(payload['time_created'])
         self.subscription_key = payload['subscription_key']
         self.leader_id = int(payload['leader_id']) if payload['leader_id'] else None
-        self.online_members_count = payload['online_members_count']
-        self.permissions = payload['permissions']
+        self.online_members_count = payload.get('online_members_count')
+        self.permissions = payload.get('permissions')
         self._members = {member['id']: client._replace_member(member) for member in (payload['members'] or [])}
 
         asyncio.create_task(self.fetch_presence())
@@ -70,7 +70,7 @@ class Lobby(abc.Identifier):
 
     @property
     def community(self):
-        return self.client.get_community(self.community_id)
+        return self._client.get_community(self.community_id)
 
     @property
     def leader(self):

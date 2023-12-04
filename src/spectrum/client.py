@@ -374,12 +374,12 @@ class Client(EventDispatchType):
 
     async def fetch_member_by_id(self, member_id):
         payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
-        member = self._replace_member(payload['data'])
+        member = self._replace_member(payload['data']['member'])
         return member
 
     async def fetch_member_by_handle(self, handle):
         payload = await self._http.fetch_member_by_handle(dict(nickname=handle))
-        member = self._replace_member(payload['data'])
+        member = self._replace_member(payload['data']['member'])
         return member
 
     @register_callback("unhandled_event")
