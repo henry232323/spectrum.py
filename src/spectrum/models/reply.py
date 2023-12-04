@@ -112,3 +112,15 @@ class Reply(abc.Identifier):
     @property
     def thread(self):
         return self._client.get_thread(self.thread_id)
+
+    async def add_vote(self):
+        await self._client._http.add_vote({
+            "entity_type": "forum_thread_reply",
+            "entity_id": self.id
+        })
+
+    async def remove_vote(self):
+        await self._client._http.remove_vote({
+            "entity_type": "forum_thread_reply",
+            "entity_id": self.id
+        })

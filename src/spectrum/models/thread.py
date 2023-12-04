@@ -237,3 +237,27 @@ class Thread(abc.Identifier):
     @property
     def community(self):
         return self._client.get_community(self.community_id)
+
+    async def sink(self):
+        return await self._client.sink_threads(self)
+
+    async def pin(self):
+        return await self._client.pin_threads(self)
+
+    async def close(self):
+        return await self._client.close_threads(self)
+
+    async def delete(self):
+        return await self._client.delete_threads(self)
+
+    async def add_vote(self):
+        await self._client._http.add_vote({
+            "entity_type": "forum_thread",
+            "entity_id": self.id
+        })
+
+    async def remove_vote(self):
+        await self._client._http.remove_vote({
+            "entity_type": "forum_thread",
+            "entity_id": self.id
+        })

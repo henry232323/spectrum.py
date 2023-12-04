@@ -1,6 +1,7 @@
 from typing import Optional
 
 from . import member, abc
+from .emoji import Emoji
 from .role import Role
 from .. import client
 from ..util import find
@@ -131,16 +132,47 @@ class Community(abc.Identifier):
     def roles(self) -> list[Role]:
         return list(self._roles.values())
 
-    async def fetch_role(self, member: member.Member):
+    def get_lobby(self, lobby_id: str | int):
+        return self._client.get_lobby(lobby_id)
+
+    async def fetch_members(self, page=1, pagesize=12, sort='displayname', sort_descending=0):
+        members = await self._client._http.fetch_community_members(
+            {"community_id": self.id, 'page': page, 'pagesize': pagesize, 'sort_descending': sort_descending,
+             'sort': sort})
+        return [self._client._replace_member(r) for r in members]
+
+    async def fetch_roles(self, member: member.Member):
         roles = await self._client._http.fetch_member_roles({"member_id": member.id, "community_id": self.id})
-        return [find(self._roles.values(), r) for r in roles['data']]
+        return [find(self._roles.values(), r) for r in roles]
+
+    async def fetch_counters(self, member: member.Member):
+        resp = await self._client._http.fetch_member_counters({"member_id": member.id, "community_id": self.id})
+        return resp
+
+    async def fetch_emojis(self, member: member.Member):
+        emojis = await self._client._http.fetch_emojis({"community_id": self.id})
+        return [Emoji(r) for r in emojis]
+
+    async def fetch_online_count(self, member: member.Member):
+        resp = await self._client._http.fetch_emojis({"community_id": self.id})
+        return {self._client.get_lobby(lid): count for lid, count in resp.items()}
 
     async def create_category_group(self, name: str):
         resp = await self._client._http.create_categories_group(
             {"community_id": self.id, "name": name}
         )
 
-        forum = self._client._replace_forum(resp['data'])
+        forum = self._client._replace_forum(resp)
+        self.forums = (*self.forums, forum)
+
+        return forum
+
+    async def create_lobby(self, name: str, *, color, description, type='public'):
+        resp = await self._client._http.create_categories_group(
+            {"community_id": self.id, "name": name, description: description, color: color, type: type}
+        )
+
+        forum = self._client._replace_forum(resp)
         self.forums = (*self.forums, forum)
 
         return forum

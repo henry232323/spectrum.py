@@ -88,12 +88,12 @@ class Lobby(abc.Identifier):
             "plaintext": content, "media_id": None, "highlight_role_id": None
         })
 
-        return message.Message(self._client, dict(message=payload['data']))
+        return message.Message(self._client, dict(message=payload))
 
     async def fetch_presence(self):
         presences = await self._client._http.fetch_presences(dict(lobby_id=self.id))
         members = []
-        for presence in presences["data"]:
+        for presence in presences:
             members.append(self._client._replace_member(presence))
 
         return members
