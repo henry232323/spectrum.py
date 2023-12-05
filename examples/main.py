@@ -15,7 +15,7 @@ class MyClient(Client):
         print(message)
 
     async def on_ready(self):
-        await self.subscribe_to_all()
+        await self.subscribe_to_default()
         print("We're ready!")
 
 

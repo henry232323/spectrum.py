@@ -451,3 +451,19 @@ class Client(EventDispatchType):
                 keys.append(label.subscription_key)
 
         await self.subscribe_to_topic(*keys)
+
+    async def subscribe_to_default(self):
+        """Subscribe to the default set of topics, including the public SC community and all direct messages and group messages."""
+        keys = []
+        for lobby in self.group_messages or []:
+            keys.append(lobby.subscription_key)
+
+        for lobby in self.private_messages.values():
+            keys.append(lobby.subscription_key)
+
+        main_community = self.get_community(1)
+        if main_community:
+            for lobby in main_community.lobbies:
+                keys.append(lobby.subscription_key)
+
+        await self.subscribe_to_topic(*keys)

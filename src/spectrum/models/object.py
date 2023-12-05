@@ -6,5 +6,5 @@ class Object(abc.Identifier):
         self.id = int(id)
         self._client = client
 
-    def repr(self):
+    def __repr__(self):
         return f"Object(id={self.id})"
