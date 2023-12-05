@@ -97,3 +97,20 @@ class Lobby(abc.Identifier, abc.Subscription):
             members.append(self._client._replace_member(presence))
 
         return members
+
+    async def fetch_history(self, count=50):
+        """Async iterator yielding up to `count`"""
+        first_message = None
+        while count != 0:
+            resp = await self._client._http.fetch_history(
+                {"lobby_id": self.id, "timeframe": "before", "message_id": first_message, "size": 50}
+            )
+            messages = resp['messages']
+            if messages:
+                first_message = messages[0]['id']
+                count -= len(messages)
+                for message in messages:
+                    yield self._client._replace_message(message)
+
+            if len(messages) < 50:
+                break
