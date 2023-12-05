@@ -43,6 +43,7 @@ CREATE_ROLE = "/api/spectrum/role/create"
 MOVE_ROLE = "/api/spectrum/role/move"
 SEARCH_USERS = "/api/spectrum/search/member/autocomplete"
 FETCH_LOBBY_INFO = "/api/spectrum/lobby/info"
+SET_STATUS = "/api/spectrum/member/presence/setStatus"
 
 
 class HTTP:

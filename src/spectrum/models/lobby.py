@@ -5,7 +5,7 @@ from . import message, abc
 from .. import client
 
 
-class Lobby(abc.Identifier):
+class Lobby(abc.Identifier, abc.Subscription):
     """
     {
         "id": "22066",

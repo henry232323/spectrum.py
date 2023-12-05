@@ -5,7 +5,7 @@ from .activity import Activity
 from .content import ContentBlock
 
 
-class Thread(abc.Identifier):
+class Thread(abc.Identifier, abc.Subscription):
     """
     {
         "data": {
