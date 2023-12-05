@@ -342,9 +342,29 @@ class Client(EventDispatchType):
         response = await self._http.fetch_thread_nested(
             {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": None})
         thread = self._replace_thread(response)
+        await self.subscribe_to_topic(thread.subscription_key)
         asyncio.create_task(self.on_forum_thread_new(thread))
 
     async def on_forum_thread_new(self, thread):
+        pass
+
+    @register_callback('forum_channel.new')
+    async def _on_channel_new_raw(self, payload: dict):
+        # {"type":"forum_channel.new","action_id":null,"forum_channel":{"id":335897,"time_created":"2023-12-05 05:12:38","time_modified":"2023-12-05 05:12:38","community_id":100987,"name":"Test Channel 5","description":"asdasd","color":"FF6262","order":4,"group_id":102761,"sort_filter":null,"label_required":false},"owner":true}
+        channel = self._replace_channel(payload["forum_channel"])
+        await self.subscribe_to_topic(channel.subscription_key, *(labels.subscription_key for labels in channel.labels))
+        asyncio.create_task(self.on_channel_new(channel))
+
+    async def on_channel_new(self, channel):
+        pass
+
+    @register_callback('forum_channel.remove')
+    async def _on_channel_remove_raw(self, payload: dict):
+        # {"type":"forum_channel.remove","action_id":null,"forum_channel_id":"335898","owner":true}
+        channel = self._channels.pop(int(payload["forum_channel_id"]))
+        asyncio.create_task(self.on_channel_remove(channel))
+
+    async def on_channel_remove(self, channel):
         pass
 
     @register_callback('member.roles.update')
@@ -363,14 +383,18 @@ class Client(EventDispatchType):
 
             asyncio.create_task(self.on_member_roles_update(community, member, roles))
         else:
-            print(self.communities)
-            self.log_handler.error(f"Failed to handle role update: {payload}")
+            self.log_handler.error(f"Failed to handle role update: {community} {member} {payload}")
 
     async def on_member_roles_update(self, community, member, roles):
         pass
 
     async def subscribe_to_topic(self, *subscription_keys):
         await self._gateway.subscribe_to_key(*subscription_keys)
+
+    async def fetch_lobby(self, lobby_id):
+        payload = await self._http.fetch_lobby_info(dict(lobby_id=lobby_id))
+        lobby = self._replace_lobby(payload)
+        return lobby
 
     async def fetch_member_by_id(self, member_id):
         payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
@@ -384,7 +408,7 @@ class Client(EventDispatchType):
 
     @register_callback("unhandled_event")
     async def _on_unhandled_event_raw(self, payload):
-        self.log_handler.info("Received unhandled event of type %s", payload['type'])
+        self.log_handler.info("Received unhandled event of type %s: %s", payload['type'], payload)
         asyncio.create_task(self.on_unhandled_event(payload))
 
     async def on_unhandled_event(self, payload):
@@ -411,3 +435,19 @@ class Client(EventDispatchType):
             "thread_ids": [t.id for t in threads],
             "reason": reason
         })
+
+    async def subscribe_to_all(self):
+        """Subscribe to all lobbies, threads, and channels to receive message/reply events."""
+        keys = []
+        for lobby in self.lobbies:
+            keys.append(lobby.subscription_key)
+
+        for thread in self.threads:
+            keys.append(thread.subscription_key)
+
+        for channel in self.channels:
+            keys.append(channel.subscription_key)
+            for label in channel.labels:
+                keys.append(label.subscription_key)
+
+        await self.subscribe_to_topic(*keys)

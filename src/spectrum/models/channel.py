@@ -1,7 +1,31 @@
 from . import abc
 
 
-class Channel(abc.Identifier):
+class Label(abc.Identifier, abc.Subscription):
+    """
+    {
+        "id": "1",
+        "channel_id": "1",
+        "name": "Community",
+        "subscription_key": "community:1:forum_label:1:ef02e5e178d66ec40e15e4e114974a91d31682dc",
+        "notification_subscription": null
+    },
+    """
+
+    def __init__(self, client, payload):
+        self._client = client
+        self.id = payload['id']
+        self.channel_id = payload['channel_id']
+        self.name = payload['name']
+        self.subscription_key = payload['subscription_key']
+        self.notification_subscription = payload['notification_subscription']
+
+    @property
+    def channel(self):
+        return self._client.get_channel(self.channel_id)
+
+
+class Channel(abc.Identifier, abc.Subscription):
     """
         {
             "0": {
@@ -90,8 +114,10 @@ class Channel(abc.Identifier):
         self.color = payload["color"]
         self.sort_filter = payload["sort_filter"]
         self.label_required = payload["label_required"]
-        self.threads_count = payload["threads_count"]
-        self.labels = payload["labels"]
+        self.subscription_key = payload["subscription_key"]
+        self.threads_count = payload.get("threads_count", 0)
+        self.labels = [Label(client, label) for label in payload.get("labels", [])]
+
         if payload.get("threads"):
             self._threads = {thread['id']: client._replace_thread(thread) for thread in payload['threads']}
 
