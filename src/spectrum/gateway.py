@@ -8,7 +8,6 @@ import aiohttp
 import yarl
 
 from . import client
-from .models.lobby import Lobby
 
 
 class WebSocketClosure(Exception):
@@ -85,11 +84,11 @@ class Gateway:
         private_lobbies = body.get("data", {}).get("private_lobbies", [])
 
         if token:
-            log.info("Successfully identified")
             self._ws_url = Gateway.DEFAULT_GATEWAY.with_query(token=token)
             parts = base64.b64decode(token.split(".")[1] + "==", validate=False).decode("utf-8")
             token_payload = json.loads(parts)
             self._client_id = token_payload['client_id']
+            log.info("Successfully identified with member_id: %s", token_payload['member_id'])
         else:
             log.info("Connecting without identification")
             self._ws_url = str(Gateway.DEFAULT_GATEWAY)
@@ -102,13 +101,6 @@ class Gateway:
 
         for lpayload in private_lobbies or []:
             self._client._replace_lobby(lpayload)
-
-        log.info("Finished identifying")
-
-    async def ready_tasks(self, tasks):
-        await self._client._ready_event.wait()
-        for task in tasks:
-            asyncio.create_task(task)
 
     async def subscribe_to_key(self, *keys: str):
         await self.socket.send_json(
@@ -163,10 +155,10 @@ class Gateway:
             elif msg.type is aiohttp.WSMsgType.BINARY:
                 await self.received_message(msg.data)
             elif msg.type is aiohttp.WSMsgType.ERROR:
-                # _log.debug('Received %s', msg)
+                log.debug('Received %s', msg)
                 raise msg.data
             elif msg.type in (aiohttp.WSMsgType.CLOSED, aiohttp.WSMsgType.CLOSING, aiohttp.WSMsgType.CLOSE):
-                # _log.debug('Received %s', msg)
+                log.debug('Received %s', msg)
                 raise WebSocketClosure
         except (asyncio.TimeoutError, WebSocketClosure) as e:
             traceback.print_exc()

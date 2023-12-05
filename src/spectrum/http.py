@@ -103,6 +103,12 @@ class HTTP:
     async def fetch_presences(self, payload):
         return await self.make_request(FETCH_PRESENCES_ENDPOINT, payload)
 
+    async def fetch_history(self, payload):
+        """
+        {"lobby_id":"1","timeframe":"before","message_id":null,"size":50}
+        """
+        return await self.make_request(FETCH_HISTORY, payload)
+
     async def fetch_thread_nested(self, payload):
         """ {"slug":"limit-accessibility-to-ships-upon-full-release-of-","sort":"oldest","target_reply_id":"6389016"}
         sort by oldest, newest, votes
