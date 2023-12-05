@@ -22,7 +22,9 @@ class ReconnectWebSocket(Exception):
 class InvalidTokenException(Exception):
     pass
 
+
 log = logging.getLogger(__name__)
+
 
 class Gateway:
     """
@@ -95,21 +97,11 @@ class Gateway:
         for community in communities or []:
             self._client._replace_community(community)
 
-        tasks = []
         for lpayload in group_lobbies or []:
-            lobby = self._client._replace_lobby(lpayload)
-            tasks.append(self.subscribe_to_lobby(lobby))
+            self._client._replace_lobby(lpayload)
 
         for lpayload in private_lobbies or []:
-            lobby = self._client._replace_lobby(lpayload)
-            tasks.append(self.subscribe_to_lobby(lobby))
-
-        main_community = self._client.get_community("1")
-        if main_community:
-            for lobby in main_community.lobbies:
-                tasks.append(self.subscribe_to_lobby(lobby))
-
-        asyncio.create_task(self.ready_tasks(tasks))
+            self._client._replace_lobby(lpayload)
 
         log.info("Finished identifying")
 
@@ -117,10 +109,6 @@ class Gateway:
         await self._client._ready_event.wait()
         for task in tasks:
             asyncio.create_task(task)
-
-    async def register_lobby(self, lpayload):
-        lobby = self._client._replace_lobby(lpayload)
-        await self.subscribe_to_lobby(lobby)
 
     async def subscribe_to_key(self, *keys: str):
         await self.socket.send_json(
@@ -132,9 +120,6 @@ class Gateway:
                 "subscription_scope": "content"
             }
         )
-
-    async def subscribe_to_lobby(self, lobby: Lobby):
-        await self.subscribe_to_key(lobby.subscription_key)
 
     async def start(self):
         self._running = True
