@@ -62,8 +62,6 @@ class Lobby(abc.Identifier, abc.Subscription):
         self.permissions = payload.get('permissions')
         self._members = {member['id']: client._replace_member(member) for member in (payload['members'] or [])}
 
-        asyncio.create_task(self.fetch_presence())
-
     @property
     def members(self):
         return list(self._members.values())
