@@ -1,8 +1,8 @@
-from .. import client
+from .. import httpclient
 
 
 class Reaction:
-    def __init__(self, client: 'client.Client', payload: dict):
+    def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.reaction_type: str = payload['reaction_type']
         self.entity_type: str = payload['entity_type']

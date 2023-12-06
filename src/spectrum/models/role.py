@@ -1,5 +1,6 @@
 from . import abc
 from .permissions import Permissions
+from .. import httpclient
 
 
 class Role(abc.Identifier):
@@ -50,7 +51,7 @@ class Role(abc.Identifier):
     },
     """
 
-    def __init__(self, client, payload):
+    def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id = int(payload["id"])
         self.community_id = int(payload["community_id"])

@@ -3,7 +3,7 @@ from typing import Optional
 
 from . import lobby, abc, member
 from .content import ContentState, Media
-from .. import client
+from .. import httpclient
 
 
 class Message(abc.Identifier):
@@ -109,7 +109,7 @@ class Message(abc.Identifier):
     ```
     """
 
-    def __init__(self, client: 'client.Client', payload: dict):
+    def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id: int = int(payload['id'])
         self.time_created: datetime = datetime.utcfromtimestamp(payload['time_created'])

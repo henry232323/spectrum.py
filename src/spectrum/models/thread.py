@@ -3,6 +3,7 @@ from datetime import datetime
 from . import abc
 from .activity import Activity
 from .content import ContentBlock
+from .. import httpclient
 
 
 class Thread(abc.Identifier, abc.Subscription):
@@ -183,7 +184,7 @@ class Thread(abc.Identifier, abc.Subscription):
     }
     """
 
-    def __init__(self, client, payload):
+    def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id = int(payload["id"])
         self.time_created = datetime.utcfromtimestamp(payload["time_created"])

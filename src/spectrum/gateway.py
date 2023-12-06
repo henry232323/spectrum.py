@@ -1,5 +1,4 @@
 import asyncio
-import base64
 import json
 import logging
 import traceback
@@ -7,7 +6,7 @@ import traceback
 import aiohttp
 import yarl
 
-from . import client
+from . import httpclient
 
 
 class WebSocketClosure(Exception):
@@ -15,10 +14,6 @@ class WebSocketClosure(Exception):
 
 
 class ReconnectWebSocket(Exception):
-    pass
-
-
-class InvalidTokenException(Exception):
     pass
 
 
@@ -30,77 +25,17 @@ class Gateway:
     {"type":"message_lobby.presence.join","lobby_id":1,"member_id":553370,"member":{"nickname":"Driver15","displayname":"Driver","avatar":"https:\/\/robertsspaceindustries.com\/media\/g6zrerb088186r\/heap_infobox\/Screenshot_5.png?v=1576397158","signature":"","meta":{"badges":[{"name":"Mercenary","icon":"https:\/\/robertsspaceindustries.com\/media\/kji9vcgdoaiibr\/heap_note\/Mercenary.png"}]},"roles":{"1":["11","12","4"]},"presence":{"status":"online","info":null,"since":1679607363}}}
     """
 
-    IDENTIFY_URL = yarl.URL("https://robertsspaceindustries.com/api/spectrum/auth/identify")
     DEFAULT_GATEWAY = yarl.URL('wss://robertsspaceindustries.com/ws/spectrum')
     _max_heartbeat_timeout = 360
 
-    def __init__(self, *, client: 'client.Client', token: str, device_id: str):
-        self._token = token
+    def __init__(self, *, client: 'httpclient.HTTPClient', rsi_token: str, device_id: str):
+        self._rsi_token = rsi_token
         self._device_id = device_id
         self._client = client
         self._ws_token = None
         self._ws_url = None
-        self._client_id = None
         self.socket = None
         self._running = False
-
-        self.cookies = {
-            '_rsi_device': self._device_id or "",
-            'Rsi-Token': self._token or "",
-        }
-
-        self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:120.0) Gecko/20100101 Firefox/120.0',
-            'Accept': 'application/json',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Referer': 'https://robertsspaceindustries.com/spectrum/community/SC/lobby/1',
-            'Origin': 'https://robertsspaceindustries.com',
-            'Connection': 'keep-alive',
-            'DNT': '1',
-        }
-
-        if self._token:
-            self.headers['X-Rsi-Token'] = self._token
-
-    async def identify(self):
-        log.info("Identifying")
-        async with aiohttp.ClientSession() as session:
-            async with session.post(
-                    self.IDENTIFY_URL,
-                    cookies=self.cookies,
-                    headers=self.headers,
-                    json={},
-                    timeout=30
-            ) as resp:
-                body = await resp.json()
-                if not body["success"]:
-                    raise InvalidTokenException("An invalid token has been passed")
-
-        token = body.get("data", {}).get("token")
-        identify_callback = self._client._get_event_callback("identify")
-        await identify_callback(body.get("data", {}))
-        communities = body.get("data", {}).get("communities", [])
-        group_lobbies = body.get("data", {}).get("group_lobbies", [])
-        private_lobbies = body.get("data", {}).get("private_lobbies", [])
-
-        if token:
-            self._ws_url = Gateway.DEFAULT_GATEWAY.with_query(token=token)
-            parts = base64.b64decode(token.split(".")[1] + "==", validate=False).decode("utf-8")
-            token_payload = json.loads(parts)
-            self._client_id = token_payload['client_id']
-            log.info("Successfully identified with member_id: %s", token_payload['member_id'])
-        else:
-            log.info("Connecting without identification")
-            self._ws_url = str(Gateway.DEFAULT_GATEWAY)
-
-        for community in communities or []:
-            self._client._replace_community(community)
-
-        for lpayload in group_lobbies or []:
-            self._client._replace_lobby(lpayload)
-
-        for lpayload in private_lobbies or []:
-            self._client._replace_lobby(lpayload)
 
     async def subscribe_to_key(self, *keys: str):
         await self.socket.send_json(
@@ -113,16 +48,20 @@ class Gateway:
             }
         )
 
-    async def start(self):
+    async def start(self, token=None):
         self._running = True
-        await self.identify()
+
+        if token:
+            self._ws_url = self.DEFAULT_GATEWAY.with_query(token=token)
+        else:
+            self._ws_url = str(Gateway.DEFAULT_GATEWAY)
 
         arguments = {
             'max_msg_size': 0,
             'timeout': 30.0,
             'autoclose': False,
             'headers': {
-                'x-rsi-token': self._token or ""
+                'x-rsi-token': self._rsi_token or ""
             },
         }
 

@@ -41,6 +41,20 @@ def event_dispatch(cls: type[T]) -> type[T]:
     """
 
     cls._callbacks = {}
+    processed = set()
+
+    def find_callbacks(root):
+        for base in reversed(root.__mro__):
+            if base in processed:
+                continue
+            else:
+                processed.add(base)
+
+            find_callbacks(base)
+            if hasattr(base, '_callbacks'):
+                cls._callbacks.update(base._callbacks)
+
+    find_callbacks(cls)
 
     for key, value in cls.__dict__.items():
         if isinstance(value, EventCallback):

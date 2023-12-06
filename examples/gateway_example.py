@@ -21,7 +21,7 @@ class MyClient(Client):
 
 async def run():
     myclient = MyClient(
-        token=token,
+        rsi_token=token,
         device_id=device_id
     )
 

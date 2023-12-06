@@ -1,8 +1,9 @@
 from . import abc
+from .. import httpclient
 
 
 class Object(abc.Identifier):
-    def __init__(self, client, id):
+    def __init__(self, client: 'httpclient.HTTPClient', id):
         self.id = int(id)
         self._client = client
 

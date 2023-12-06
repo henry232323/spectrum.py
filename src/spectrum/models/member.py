@@ -3,7 +3,7 @@ from typing import Optional
 from . import abc, lobby, message, community
 from .badge import Badge
 from .presence import Presence
-from .. import client
+from .. import httpclient
 
 
 class Member(abc.Identifier):
@@ -33,7 +33,7 @@ class Member(abc.Identifier):
     }
     """
 
-    def __init__(self, client: 'client.Client', payload: dict):
+    def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id: int = int(payload["id"])
         self.displayname: str = payload["displayname"]

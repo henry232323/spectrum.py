@@ -1,212 +1,30 @@
 import asyncio
-import logging
-import sys
 import traceback
-from typing import Optional
 
 from .gateway import Gateway
-from .http import HTTP
+from .httpclient import HTTPClient
 from .models import Object
-from .models.channel import Channel
-from .models.community import Community
-from .models.forum import Forum
 from .models.lobby import Lobby
 from .models.member import Member
 from .models.message import Message
 from .models.presence import Presence
 from .models.reaction import Reaction
-from .models.reply import Reply
-from .models.role import Role
-from .models.thread import Thread
 from .util import find, event_dispatch, register_callback
 from .util.event_dispatch import EventDispatchType
-from .util.limited_size_dict import LimitedSizeDict
-
-log = logging.getLogger(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 @event_dispatch
-class Client(EventDispatchType):
-    def __init__(self, *, token: str = None, device_id: str = None, log_handler=log,
-                 message_cache_size=500):
-        self._ready_event = asyncio.Event()
-        self._lobbies: dict[int, Lobby] = {}
-        self._private_messages: dict[int, Lobby] = {}
-        self._group_messages: dict[int, Lobby] = {}
-        self._members: dict[int, Member] = {}
-        self._messages: dict[int, Message] = LimitedSizeDict(size_limit=message_cache_size)
-        self._communities: dict[int, Community] = {}
-        self._forums: dict[int, Forum] = {}
-        self._channels: dict[int, Channel] = {}
-        self._threads: dict[int, Thread] = {}
-        self._replies: dict[int, Reply] = {}
-        self._gateway: Gateway = Gateway(client=self, token=token, device_id=device_id)
-        self._http: HTTP = HTTP(self._gateway, token=token)
-        self.log_handler = log_handler
-        self.me: Optional[Member] = None
+class Client(HTTPClient, EventDispatchType):
+    def __init__(self, *, rsi_token: str = None, device_id: str = None, **kwargs):
+        super().__init__(rsi_token=rsi_token, device_id=device_id, **kwargs)
+        self._gateway: Gateway = Gateway(client=self, rsi_token=rsi_token, device_id=device_id)
 
     async def run(self):
+        await self.identify()
         try:
             await self._gateway.start()
         except Exception as e:
             traceback.print_exc()
-
-    def get_member(self, member_id: str | int) -> Optional[Member]:
-        return self._members.get(int(member_id))
-
-    @property
-    def members(self) -> list[Member]:
-        return list(self._members.values())
-
-    def _replace_member(self, payload: dict):
-        member = self.get_member(payload['id'])
-        if member:
-            member.__init__(self, payload)
-        else:
-            self._members[int(payload['id'])] = member = Member(self, payload)
-
-        return member
-
-    def get_lobby(self, lobby_id: str | int) -> Optional[Lobby]:
-        return self._lobbies.get(int(lobby_id))
-
-    @property
-    def lobbies(self) -> list[Lobby]:
-        return list(self._lobbies.values())
-
-    @property
-    def private_messages(self) -> dict[int, Lobby]:
-        return self._private_messages.copy()
-
-    def get_pm(self, id):
-        return self._private_messages.get(int(id))
-
-    @property
-    def group_messages(self) -> list[Lobby]:
-        return list(self._group_messages.values())
-
-    def get_group_message(self, id):
-        return self._group_messages.get(int(id))
-
-    def _replace_lobby(self, payload: dict):
-        lobby = self.get_lobby(payload['id'])
-        if lobby:
-            lobby.__init__(self, payload)
-        else:
-            self._lobbies[int(payload['id'])] = lobby = Lobby(self, payload)
-
-        if lobby.type == "private":
-            for member in lobby.members:
-                if member.id != self.me.id:
-                    self._private_messages[member.id] = lobby
-
-        if lobby.type == "group":
-            for member in lobby.members:
-                if member.id != self.me.id:
-                    self._group_messages[lobby.id] = lobby
-
-        return lobby
-
-    def get_community(self, community_id: int | str) -> Optional[Community]:
-        return self._communities.get(int(community_id))
-
-    @property
-    def communities(self) -> list[Community]:
-        return list(self._communities.values())
-
-    def _replace_community(self, payload: dict):
-        community = self.get_community(payload['id'])
-        if community:
-            community.__init__(self, payload)
-        else:
-            self._communities[int(payload['id'])] = community = Community(self, payload)
-
-        return community
-
-    def get_forum(self, forum_id: str | int) -> Optional[Forum]:
-        return self._forums.get(int(forum_id))
-
-    @property
-    def forums(self) -> list[Forum]:
-        return list(self._forums.values())
-
-    def _replace_forum(self, payload: dict):
-        forum = self.get_forum(payload['id'])
-        if forum:
-            forum.__init__(self, payload)
-        else:
-            self._forums[int(payload['id'])] = forum = Forum(self, payload)
-
-        return forum
-
-    def get_channel(self, channel_id: str | int) -> Optional[Channel]:
-        return self._channels.get(int(channel_id))
-
-    @property
-    def channels(self) -> list[Channel]:
-        return list(self._channels.values())
-
-    def _replace_channel(self, payload: dict):
-        channel = self.get_channel(payload['id'])
-        if channel:
-            channel.__init__(self, payload)
-        else:
-            self._channels[int(payload['id'])] = channel = Channel(self, payload)
-
-        return channel
-
-    def get_thread(self, thread_id: str | int) -> Optional[Thread]:
-        return self._threads.get(int(thread_id))
-
-    @property
-    def threads(self) -> list[Thread]:
-        return list(self._threads.values())
-
-    def _replace_thread(self, payload: dict):
-        thread = self.get_thread(int(payload['id']))
-        if thread:
-            thread.__init__(self, payload)
-        else:
-            self._threads[int(payload['id'])] = thread = Thread(self, payload)
-
-        return thread
-
-    def get_message(self, message_id: str | int) -> Optional[Message]:
-        return self._messages.get(int(message_id))
-
-    @property
-    def messages(self) -> list[Message]:
-        return list(self._messages.values())
-
-    def _replace_message(self, payload: dict):
-        message = self.get_message(int(payload['id']))
-        if message:
-            message.__init__(self, payload)
-        else:
-            self._messages[int(payload['id'])] = message = Message(self, payload)
-
-        return message
-
-    def get_reply(self, reply_id: str | int) -> Optional[Reply]:
-        return self._replies.get(int(reply_id))
-
-    @property
-    def replies(self) -> list[Reply]:
-        return list(self._replies.values())
-
-    def _replace_reply(self, payload: dict):
-        reply = self.get_reply(payload['id'])
-        if reply:
-            reply.__init__(self, payload)
-        else:
-            self._replies[int(payload['id'])] = reply = Reply(self, payload)
-
-        return reply
-
-    @property
-    def roles(self) -> list[Role]:
-        return [r for community in self._communities.values() for r in community.roles]
 
     @register_callback('message.new')
     async def _on_message_raw(self, payload: dict):
@@ -234,18 +52,8 @@ class Client(EventDispatchType):
     async def on_member_update(self, member: Member):
         pass
 
-    @register_callback('identify')
-    async def _on_identify_raw(self, payload):
-        if payload.get("member"):
-            self.me = self._replace_member(payload["member"])
-
-        if payload.get("friends"):
-            for friend in payload["friends"] or []:
-                self._replace_member(friend)
-
     @register_callback('broadcaster.ready')
     async def _on_ready_raw(self, payload):
-        self._ready_event.set()
         asyncio.create_task(self.on_ready())
 
     async def on_ready(self):
@@ -388,24 +196,6 @@ class Client(EventDispatchType):
     async def on_member_roles_update(self, community, member, roles):
         pass
 
-    async def subscribe_to_topic(self, *subscription_keys):
-        await self._gateway.subscribe_to_key(*subscription_keys)
-
-    async def fetch_lobby(self, lobby_id):
-        payload = await self._http.fetch_lobby_info(dict(lobby_id=lobby_id))
-        lobby = self._replace_lobby(payload)
-        return lobby
-
-    async def fetch_member_by_id(self, member_id):
-        payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
-        member = self._replace_member(payload['member'])
-        return member
-
-    async def fetch_member_by_handle(self, handle):
-        payload = await self._http.fetch_member_by_handle(dict(nickname=handle))
-        member = self._replace_member(payload['member'])
-        return member
-
     @register_callback("unhandled_event")
     async def _on_unhandled_event_raw(self, payload):
         self.log_handler.info("Received unhandled event of type %s: %s", payload['type'], payload)
@@ -414,27 +204,8 @@ class Client(EventDispatchType):
     async def on_unhandled_event(self, payload):
         pass
 
-    async def sink_threads(self, *threads):
-        return await self._http.sink_threads({
-            "thread_ids": [t.id for t in threads]
-        })
-
-    async def pin_threads(self, *threads):
-        return await self._http.pin_threads({
-            "thread_ids": [t.id for t in threads]
-        })
-
-    async def close_threads(self, *threads, reason: str = None):
-        return await self._http.close_threads({
-            "thread_ids": [t.id for t in threads],
-            "reason": reason
-        })
-
-    async def delete_threads(self, *threads, reason: str = None):
-        return await self._http.delete_threads({
-            "thread_ids": [t.id for t in threads],
-            "reason": reason
-        })
+    async def subscribe_to_topic(self, *subscription_keys):
+        await self._gateway.subscribe_to_key(*subscription_keys)
 
     async def subscribe_to_all(self):
         """Subscribe to all lobbies, threads, and channels to receive message/reply events."""

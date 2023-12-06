@@ -1,4 +1,5 @@
 from . import abc
+from .. import httpclient
 
 
 class Label(abc.Identifier, abc.Subscription):
@@ -103,7 +104,7 @@ class Channel(abc.Identifier, abc.Subscription):
         }
     """
 
-    def __init__(self, client, payload):
+    def __init__(self, client: 'httpclient.HTTPClient', payload):
         self._client = client
         self.id = int(payload["id"])
         self.community_id = int(payload["community_id"])
@@ -189,7 +190,7 @@ class Channel(abc.Identifier, abc.Subscription):
         threads = []
         if max_count and len(threads) >= max_count:
             for item in thread_data:
-                thread = self._client._http._replace_thread(item)
+                thread = self._client._replace_thread(item)
                 self.threads[item['id']] = thread
 
             return threads
@@ -201,7 +202,7 @@ class Channel(abc.Identifier, abc.Subscription):
                 {"channel_id": self.id, "page": page, "sort": "hot", "label_id": label_id})
             thread_data = resp['threads']
             for item in thread_data:
-                thread = self._client._http._replace_thread(item)
+                thread = self._client._replace_thread(item)
                 self.threads[item['id']] = thread
 
             page += 1
