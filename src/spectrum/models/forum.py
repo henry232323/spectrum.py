@@ -1,4 +1,5 @@
 from . import abc
+from .. import httpclient
 
 
 class Forum(abc.Identifier):
@@ -14,7 +15,7 @@ class Forum(abc.Identifier):
     }
     """
 
-    def __init__(self, client, payload):
+    def __init__(self, client: 'httpclient.HTTPClient', payload):
         self._client = client
         self.id = int(payload["id"])
         self.community_id = int(payload["community_id"])

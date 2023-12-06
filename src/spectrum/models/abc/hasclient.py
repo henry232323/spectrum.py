@@ -1,7 +1,7 @@
 import abc
 
-from ... import client
+from ... import httpclient
 
 
 class HasClient(abc.ABC):
-    _client: 'client.Client'
+    _client: 'httpclient.HTTPClient'

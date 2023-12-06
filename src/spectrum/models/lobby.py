@@ -2,7 +2,7 @@ import asyncio
 from datetime import datetime
 
 from . import message, abc
-from .. import client
+from .. import httpclient
 
 
 class Lobby(abc.Identifier, abc.Subscription):
@@ -46,7 +46,7 @@ class Lobby(abc.Identifier, abc.Subscription):
     }
     """
 
-    def __init__(self, client: 'client.Client', payload: dict):
+    def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id = int(payload["id"])
         self.type = payload['type']

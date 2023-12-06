@@ -1,9 +1,14 @@
 import asyncio
+import base64
+import json
+import logging
 
 import aiohttp
+import yarl
 
 from spectrum.errors import HTTPError, exception_map
 
+IDENTIFY_URL = yarl.URL("https://robertsspaceindustries.com/api/spectrum/auth/identify")
 SPECTRUM_API_BASE = "https://robertsspaceindustries.com/"
 CREATE_MESSAGE_ENDPOINT = "/api/spectrum/message/create"
 FETCH_THREADS = "/api/spectrum/forum/channel/threads"
@@ -46,13 +51,43 @@ FETCH_LOBBY_INFO = "/api/spectrum/lobby/info"
 SET_STATUS = "/api/spectrum/member/presence/setStatus"
 
 
+class InvalidTokenException(Exception):
+    pass
+
+
+log = logging.getLogger(__name__)
+
+
 class HTTP:
-    def __init__(self, gateway, token):
-        self._gateway = gateway
-        self._token = token
+    def __init__(self, client, rsi_token, device_id):
+        self._client = client
+        self._rsi_token = rsi_token
+        self._device_id = device_id
+        self._client_id = None
 
         loop = asyncio.get_event_loop()
         self._session = aiohttp.ClientSession(loop=loop, base_url=SPECTRUM_API_BASE)
+
+        self.cookies = {
+            '_rsi_device': self._device_id or "",
+            'Rsi-Token': self._rsi_token or "",
+        }
+
+        self.headers = {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:120.0) Gecko/20100101 Firefox/120.0',
+            'Accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.5',
+            'Referer': 'https://robertsspaceindustries.com/spectrum/community/SC/lobby/1',
+            'Origin': 'https://robertsspaceindustries.com',
+            'Connection': 'keep-alive',
+            'DNT': '1',
+        }
+
+        if self._rsi_token:
+            self.headers['X-Rsi-Token'] = self._rsi_token
+
+    async def close(self):
+        await self._session.close()
 
     async def send_message(self, payload: dict):
         return await self.make_request(CREATE_MESSAGE_ENDPOINT, payload)
@@ -257,23 +292,49 @@ class HTTP:
         return await self.make_request(FETCH_LOBBY_INFO, payload)
 
     async def make_request(self, endpoint: str, payload: dict):
-        await self._gateway._client._ready_event.wait()
+        await self._client._ready_event.wait()
         headers = {
-            **self._gateway.headers,
+            **self.headers,
             'X-Tavern-action-id': '1',
         }
 
-        if self._gateway._client_id:
-            headers['x-tavern-id'] = self._gateway._client_id
+        if self._client_id:
+            headers['x-tavern-id'] = self._client_id
 
         async with self._session.post(
                 endpoint,
                 json=payload,
                 headers=headers,
-                cookies=self._gateway.cookies
+                cookies=self.cookies
         ) as resp:
             response = await resp.json()
             if response.get('success'):
                 return response['data']
             else:
                 raise exception_map.get(response['code'], HTTPError)(response['msg'])
+
+    async def identify(self):
+        log.info("Identifying")
+        async with aiohttp.ClientSession() as session:
+            async with session.post(
+                    IDENTIFY_URL,
+                    cookies=self.cookies,
+                    headers=self.headers,
+                    json={},
+                    timeout=30
+            ) as resp:
+                body = await resp.json()
+                if not body["success"]:
+                    raise InvalidTokenException("An invalid token has been passed")
+
+        token = body.get("data", {}).get("token")
+        identify_callback = self._client._get_event_callback("identify")
+        await identify_callback(body.get("data", {}))
+
+        if token:
+            parts = base64.b64decode(token.split(".")[1] + "==", validate=False).decode("utf-8")
+            token_payload = json.loads(parts)
+            self._client_id = token_payload['client_id']
+            log.info("Successfully identified with member_id: %s", token_payload['member_id'])
+        else:
+            log.info("Connecting without identification")

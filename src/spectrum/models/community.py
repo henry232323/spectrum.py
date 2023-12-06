@@ -3,7 +3,7 @@ from typing import Optional
 from . import member, abc
 from .emoji import Emoji
 from .role import Role
-from .. import client
+from .. import httpclient
 from ..util import find
 
 
@@ -109,7 +109,7 @@ class Community(abc.Identifier):
 }
     """
 
-    def __init__(self, client: 'client.Client', payload: dict):
+    def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id = int(payload["id"])
         self.slug = payload['slug']
@@ -183,8 +183,8 @@ class Community(abc.Identifier):
     def _replace_role(self, payload: dict):
         role = self.get_role(payload['id'])
         if role:
-            role.__init__(self, payload)
+            role.__init__(self._client, payload)
         else:
-            self._roles[int(payload['id'])] = role = Role(self, payload)
+            self._roles[int(payload['id'])] = role = Role(self._client, payload)
 
         return role
