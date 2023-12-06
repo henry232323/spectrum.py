@@ -1,10 +1,8 @@
 import asyncio
 import logging
 import sys
-import traceback
 from typing import Optional
 
-from .gateway import Gateway
 from .http import HTTP
 from .models import Lobby, Member, Community, Message, Forum, Channel, Thread, Reply, Role
 from .util import register_callback, event_dispatch

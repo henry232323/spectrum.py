@@ -238,3 +238,8 @@ class Client(HTTPClient, EventDispatchType):
                 keys.append(lobby.subscription_key)
 
         await self.subscribe_to_topic(*keys)
+
+    def _replace_lobby(self, payload: dict):
+        lobby = super()._replace_lobby(payload)
+        asyncio.create_task(lobby.fetch_presence())
+        return lobby
