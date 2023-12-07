@@ -332,7 +332,6 @@ class HTTP:
         identify_callback = self._client._get_event_callback("identify")
         await identify_callback(body.get("data", {}))
 
-        print(token)
         if token:
             self._gateway_token = token
             parts = base64.b64decode(token.split(".")[1] + "==", validate=False).decode("utf-8")
