@@ -274,7 +274,7 @@ class HTTPClient(EventDispatchType):
         self._ready_event.set()
 
     async def identify(self):
-        await self._http.identify()
+        return await self._http.identify()
 
     async def close(self):
         await self._http.close()

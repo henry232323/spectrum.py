@@ -20,9 +20,9 @@ class Client(HTTPClient, EventDispatchType):
         self._gateway: Gateway = Gateway(client=self, rsi_token=rsi_token, device_id=device_id)
 
     async def run(self):
-        await self.identify()
+        gateway_token = await self.identify()
         try:
-            await self._gateway.start()
+            await self._gateway.start(gateway_token)
         except Exception as e:
             traceback.print_exc()
 

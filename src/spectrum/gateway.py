@@ -21,10 +21,6 @@ log = logging.getLogger(__name__)
 
 
 class Gateway:
-    """
-    {"type":"message_lobby.presence.join","lobby_id":1,"member_id":553370,"member":{"nickname":"Driver15","displayname":"Driver","avatar":"https:\/\/robertsspaceindustries.com\/media\/g6zrerb088186r\/heap_infobox\/Screenshot_5.png?v=1576397158","signature":"","meta":{"badges":[{"name":"Mercenary","icon":"https:\/\/robertsspaceindustries.com\/media\/kji9vcgdoaiibr\/heap_note\/Mercenary.png"}]},"roles":{"1":["11","12","4"]},"presence":{"status":"online","info":null,"since":1679607363}}}
-    """
-
     DEFAULT_GATEWAY = yarl.URL('wss://robertsspaceindustries.com/ws/spectrum')
     _max_heartbeat_timeout = 360
 
@@ -49,10 +45,12 @@ class Gateway:
         )
 
     async def start(self, token=None):
+        log.info('Starting gateway')
         self._running = True
 
         if token:
-            self._ws_url = self.DEFAULT_GATEWAY.with_query(token=token)
+            self._ws_token = token
+            self._ws_url = self.DEFAULT_GATEWAY.with_query(token=self._ws_token)
         else:
             self._ws_url = str(Gateway.DEFAULT_GATEWAY)
 
@@ -123,4 +121,5 @@ class Gateway:
     async def received_message(self, data):
         payload = json.loads(data)
         if isinstance(payload, dict):
+            log.debug('Received %s', payload)
             await self._client._dispatch_event(payload['type'], payload)
