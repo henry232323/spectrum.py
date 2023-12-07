@@ -62,6 +62,7 @@ class HTTP:
     def __init__(self, client, rsi_token, device_id):
         self._client = client
         self._rsi_token = rsi_token
+        self._gateway_token = None
         self._device_id = device_id
         self._client_id = None
 
@@ -331,10 +332,14 @@ class HTTP:
         identify_callback = self._client._get_event_callback("identify")
         await identify_callback(body.get("data", {}))
 
+        print(token)
         if token:
+            self._gateway_token = token
             parts = base64.b64decode(token.split(".")[1] + "==", validate=False).decode("utf-8")
             token_payload = json.loads(parts)
             self._client_id = token_payload['client_id']
             log.info("Successfully identified with member_id: %s", token_payload['member_id'])
         else:
             log.info("Connecting without identification")
+
+        return self._gateway_token
