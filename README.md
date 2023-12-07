@@ -5,6 +5,9 @@ for Star Citizen's [Spectrum](https://robertsspaceindustries.com/spectrum/commun
 
 ## Installation
 ```shell
+# Latest Release
+python -m pip install spectrum.py
+# Latest in Github
 python -m pip install git+https://github.com/henry232323/spectrum.py
 ```
 
