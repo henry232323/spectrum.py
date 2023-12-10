@@ -86,7 +86,7 @@ class Lobby(abc.Identifier, abc.Subscription):
             "plaintext": content, "media_id": None, "highlight_role_id": None
         })
 
-        return message.Message(self._client, dict(message=payload))
+        return message.Message(self._client, payload)
 
     async def fetch_presence(self):
         presences = await self._client._http.fetch_presences(dict(lobby_id=self.id))
