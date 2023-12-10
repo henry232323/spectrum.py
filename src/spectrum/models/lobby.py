@@ -1,4 +1,3 @@
-import asyncio
 from datetime import datetime
 
 from . import message, abc
@@ -60,10 +59,15 @@ class Lobby(abc.Identifier, abc.Subscription):
         self.leader_id = int(payload['leader_id']) if payload['leader_id'] else None
         self.online_members_count = payload.get('online_members_count')
         self.permissions = payload.get('permissions')
-        self._members = {member['id']: client._replace_member(member) for member in (payload['members'] or [])}
+        if payload['members'] is None:
+            self._members = None
+        else:
+            self._members = {member['id']: client._replace_member(member) for member in (payload['members'])}
 
     @property
     def members(self):
+        if self._members is None:
+            return None
         return list(self._members.values())
 
     @property
