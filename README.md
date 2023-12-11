@@ -1,7 +1,8 @@
 # spectrum.py
 
 spectrum.py is a [discord.py](https://github.com/Rapptz/discord.py) style proof-of-concept library for making chatbots
-for Star Citizen's [Spectrum](https://robertsspaceindustries.com/spectrum/community/SC) chat client.
+for Star Citizen's [Spectrum](https://robertsspaceindustries.com/spectrum/community/SC) chat client. It also offers HTTP clients for interacting
+with both Spectrum's REST API and the Community Hub's GraphQL API.
 
 ## Installation
 ```shell
@@ -55,6 +56,18 @@ async def run():
     print(member)
 
     await client.close()
+
+asyncio.run(run())
+```
+
+### Community Hub
+```python
+import asyncio
+from spectrum import CommunityHubClient
+
+async def run():
+    client = CommunityHubClient()
+    print(await client.fetch_user_profile("Khuzdul"))
 
 asyncio.run(run())
 ```
