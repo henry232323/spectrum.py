@@ -4,7 +4,8 @@ import sys
 from typing import Optional
 
 from .http import HTTP
-from .models import Lobby, Member, Community, Message, Forum, Channel, Thread, Reply, Role
+from .models import Lobby, Member, Community, Message, Forum, channel, Thread, Reply, Role
+from .models.thread import ThreadStub
 from .util import register_callback, event_dispatch
 from .util.event_dispatch import EventDispatchType
 from .util.limited_size_dict import LimitedSizeDict
@@ -26,8 +27,9 @@ class HTTPClient(EventDispatchType):
         self._messages: dict[int, Message] = LimitedSizeDict(size_limit=message_cache_size)
         self._communities: dict[int, Community] = {}
         self._forums: dict[int, Forum] = {}
-        self._channels: dict[int, Channel] = {}
+        self._channels: dict[int, channel.Channel] = {}
         self._threads: dict[int, Thread] = {}
+        self._thread_stubs: dict[int, ThreadStub] = {}
         self._replies: dict[int, Reply] = {}
         self.log_handler = log_handler
         self.me: Optional[Member] = None
@@ -120,21 +122,21 @@ class HTTPClient(EventDispatchType):
 
         return forum
 
-    def get_channel(self, channel_id: str | int) -> Optional[Channel]:
+    def get_channel(self, channel_id: str | int) -> Optional[channel.Channel]:
         return self._channels.get(int(channel_id))
 
     @property
-    def channels(self) -> list[Channel]:
+    def channels(self) -> list[channel.Channel]:
         return list(self._channels.values())
 
     def _replace_channel(self, payload: dict):
-        channel = self.get_channel(payload['id'])
-        if channel:
-            channel.__init__(self, payload)
+        c = self.get_channel(payload['id'])
+        if c:
+            c.__init__(self, payload)
         else:
-            self._channels[int(payload['id'])] = channel = Channel(self, payload)
+            self._channels[int(payload['id'])] = c = channel.Channel(self, payload)
 
-        return channel
+        return c
 
     def get_thread(self, thread_id: str | int) -> Optional[Thread]:
         return self._threads.get(int(thread_id))
@@ -150,6 +152,17 @@ class HTTPClient(EventDispatchType):
         else:
             self._threads[int(payload['id'])] = thread = Thread(self, payload)
 
+        return thread
+
+    def get_thread_stub(self, thread_id: str | int) -> Optional[ThreadStub]:
+        return self._thread_stubs.get(int(thread_id))
+
+    @property
+    def thread_stubs(self) -> list[Thread]:
+        return list(self._thread_stubs.values())
+
+    def _replace_thread_stub(self, payload: dict):
+        self._thread_stubs[int(payload['id'])] = thread = ThreadStub(**payload)
         return thread
 
     def get_message(self, message_id: str | int) -> Optional[Message]:

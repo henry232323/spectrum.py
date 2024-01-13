@@ -294,6 +294,7 @@ class HTTP:
 
     async def make_request(self, endpoint: str, payload: dict):
         await self._client._ready_event.wait()
+        log.debug("Sending request to %s with payload %s" % (endpoint, payload))
         headers = {
             **self.headers,
             'X-Tavern-action-id': '1',
@@ -312,6 +313,7 @@ class HTTP:
             if response.get('success'):
                 return response['data']
             else:
+                log.error("Made bad request: %s", payload)
                 raise exception_map.get(response['code'], HTTPError)(response['msg'])
 
     async def identify(self):

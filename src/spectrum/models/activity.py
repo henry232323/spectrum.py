@@ -4,14 +4,12 @@ from datetime import datetime
 
 @dataclasses.dataclass
 class Activity:
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.member_id = int(kwargs['member']['id'])
-
     time_created: datetime
-    member_id: int
     highlight_role_id: int
+    member_id: int = None
+    member: dict = None
 
     def __post_init__(self):
-        self.highlight_role_id = int(self.highlight_role_id)
+        self.member_id = self.member_id or int(self.member['id'])
+        self.highlight_role_id = int(self.highlight_role_id) if self.highlight_role_id else None
         self.time_created = datetime.utcfromtimestamp(self.time_created)

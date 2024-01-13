@@ -2,6 +2,7 @@ from datetime import datetime
 
 from . import abc
 from .. import httpclient
+from .content import ContentBlock
 
 
 class Reply(abc.Identifier):
@@ -96,7 +97,7 @@ class Reply(abc.Identifier):
         self.thread_id = int(payload["thread_id"])
         self.time_created = datetime.utcfromtimestamp(payload["time_created"])
         self.time_modified = datetime.utcfromtimestamp(payload["time_modified"]) if payload["time_modified"] else None
-        self.content_blocks = payload["content_blocks"]
+        self.content_blocks = [ContentBlock(**block) for block in payload["content_blocks"]]
         self.is_erased = payload["is_erased"]
         self.erased_by = payload["erased_by"]
         self.annotation_plaintext = payload["annotation_plaintext"]
@@ -125,3 +126,7 @@ class Reply(abc.Identifier):
             "entity_type": "forum_thread_reply",
             "entity_id": self.id
         })
+
+    def __repr__(self):
+        content = "\n".join(block.plaintext() for block in self.content_blocks)
+        return f"Reply(id={self.id}, author={self.member}, content={content})"

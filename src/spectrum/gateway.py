@@ -33,15 +33,17 @@ class Gateway:
         self.socket = None
         self._running = False
 
-    async def subscribe_to_key(self, *keys: str):
+    async def subscribe_to_key(self, *keys: str, scope=None):
+        payload = {
+            "type": "subscribe",
+            "subscription_keys": [
+                *keys
+            ],
+            "subscription_scope": scope
+        }
+        log.debug("Sent payload: %s", payload)
         await self.socket.send_json(
-            {
-                "type": "subscribe",
-                "subscription_keys": [
-                    *keys
-                ],
-                "subscription_scope": "content"
-            }
+            payload
         )
 
     async def start(self, token=None):

@@ -128,15 +128,25 @@ class Client(HTTPClient, EventDispatchType):
     async def on_typing_start(self, lobby: Lobby, member: Member):
         pass
 
+    @register_callback('forum.thread.reply.new')
     async def _on_forum_thread_reply_raw(self, payload):
         # {"type":"forum.thread.reply.new","channel_id":3,"label_id":null,"thread_id":396187,"reply_id":6452134}
         thread = self.get_thread(payload["thread_id"])
         if not thread:
-            response = await self._http.fetch_thread_nested(
-                {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": payload["reply_id"]}
-            )
+            thread = self.get_thread_stub(payload['thread_id'])
+            if not thread:
+                channel = self.get_channel(payload['channel_id'])
+                await channel.fetch_thread_stubs()
+                thread = self.get_thread_stub(payload['thread_id'])
 
-            thread.replies.append(self._replace_reply(response))
+            if not thread:
+                return
+
+
+        response = await self._http.fetch_thread_nested(
+            {"slug": thread.slug, "sort": "votes", "target_reply_id": payload["reply_id"]}
+        )
+        thread = self._replace_thread(response)
 
         reply = find(thread.replies, payload["reply_id"])
         asyncio.create_task(self.on_forum_thread_reply(reply))
@@ -148,7 +158,7 @@ class Client(HTTPClient, EventDispatchType):
     async def _on_forum_thread_new_raw(self, payload):
         # {"type":"forum.thread.new","channel_id":3,"thread_id":396233,"label_id":null,"time_created":1701340775}
         response = await self._http.fetch_thread_nested(
-            {"thread_id": payload["thread_id"], "sort": "votes", "target_reply_id": None})
+            {"slug": payload["slug"], "sort": "votes", "target_reply_id": None})
         thread = self._replace_thread(response)
         await self.subscribe_to_topic(thread.subscription_key)
         asyncio.create_task(self.on_forum_thread_new(thread))
@@ -204,24 +214,31 @@ class Client(HTTPClient, EventDispatchType):
     async def on_unhandled_event(self, payload):
         pass
 
-    async def subscribe_to_topic(self, *subscription_keys):
-        await self._gateway.subscribe_to_key(*subscription_keys)
+    async def subscribe_to_topic(self, *subscription_keys, scope=None):
+        await self._gateway.subscribe_to_key(*subscription_keys, scope=scope)
 
-    async def subscribe_to_all(self):
+    async def subscribe_to_all(self, max_threads=50):
         """Subscribe to all lobbies, threads, and channels to receive message/reply events."""
         keys = []
         for lobby in self.lobbies:
             keys.append(lobby.subscription_key)
 
-        for thread in self.threads:
-            keys.append(thread.subscription_key)
-
+        thread_keys = []
         for channel in self.channels:
             keys.append(channel.subscription_key)
             for label in channel.labels:
                 keys.append(label.subscription_key)
 
+            stubs = await channel.fetch_thread_stubs(max_count=max_threads)
+
+            for stub in stubs:
+                thread_keys.append(stub.subscription_key)
+
+        for thread in self.threads:
+            keys.append(thread.subscription_key)
+
         await self.subscribe_to_topic(*keys)
+        await self.subscribe_to_topic(*thread_keys, scope='content')
 
     async def subscribe_to_default(self):
         """Subscribe to the default set of topics, including the public SC community and all direct messages and group messages."""
