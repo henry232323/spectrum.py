@@ -1,5 +1,8 @@
+import asyncio
+
 from . import abc
-from .. import httpclient
+from .thread import ThreadStub
+from .. import httpclient, client
 
 
 class Label(abc.Identifier, abc.Subscription):
@@ -182,33 +185,57 @@ class Channel(abc.Identifier, abc.Subscription):
         self.threads[thread.id] = thread
         return thread
 
-    async def fetch_threads(self, max_count=None, label_id=None):
+    async def fetch_thread_stubs(self, max_count=None, label_id=None):
         resp = await self._client._http.fetch_threads(
-            {"channel_id": self.id, "page": 1, "sort": "hot", "label_id": label_id})
+            {"channel_id": self.id, "page": 1, "sort": "hot", "label_id": label_id}
+        )
+
         threads_count = resp['threads_count']
         thread_data = resp['threads']
-        threads = []
-        if max_count and len(threads) >= max_count:
-            for item in thread_data:
-                thread = self._client._replace_thread(item)
-                self.threads[item['id']] = thread
+        thread_stubs = []
+        for item in thread_data:
+            thread_stubs.append(self._client._replace_thread_stub(item))
 
-            return threads
+        if max_count and len(thread_stubs) >= max_count:
+            return thread_stubs
 
         page = 2
 
-        while len(threads) <= threads_count:
+        last_count = len(thread_stubs)
+        while len(thread_stubs) < threads_count:
+            await asyncio.sleep(0.1)
             resp = await self._client._http.fetch_threads(
-                {"channel_id": self.id, "page": page, "sort": "hot", "label_id": label_id})
+                {"channel_id": self.id, "page": page, "sort": "hot", "label_id": label_id}
+            )
             thread_data = resp['threads']
+            threads_count = resp['threads_count']
             for item in thread_data:
-                thread = self._client._replace_thread(item)
-                self.threads[item['id']] = thread
+                stub = self._client._replace_thread_stub(item)
+                thread_stubs.append(stub)
 
+            if len(thread_stubs) == last_count:
+                return thread_stubs
+
+            last_count = len(thread_stubs)
             page += 1
-            if max_count and len(threads) >= max_count:
-                return threads
+            if max_count and len(thread_stubs) >= max_count:
+                return thread_stubs
 
-        self.threads.clear()
-        for thread in threads:
-            self.threads[thread.id] = thread
+        return thread_stubs
+
+    async def subscribe(self, max_threads=50):
+        if isinstance(self._client, client.Client):
+            keys = []
+
+            for label in self.labels:
+                keys.append(label.subscription_key)
+
+            stubs = await self.fetch_thread_stubs(max_count=max_threads)
+
+            for stub in stubs:
+                keys.append(stub.subscription_key)
+
+            await self._client.subscribe_to_topic(self.subscription_key)
+            await self._client.subscribe_to_topic(*keys, scope='content')
+        else:
+            raise NotImplementedError("Cannot subscribe with http client")

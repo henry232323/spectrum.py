@@ -1,9 +1,161 @@
+import dataclasses
 from datetime import datetime
+from typing import Optional
 
 from . import abc
 from .activity import Activity
 from .content import ContentBlock
 from .. import httpclient
+
+
+@dataclasses.dataclass
+class ThreadStub:
+    id: int
+    time_created: int
+    time_modified: int
+    channel_id: str
+    type: str
+    slug: str
+    subject: str
+    is_locked: bool
+    is_pinned: bool
+    is_sinked: bool
+    is_erased: bool
+    erased_by: int
+    tracked_post_role_id: str
+    content_reply_id: str
+    label: None
+    subscription_key: str
+    member: dict
+    is_new: bool
+    votes: dict
+    replies_count: int
+    views_count: int
+    highlight_role_id: str
+    latest_activity: Activity
+    aspect: str
+    media_preview: Optional[dict] = None
+    first_tracked_reply: Optional[dict] = None
+    is_reply_nesting_disabled: Optional[bool] = None
+    annotation_plaintext: None = None
+    new_replies_count: Optional[int] = None
+
+    """
+    {
+        "id": "400271",
+        "time_created": 1703016133,
+        "time_modified": 1704195273,
+        "channel_id": "3",
+        "type": "discussion",
+        "slug": "galactapedia-update-december-19-2023",
+        "subject": "Galactapedia Update | December 19, 2023",
+        "is_locked": false,
+        "is_reply_nesting_disabled": false,
+        "is_pinned": true,
+        "is_sinked": false,
+        "is_erased": false,
+        "erased_by": null,
+        "tracked_post_role_id": "2",
+        "content_reply_id": "6518466",
+        "annotation_plaintext": null,
+        "label": null,
+        "subscription_key": "community:1:forum_thread:400271:0d8912a36d5ab1a98325f2f59b754922d6529dcd",
+        "member": {
+            "id": "2310",
+            "displayname": "Cherie Heiberg",
+            "nickname": "starchivist",
+            "avatar": "https://robertsspaceindustries.com/media/gf62vdpuz0ueqr/heap_infobox/UN_Spacy_Roundelsvg.png?v=1429141003",
+            "signature": "",
+            "meta": {
+                "badges": [
+                    {
+                        "name": "Staff",
+                        "icon": "https://robertsspaceindustries.com/media/tlu8svn1uwboir/heap_note/Staff.png"
+                    }
+                ]
+            },
+            "isGM": true,
+            "spoken_languages": [
+                "en"
+            ],
+            "presence": {
+                "info": null,
+                "since": 1703198694,
+                "status": "offline"
+            },
+            "roles": {
+                "1": [
+                    "11",
+                    "2",
+                    "4"
+                ]
+            }
+        },
+        "is_new": true,
+        "votes": {
+            "count": 33,
+            "voted": 0
+        },
+        "replies_count": 7,
+        "views_count": 1264,
+        "highlight_role_id": "2",
+        "latest_activity": {
+            "time_created": 1704195273,
+            "member": {
+                "id": "212914",
+                "displayname": "Jale - X.ēl - Jéla",
+                "nickname": "jale-xel-jela",
+                "avatar": "https://robertsspaceindustries.com/media/4jco461i7bqmhr/heap_infobox/LogoTransp.png?v=1700777063",
+                "signature": "",
+                "meta": {
+                    "badges": [
+                        {
+                            "name": "Most Valuable Poster",
+                            "icon": "https://robertsspaceindustries.com/media/zvu7vq3oypo40r/heap_note/Mvp.png"
+                        },
+                        {
+                            "name": "League Of Relic Enthusiasts",
+                            "icon": "/media/khujdt7zciqibr/heap_note/L0RE-Thumbnail.png",
+                            "url": "https://robertsspaceindustries.com/orgs/L0RE"
+                        }
+                    ]
+                },
+                "isGM": false,
+                "spoken_languages": [
+                    "eo"
+                ],
+                "roles": {
+                    "1": [
+                        "11",
+                        "285269",
+                        "4"
+                    ],
+                    "8": [
+                        "61"
+                    ],
+                    "255": [
+                        "1790"
+                    ],
+                    "13275": [
+                        "92917"
+                    ],
+                    "25032": [
+                        "175174"
+                    ],
+                    "26559": [
+                        "185856"
+                    ],
+                    "92038": [
+                        "606425"
+                    ]
+                }
+            },
+            "highlight_role_id": null
+        },
+        "aspect": "teaser"
+    }
+    """
+    pass
 
 
 class Thread(abc.Identifier, abc.Subscription):
@@ -186,13 +338,15 @@ class Thread(abc.Identifier, abc.Subscription):
 
     def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
+        print(payload)
         self.id = int(payload["id"])
         self.time_created = datetime.utcfromtimestamp(payload["time_created"])
         self.time_modified = datetime.utcfromtimestamp(payload["time_modified"]) if payload["time_modified"] else None
 
         self.channel_id = int(payload["channel_id"])
         self.community_id = int(payload["community_id"])
-        self.label_id = int(payload["label_id"])
+
+        self.label_id = int(payload.get("label_id")) if payload.get("label_id") else None
 
         self.type = payload["type"]
         self.slug = payload["slug"]
@@ -205,13 +359,13 @@ class Thread(abc.Identifier, abc.Subscription):
         self.is_erased = payload["is_erased"]
         self.erased_by = payload["erased_by"]
 
-        self.tracked_post_role_id = int(payload["tracked_post_role_id"])
-        self.content_reply_id = int(payload["content_reply_id"])
+        self.tracked_post_role_id = int(payload["tracked_post_role_id"]) if payload["tracked_post_role_id"] else None
+        self.content_reply_id = int(payload["content_reply_id"]) if payload["content_reply_id"] else None
 
         self.annotation_plaintext = payload["annotation_plaintext"]
         self.subscription_key = payload["subscription_key"]
         self.content_blocks = [ContentBlock(**data) for data in payload["content_blocks"]]
-        self.highlight_role_id = int(payload["highlight_role_id"])
+        self.highlight_role_id = int(payload["highlight_role_id"]) if payload["highlight_role_id"] else None
 
         self.member = self._client._replace_member(payload["member"])
 
@@ -229,7 +383,7 @@ class Thread(abc.Identifier, abc.Subscription):
         self.notification_subscription = payload["notification_subscription"]
         self.aspect = payload["aspect"]
         self.nested_replies_ids = [int(x) for x in payload["nested_replies_ids"]]
-        self.replies = payload["replies"]
+        self.replies = [self._client._replace_reply(reply) for reply in payload['replies']]
 
     @property
     def channel(self):

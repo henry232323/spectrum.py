@@ -53,11 +53,19 @@ class ContentState:
 class ContentBlock:
     id: int
     type: str
-    blocks: list[Block]
+    blocks: list[Block] = None
+    data: Optional[dict] = None
 
     def __post_init__(self):
         self.id = int(self.id)
-        self.blocks = [Block(**block) for block in self.blocks]
+        self.blocks = [Block(**block) for block in self.blocks or self.data['blocks']]
+
+    def plaintext(self):
+        chunks = []
+        for block in self.blocks:
+            chunks.append(block.text)
+
+        return "\n".join(chunks)
 
 
 @dataclasses.dataclass
