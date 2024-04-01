@@ -45,8 +45,7 @@ class RecruitingBot(Client):
         async for item in self.lobby.fetch_history(1):
             # Only send if the last message is not from @me
             if item.author != self.me:
-                #await self.lobby.send('recruiting')
-                print("WOWEE!")
+                await self.lobby.send('Join my super cool org! https://sc-market.space/')
 
             break
 
