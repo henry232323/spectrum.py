@@ -27,13 +27,13 @@ class ThreadStub:
     label: None
     subscription_key: str
     member: dict
-    is_new: bool
     votes: dict
     replies_count: int
     views_count: int
     highlight_role_id: str
     latest_activity: Activity
     aspect: str
+    is_new: bool = False
     media_preview: Optional[dict] = None
     first_tracked_reply: Optional[dict] = None
     is_reply_nesting_disabled: Optional[bool] = None
