@@ -77,8 +77,8 @@ async def run():
         intents=intents,
     )
 
-    asyncio.create_task(spectrum_client.run())
-    asyncio.create_task(discord_client.start(token=discord_token))
+    asyncio.ensure_future(spectrum_client.run())
+    asyncio.ensure_future(discord_client.start(token=discord_token))
 
     await asyncio.Event().wait()
 

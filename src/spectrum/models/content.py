@@ -48,6 +48,13 @@ class ContentState:
         self.blocks = [Block(**block) for block in self.blocks]
         self.entityMap = [EntityMap(**em) for em in self.entityMap]
 
+    def get_plaintext(self):
+        acc = ""
+        for block in self.blocks:
+            acc = acc + block.text + "\n"
+
+        return acc
+
 
 @dataclasses.dataclass
 class ContentBlock:
@@ -57,8 +64,8 @@ class ContentBlock:
     data: Optional[dict] = None
 
     def __post_init__(self):
-        self.id = int(self.id)
-        self.blocks = [Block(**block) for block in self.blocks or self.data['blocks']]
+        self.id = int(self.id) if isinstance(self.id, str) and self.id.isnumeric() else self.id
+        self.blocks = [Block(**block) for block in (self.blocks if self.blocks is not None else self.data['blocks'])]
 
     def plaintext(self):
         chunks = []

@@ -119,8 +119,8 @@ class Message(abc.Identifier):
         # self.is_erased = payload['is_erased']
         # self.erased_by = payload['erased_by']
         self._lobby_id: int = int(payload['lobby_id'])
-        self.plaintext: str = payload['plaintext']
         self.content_state: ContentState = ContentState(**payload['content_state'])
+        self.plaintext: str = payload['plaintext'] if 'plaintext' in payload else self.content_state.get_plaintext()
         self.media: Optional[Media] = None
         if payload.get('media'):
             self.media = Media(**payload['media'])

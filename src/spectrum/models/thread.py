@@ -338,7 +338,6 @@ class Thread(abc.Identifier, abc.Subscription):
 
     def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
-        print(payload)
         self.id = int(payload["id"])
         self.time_created = datetime.utcfromtimestamp(payload["time_created"])
         self.time_modified = datetime.utcfromtimestamp(payload["time_modified"]) if payload["time_modified"] else None
