@@ -21,7 +21,7 @@ class RecruitingBot(Client):
     running = False
 
     async def on_ready(self):
-        self.lobby = self.get_lobby(lobby_id)
+        self.lobby = await self.fetch_lobby(lobby_id)
         asyncio.ensure_future(self.post_task())
         print("We're ready!")
 
