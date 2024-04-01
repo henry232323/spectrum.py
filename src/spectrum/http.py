@@ -336,7 +336,7 @@ class HTTP:
 
         if token:
             self._gateway_token = token
-            parts = base64.b64decode(token.split(".")[1] + "==", validate=False).decode("utf-8")
+            parts = base64.urlsafe_b64decode(token.split(".")[1] + "==").decode("utf-8")
             token_payload = json.loads(parts)
             self._client_id = token_payload['client_id']
             log.info("Successfully identified with member_id: %s", token_payload['member_id'])
