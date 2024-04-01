@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import sys
+import traceback
 from typing import Optional
 
 from .http import HTTP
@@ -91,7 +92,10 @@ class HTTPClient(EventDispatchType):
 
             return lobby
         except Exception as e:
-            logging.error("Error occurred replacing lobby: %s", e)
+            logging.error("Error occurred replacing lobby: %s\nFailing Payload: %s",
+                          traceback.format_exception_only(e),
+                          payload)
+            raise e
 
     def get_community(self, community_id: int | str) -> Optional[Community]:
         return self._communities.get(int(community_id))
