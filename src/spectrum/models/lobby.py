@@ -2,6 +2,7 @@ from datetime import datetime
 
 from . import message, abc
 from .. import httpclient
+from ..util.entity_ranges import get_entity_ranges
 
 
 class Lobby(abc.Identifier, abc.Subscription):
@@ -81,12 +82,18 @@ class Lobby(abc.Identifier, abc.Subscription):
     def __repr__(self):
         return f"Lobby(id={repr(self.id)}, name={repr(self.name)})"
 
-    async def send(self, content: str):
+    async def send(self, content: str, add_links=True):
+        entity_ranges = []
+
+        if add_links:
+            entity_ranges = get_entity_ranges(content)
+
+
         payload = await self._client._http.send_message({
             "lobby_id": self.id,
             "content_state": {"blocks": [
                 {"key": "bpeol", "text": content, "type": "unstyled", "depth": 0,
-                 "inlineStyleRanges": [], "entityRanges": [], "data": {}}], "entityMap": {}},
+                 "inlineStyleRanges": [], "entityRanges": entity_ranges, "data": {}}], "entityMap": {}},
             "plaintext": content, "media_id": None, "highlight_role_id": None
         })
 

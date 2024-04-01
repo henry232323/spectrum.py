@@ -62,6 +62,7 @@ class ContentBlock:
     type: str
     blocks: list[Block] = None
     data: Optional[dict] = None
+    reply_id: int = None
 
     def __post_init__(self):
         self.id = int(self.id) if isinstance(self.id, str) and self.id.isnumeric() else self.id
