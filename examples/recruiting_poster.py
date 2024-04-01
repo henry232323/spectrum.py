@@ -21,7 +21,7 @@ class RecruitingBot(Client):
     running = False
 
     async def on_ready(self):
-        self.lobby = await self.fetch_lobby(lobby_id)
+        self.lobby = self.get_lobby(lobby_id)
         asyncio.ensure_future(self.post_task())
         print("We're ready!")
 
@@ -42,12 +42,15 @@ class RecruitingBot(Client):
             self.running = False
 
     async def post_recruitment(self):
+        message = 'Join my super cool org! https://sc-market.space/'
         async for item in self.lobby.fetch_history(1):
             # Only send if the last message is not from @me
             if item.author != self.me:
-                await self.lobby.send('Join my super cool org! https://sc-market.space/')
+                await self.lobby.send(message)
 
-            break
+            return
+        else:
+            await self.lobby.send(message)
 
 
 async def run():
