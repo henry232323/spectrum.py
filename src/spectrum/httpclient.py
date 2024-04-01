@@ -72,23 +72,26 @@ class HTTPClient(EventDispatchType):
         return self._group_messages.get(int(id))
 
     def _replace_lobby(self, payload: dict):
-        lobby = self.get_lobby(payload['id'])
-        if lobby:
-            lobby.__init__(self, payload)
-        else:
-            self._lobbies[int(payload['id'])] = lobby = Lobby(self, payload)
+        try:
+            lobby = self.get_lobby(payload['id'])
+            if lobby:
+                lobby.__init__(self, payload)
+            else:
+                self._lobbies[int(payload['id'])] = lobby = Lobby(self, payload)
 
-        if lobby.type == "private":
-            for member in lobby.members:
-                if member.id != self.me.id:
-                    self._private_messages[member.id] = lobby
+            if lobby.type == "private":
+                for member in lobby.members:
+                    if member.id != self.me.id:
+                        self._private_messages[member.id] = lobby
 
-        if lobby.type == "group":
-            for member in lobby.members:
-                if member.id != self.me.id:
-                    self._group_messages[lobby.id] = lobby
+            if lobby.type == "group":
+                for member in lobby.members:
+                    if member.id != self.me.id:
+                        self._group_messages[lobby.id] = lobby
 
-        return lobby
+            return lobby
+        except Exception as e:
+            logging.error("Error occurred replacing lobby: %s", e)
 
     def get_community(self, community_id: int | str) -> Optional[Community]:
         return self._communities.get(int(community_id))
