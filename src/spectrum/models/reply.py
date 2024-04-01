@@ -129,4 +129,4 @@ class Reply(abc.Identifier):
 
     def __repr__(self):
         content = "\n".join(block.plaintext() for block in self.content_blocks)
-        return f"Reply(id={self.id}, author={self.member}, content={content})"
+        return f"Reply(id={self.id}, author={self.member}, content={repr(content)})"

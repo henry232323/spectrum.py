@@ -105,7 +105,7 @@ class Lobby(abc.Identifier, abc.Subscription):
         first_message = None
         while count != 0:
             resp = await self._client._http.fetch_history(
-                {"lobby_id": self.id, "timeframe": "before", "message_id": first_message, "size": 50}
+                {"lobby_id": self.id, "timeframe": "before", "message_id": first_message, "size": count}
             )
             messages = resp['messages']
             if messages:

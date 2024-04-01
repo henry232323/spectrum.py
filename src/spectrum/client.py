@@ -30,7 +30,7 @@ class Client(HTTPClient, EventDispatchType):
     async def _on_message_raw(self, payload: dict):
         self._replace_member(payload['message']['member'])
         message = self._replace_message(payload['message'])
-        asyncio.create_task(self.on_message(message))
+        asyncio.ensure_future(self.on_message(message))
 
     async def on_message(self, message: Message):
         pass
@@ -39,7 +39,7 @@ class Client(HTTPClient, EventDispatchType):
     async def _on_message_edit_raw(self, payload: dict):
         self._replace_member(payload['message']['member'])
         message = self._replace_message(payload['message'])
-        asyncio.create_task(self.on_message_edit(message))
+        asyncio.ensure_future(self.on_message_edit(message))
 
     async def on_message_edit(self, message: Message):
         pass
@@ -47,14 +47,14 @@ class Client(HTTPClient, EventDispatchType):
     @register_callback('member.update')
     async def _on_member_update_raw(self, payload: dict):
         member = self._replace_member(payload['member'])
-        asyncio.create_task(self.on_member_update(member))
+        asyncio.ensure_future(self.on_member_update(member))
 
     async def on_member_update(self, member: Member):
         pass
 
     @register_callback('broadcaster.ready')
     async def _on_ready_raw(self, payload):
-        asyncio.create_task(self.on_ready())
+        asyncio.ensure_future(self.on_ready())
 
     async def on_ready(self):
         pass
@@ -65,7 +65,7 @@ class Client(HTTPClient, EventDispatchType):
         member = self.get_member(payload["member_id"])
         if member:
             member.presence = presence = Presence(self, payload["presence"])
-            asyncio.create_task(self.on_presence_update(member, presence))
+            asyncio.ensure_future(self.on_presence_update(member, presence))
 
     async def on_presence_update(self, member, presence: Presence):
         pass
@@ -75,7 +75,7 @@ class Client(HTTPClient, EventDispatchType):
         member = self.get_member(payload["member_id"])
         if member:
             member.presence = presence = Presence(self, payload['member']['presence'])
-            asyncio.create_task(self.on_presence_join(member, presence))
+            asyncio.ensure_future(self.on_presence_join(member, presence))
 
     async def on_presence_join(self, member, presence):
         pass
@@ -85,7 +85,7 @@ class Client(HTTPClient, EventDispatchType):
         member = self.get_member(payload["member_id"])
         if member:
             member.presence = None
-            asyncio.create_task(self.on_presence_leave(member))
+            asyncio.ensure_future(self.on_presence_leave(member))
 
     async def on_presence_leave(self, member):
         pass
@@ -94,7 +94,7 @@ class Client(HTTPClient, EventDispatchType):
     async def _on_reaction_add_raw(self, payload):
         member = self.get_member(payload["reaction"]["member"]["id"])
         if member:
-            asyncio.create_task(self.on_reaction_add(member, reaction=Reaction(self, payload['reaction'])))
+            asyncio.ensure_future(self.on_reaction_add(member, reaction=Reaction(self, payload['reaction'])))
 
     async def on_reaction_add(self, member: Member, reaction: Reaction):
         pass
@@ -103,7 +103,7 @@ class Client(HTTPClient, EventDispatchType):
     async def _on_reaction_remove_raw(self, payload):
         member = self.get_member(payload["reaction"]["member"]["id"])
         if member:
-            asyncio.create_task(self.on_reaction_remove(member, reaction=Reaction(self, payload['reaction'])))
+            asyncio.ensure_future(self.on_reaction_remove(member, reaction=Reaction(self, payload['reaction'])))
 
     async def on_reaction_remove(self, member: Member, reaction: Reaction):
         pass
@@ -113,7 +113,7 @@ class Client(HTTPClient, EventDispatchType):
         member = self.get_member(payload["member_id"])
         lobby = self.get_lobby(payload["lobby_id"])
         if member and lobby:
-            asyncio.create_task(self.on_typing_end(lobby, member))
+            asyncio.ensure_future(self.on_typing_end(lobby, member))
 
     async def on_typing_end(self, lobby: Lobby, member: Member):
         pass
@@ -123,7 +123,7 @@ class Client(HTTPClient, EventDispatchType):
         member = self.get_member(payload["member_id"])
         lobby = self.get_lobby(payload["lobby_id"])
         if member and lobby:
-            asyncio.create_task(self.on_typing_start(lobby, member))
+            asyncio.ensure_future(self.on_typing_start(lobby, member))
 
     async def on_typing_start(self, lobby: Lobby, member: Member):
         pass
@@ -149,7 +149,7 @@ class Client(HTTPClient, EventDispatchType):
         thread = self._replace_thread(response)
 
         reply = find(thread.replies, payload["reply_id"])
-        asyncio.create_task(self.on_forum_thread_reply(reply))
+        asyncio.ensure_future(self.on_forum_thread_reply(reply))
 
     async def on_forum_thread_reply(self, reply):
         pass
@@ -161,7 +161,7 @@ class Client(HTTPClient, EventDispatchType):
             {"slug": payload["slug"], "sort": "votes", "target_reply_id": None})
         thread = self._replace_thread(response)
         await self.subscribe_to_topic(thread.subscription_key)
-        asyncio.create_task(self.on_forum_thread_new(thread))
+        asyncio.ensure_future(self.on_forum_thread_new(thread))
 
     async def on_forum_thread_new(self, thread):
         pass
@@ -171,7 +171,7 @@ class Client(HTTPClient, EventDispatchType):
         # {"type":"forum_channel.new","action_id":null,"forum_channel":{"id":335897,"time_created":"2023-12-05 05:12:38","time_modified":"2023-12-05 05:12:38","community_id":100987,"name":"Test Channel 5","description":"asdasd","color":"FF6262","order":4,"group_id":102761,"sort_filter":null,"label_required":false},"owner":true}
         channel = self._replace_channel(payload["forum_channel"])
         await self.subscribe_to_topic(channel.subscription_key, *(labels.subscription_key for labels in channel.labels))
-        asyncio.create_task(self.on_channel_new(channel))
+        asyncio.ensure_future(self.on_channel_new(channel))
 
     async def on_channel_new(self, channel):
         pass
@@ -180,7 +180,7 @@ class Client(HTTPClient, EventDispatchType):
     async def _on_channel_remove_raw(self, payload: dict):
         # {"type":"forum_channel.remove","action_id":null,"forum_channel_id":"335898","owner":true}
         channel = self._channels.pop(int(payload["forum_channel_id"]))
-        asyncio.create_task(self.on_channel_remove(channel))
+        asyncio.ensure_future(self.on_channel_remove(channel))
 
     async def on_channel_remove(self, channel):
         pass
@@ -199,7 +199,7 @@ class Client(HTTPClient, EventDispatchType):
                 role = community.get_role(item)
                 roles.append(role)
 
-            asyncio.create_task(self.on_member_roles_update(community, member, roles))
+            asyncio.ensure_future(self.on_member_roles_update(community, member, roles))
         else:
             self.log_handler.error(f"Failed to handle role update: {community} {member} {payload}")
 
@@ -209,7 +209,7 @@ class Client(HTTPClient, EventDispatchType):
     @register_callback("unhandled_event")
     async def _on_unhandled_event_raw(self, payload):
         self.log_handler.info("Received unhandled event of type %s: %s", payload['type'], payload)
-        asyncio.create_task(self.on_unhandled_event(payload))
+        asyncio.ensure_future(self.on_unhandled_event(payload))
 
     async def on_unhandled_event(self, payload):
         pass
@@ -258,5 +258,5 @@ class Client(HTTPClient, EventDispatchType):
 
     def _replace_lobby(self, payload: dict):
         lobby = super()._replace_lobby(payload)
-        asyncio.create_task(lobby.fetch_presence())
+        asyncio.ensure_future(lobby.fetch_presence())
         return lobby

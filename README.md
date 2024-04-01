@@ -32,7 +32,7 @@ async def run():
         device_id=...,
     )
 
-    asyncio.create_task(myclient.run())
+    asyncio.ensure_future(myclient.run())
     await asyncio.Event().wait()
 
 
