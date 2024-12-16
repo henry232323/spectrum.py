@@ -241,7 +241,8 @@ class Client(HTTPClient, EventDispatchType):
         await self.subscribe_to_topic(*thread_keys, scope='content')
 
     async def subscribe_to_default(self):
-        """Subscribe to the default set of topics, including the public SC community and all direct messages and group messages."""
+        """Subscribe to the default set of topics, including the public SC community and all direct messages and
+        group messages."""
         keys = []
         for lobby in self.group_messages or []:
             keys.append(lobby.subscription_key)
@@ -260,3 +261,7 @@ class Client(HTTPClient, EventDispatchType):
         lobby = super()._replace_lobby(payload)
         asyncio.ensure_future(lobby.fetch_presence())
         return lobby
+
+    def close(self):
+        """End the run task"""
+        self._gateway.close()

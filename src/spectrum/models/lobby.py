@@ -1,7 +1,6 @@
-from datetime import datetime
-
 from . import message, abc
 from .. import httpclient
+from ..util.datetime import parse_timestamp
 from ..util.entity_ranges import get_entity_ranges
 
 
@@ -55,7 +54,7 @@ class Lobby(abc.Identifier, abc.Subscription):
         self.description = payload['description']
         self.color = payload['color']
         self.icon = payload['icon']
-        self.time_created = datetime.utcfromtimestamp(payload['time_created'])
+        self.time_created = parse_timestamp(payload['time_created'])
         self.subscription_key = payload['subscription_key']
         self.leader_id = int(payload['leader_id']) if payload['leader_id'] else None
         self.online_members_count = payload.get('online_members_count')
@@ -87,7 +86,6 @@ class Lobby(abc.Identifier, abc.Subscription):
 
         if add_links:
             entity_ranges = get_entity_ranges(content)
-
 
         payload = await self._client._http.send_message({
             "lobby_id": self.id,

@@ -125,3 +125,6 @@ class Gateway:
         if isinstance(payload, dict):
             log.debug('Received %s', payload)
             await self._client._dispatch_event(payload['type'], payload)
+
+    def close(self):
+        self._running = False

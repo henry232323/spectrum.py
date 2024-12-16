@@ -1,11 +1,11 @@
 import dataclasses
-from datetime import datetime
 from typing import Optional
 
 from . import abc
 from .activity import Activity
 from .content import ContentBlock
 from .. import httpclient
+from ..util.datetime import parse_timestamp
 
 
 @dataclasses.dataclass
@@ -339,8 +339,8 @@ class Thread(abc.Identifier, abc.Subscription):
     def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id = int(payload["id"])
-        self.time_created = datetime.utcfromtimestamp(payload["time_created"])
-        self.time_modified = datetime.utcfromtimestamp(payload["time_modified"]) if payload["time_modified"] else None
+        self.time_created = parse_timestamp(payload["time_created"])
+        self.time_modified = parse_timestamp(payload["time_modified"])
 
         self.channel_id = int(payload["channel_id"])
         self.community_id = int(payload["community_id"])
