@@ -1,8 +1,8 @@
-from datetime import datetime, UTC
+from datetime import datetime
 
 
 def parse_timestamp(s):
     try:
-        return datetime.fromtimestamp(s, UTC) if s else None
+        return datetime.utcfromtimestamp(s) if s else None
     except OSError:
         return None
