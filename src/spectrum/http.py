@@ -6,7 +6,7 @@ import logging
 import aiohttp
 import yarl
 
-from spectrum.errors import HTTPError, exception_map
+from .errors import HTTPError, NullResponseError, exception_map
 
 IDENTIFY_URL = yarl.URL("https://robertsspaceindustries.com/api/spectrum/auth/identify")
 SPECTRUM_API_BASE = "https://robertsspaceindustries.com/"
@@ -310,7 +310,9 @@ class HTTP:
                 cookies=self.cookies
         ) as resp:
             response = await resp.json()
-            if response.get('success'):
+            if response is None:
+                raise NullResponseError()
+            elif response.get('success'):
                 return response['data']
             else:
                 log.error("Made bad request: %s", payload)

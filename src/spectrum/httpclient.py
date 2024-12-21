@@ -4,6 +4,7 @@ import sys
 import traceback
 from typing import Optional
 
+from .errors import NullResponseError, ResourceNotFound
 from .http import HTTP
 from .models import Lobby, Member, Community, Message, Forum, channel, Thread, Reply, Role
 from .models.thread import ThreadStub
@@ -236,9 +237,12 @@ class HTTPClient(EventDispatchType):
         return lobby
 
     async def fetch_member_by_id(self, member_id):
-        payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
-        member = self._replace_member(payload['member'])
-        return member
+        try:
+            payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
+            member = self._replace_member(payload['member'])
+            return member
+        except NullResponseError:
+            raise ResourceNotFound("Member not found")
 
     async def fetch_member_by_handle(self, handle):
         payload = await self._http.fetch_member_by_handle(dict(nickname=handle))
