@@ -136,10 +136,10 @@ class Community(abc.Identifier):
         return self._client.get_lobby(lobby_id)
 
     async def fetch_members(self, page=1, pagesize=12, sort='displayname', sort_descending=0):
-        members = await self._client._http.fetch_community_members(
+        resp = await self._client._http.fetch_community_members(
             {"community_id": self.id, 'page': page, 'pagesize': pagesize, 'sort_descending': sort_descending,
              'sort': sort})
-        return [self._client._replace_member(r) for r in members]
+        return [self._client._replace_member(r) for r in resp['members']]
 
     async def fetch_roles(self, member: member.Member):
         roles = await self._client._http.fetch_member_roles({"member_id": member.id, "community_id": self.id})
