@@ -53,6 +53,8 @@ EDIT_MESSAGE = "/api/spectrum/message/edit"
 DELETE_MESSAGE = "/api/spectrum/message/delete"
 ADD_FRIEND = "/api/spectrum/friend/add"
 REMOVE_FRIEND = "/api/spectrum/friend/remove"
+BLOCKLIST_ADD = "/api/spectrum/blocklist/add"
+BLOCKLIST_REMOVE = "/api/spectrum/blocklist/remove"
 UNSUBSCRIBE = "/api/spectrum/subscription/remove"
 
 
@@ -314,6 +316,18 @@ class HTTP:
     async def remove_friend(self, payload):
         """{"member_id":"123"}"""
         return await self.make_request(REMOVE_FRIEND, payload)
+
+    async def extended_search(self, payload):
+        """{"community_id":"1","type":["op","reply","chat"],"text":"","page":1,"sort":"latest","range":"year","author":"200762","visibility":"nonerased"}"""
+        return await self.make_request(EXTENDED_SEARCH, payload)
+
+    async def blocklist_add(self, payload):
+        """{"member_id":"48758"}"""
+        return await self.make_request(BLOCKLIST_ADD, payload)
+
+    async def blocklist_remove(self, payload):
+        """{"member_id":"48758"}"""
+        return await self.make_request(BLOCKLIST_REMOVE, payload)
 
     async def set_status(self, payload):
         """{"status":"playing","info":"Playing Star Citizen"}"""

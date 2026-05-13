@@ -65,6 +65,12 @@ class Member(abc.Identifier):
         lobby = await self.get_dm()
         return await lobby.send(content)
 
+    async def block(self):
+        await self._client.block_member(self.id)
+
+    async def unblock(self):
+        await self._client.unblock_member(self.id)
+
     async def fetch_roles(self, community: 'community.Community'):
         await community.fetch_roles(self)
 

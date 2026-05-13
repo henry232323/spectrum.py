@@ -292,6 +292,30 @@ class HTTPClient(EventDispatchType):
     async def remove_friend(self, member_id: int | str):
         await self._http.remove_friend({"member_id": str(member_id)})
 
+    async def block_member(self, member_id: int | str):
+        await self._http.blocklist_add({"member_id": str(member_id)})
+
+    async def unblock_member(self, member_id: int | str):
+        await self._http.blocklist_remove({"member_id": str(member_id)})
+
+    async def search_content(self, community_id: int | str = "1", text: str = "",
+                             content_types: list[str] = None, page: int = 1,
+                             sort: str = "latest", range: str = "year",
+                             author: str = None, visibility: str = "nonerased"):
+        payload = {
+            "community_id": str(community_id),
+            "type": content_types or ["op", "reply", "chat"],
+            "text": text,
+            "page": page,
+            "sort": sort,
+            "range": range,
+            "visibility": visibility,
+        }
+        if author:
+            payload["author"] = str(author)
+        resp = await self._http.extended_search(payload)
+        return resp['hits']['hits']
+
     @register_callback('identify')
     async def _on_identify_raw(self, payload):
         if payload.get("member"):
