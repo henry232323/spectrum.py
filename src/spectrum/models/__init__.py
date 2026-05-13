@@ -11,6 +11,7 @@ from . import reply
 from . import role
 from . import thread
 from .activity import Activity
+from .pagination import PaginatedResult
 from .badge import Badge
 from .channel import Channel
 from .community import Community

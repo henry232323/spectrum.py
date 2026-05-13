@@ -61,7 +61,6 @@ class Client(HTTPClient, EventDispatchType):
 
     @register_callback('member.presence.update')
     async def _on_presence_update_raw(self, payload):
-        # {"type": "member.presence.update", "member_id": 2280259}
         member = self.get_member(payload["member_id"])
         if member:
             member.presence = presence = Presence(self, payload["presence"])
@@ -72,10 +71,9 @@ class Client(HTTPClient, EventDispatchType):
 
     @register_callback('message_lobby.presence.join')
     async def _on_presence_join_raw(self, payload):
-        member = self.get_member(payload["member_id"])
-        if member:
-            member.presence = presence = Presence(self, payload['member']['presence'])
-            asyncio.ensure_future(self.on_presence_join(member, presence))
+        member = self._replace_member(payload['member'])
+        member.presence = presence = Presence(self, payload['member']['presence'])
+        asyncio.ensure_future(self.on_presence_join(member, presence))
 
     async def on_presence_join(self, member, presence):
         pass
@@ -92,18 +90,16 @@ class Client(HTTPClient, EventDispatchType):
 
     @register_callback('reaction.add')
     async def _on_reaction_add_raw(self, payload):
-        member = self.get_member(payload["reaction"]["member"]["id"])
-        if member:
-            asyncio.ensure_future(self.on_reaction_add(member, reaction=Reaction(self, payload['reaction'])))
+        member = self._replace_member(payload["reaction"]["member"])
+        asyncio.ensure_future(self.on_reaction_add(member, reaction=Reaction(self, payload['reaction'])))
 
     async def on_reaction_add(self, member: Member, reaction: Reaction):
         pass
 
     @register_callback('reaction.remove')
     async def _on_reaction_remove_raw(self, payload):
-        member = self.get_member(payload["reaction"]["member"]["id"])
-        if member:
-            asyncio.ensure_future(self.on_reaction_remove(member, reaction=Reaction(self, payload['reaction'])))
+        member = self._replace_member(payload["reaction"]["member"])
+        asyncio.ensure_future(self.on_reaction_remove(member, reaction=Reaction(self, payload['reaction'])))
 
     async def on_reaction_remove(self, member: Member, reaction: Reaction):
         pass
@@ -261,9 +257,7 @@ class Client(HTTPClient, EventDispatchType):
         await self.subscribe_to_topic(*keys)
 
     def _replace_lobby(self, payload: dict):
-        lobby = super()._replace_lobby(payload)
-        asyncio.ensure_future(lobby.fetch_presence())
-        return lobby
+        return super()._replace_lobby(payload)
 
     async def close(self):
         """End the run task and clean up resources."""
