@@ -73,9 +73,7 @@ async def run():
     intents.reactions = True
     intents.message_content = True
 
-    discord_client = DiscordClient(
-        intents=intents,
-    )
+    discord_client = DiscordClient(intents=intents)
 
     asyncio.ensure_future(spectrum_client.run())
     asyncio.ensure_future(discord_client.start(token=discord_token))

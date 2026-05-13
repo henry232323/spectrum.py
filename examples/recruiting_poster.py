@@ -44,23 +44,16 @@ class RecruitingBot(Client):
     async def post_recruitment(self):
         message = 'Join my super cool org! https://sc-market.space/'
         async for item in self.lobby.fetch_history(1):
-            # Only send if the last message is not from @me
             if item.author != self.me:
                 await self.lobby.send(message)
-
             return
         else:
             await self.lobby.send(message)
 
 
 async def run():
-    myclient = RecruitingBot(
-        rsi_token=token,
-        device_id=device_id
-    )
-
-    asyncio.ensure_future(myclient.run())
-    await asyncio.Event().wait()
+    async with RecruitingBot(rsi_token=token, device_id=device_id) as myclient:
+        await myclient.run()
 
 
 asyncio.run(run())

@@ -1,7 +1,9 @@
+import asyncio
 from typing import Optional
 
 from . import member, abc
 from .emoji import Emoji
+from .pagination import PaginatedResult
 from .role import Role
 from .. import httpclient
 from ..util import find
@@ -140,18 +142,21 @@ class Community(abc.Identifier):
             {"community_id": self.id, 'page': page, 'pagesize': pagesize, 'sort_descending': sort_descending,
              'sort': sort})
         members = [self._client._replace_member(r) for r in resp['members']]
-        return members, resp['members_total'], resp['pages_total']
+        return PaginatedResult(items=members, total=resp['members_total'],
+                               page=page, pages_total=resp['pages_total'])
 
-    async def fetch_all_members(self, pagesize=12, sort='displayname', sort_descending=0):
+    async def fetch_all_members(self, pagesize=12, sort='displayname', sort_descending=0, page_delay=1.0):
         page = 1
         while True:
-            members, total, pages_total = await self.fetch_members(
+            result = await self.fetch_members(
                 page=page, pagesize=pagesize, sort=sort, sort_descending=sort_descending)
-            for member in members:
-                yield member
-            if page >= pages_total:
+            for m in result.items:
+                yield m
+            if not result.has_next:
                 return
             page += 1
+            if page_delay:
+                await asyncio.sleep(page_delay)
 
     async def fetch_roles(self, member: member.Member):
         roles = await self._client._http.fetch_member_roles({"member_id": member.id, "community_id": self.id})

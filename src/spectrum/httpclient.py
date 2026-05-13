@@ -258,8 +258,7 @@ class HTTPClient(EventDispatchType):
         member = self._replace_member(payload['member'])
         return member
 
-    async def search_users(self, query: str, ignore_self=True, community=None, max_count=None):
-        """Used when adding friends."""
+    async def search_users(self, query: str, ignore_self=True, community=None, max_count=None, page_delay=1.0):
         page = 1
         count = 0
         while True:
@@ -267,21 +266,23 @@ class HTTPClient(EventDispatchType):
                 "community_id": community.id if community else None,
                 "text": query,
                 "ignore_self": ignore_self,
-                "pagesize": 15,  # maximum page size
+                "pagesize": 15,
                 "page": page,
             })
-
-            page = payload['page'] + 1
 
             for member in payload['members']:
                 yield self._replace_member(member)
                 count += 1
 
-                if count >= max_count:
+                if max_count and count >= max_count:
                     return
 
             if payload['page'] >= payload['pages_total']:
                 return
+
+            page = payload['page'] + 1
+            if page_delay:
+                await asyncio.sleep(page_delay)
 
     async def set_status(self, status: str, info: str = None):
         await self._http.set_status({"status": status, "info": info})

@@ -26,17 +26,11 @@ class MyClient(Client):
 
     async def on_forum_thread_new(self, thread):
         print(thread)
-        # await self.subscribe_to_topic(thread.subscription_key)
 
 
 async def run():
-    myclient = MyClient(
-        rsi_token=token,
-        device_id=device_id
-    )
-
-    asyncio.ensure_future(myclient.run())
-    await asyncio.Event().wait()
+    async with MyClient(rsi_token=token, device_id=device_id) as myclient:
+        await myclient.run()
 
 
 asyncio.run(run())

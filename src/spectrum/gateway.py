@@ -64,10 +64,19 @@ class Gateway:
             },
         }
 
+        first_connect = True
         backoff = 1
         while self._running:
             async with aiohttp.ClientSession() as session:
                 try:
+                    if not first_connect:
+                        self._client._ready_event.clear()
+                        new_token = await self._client._http.identify()
+                        if new_token:
+                            self._ws_token = new_token
+                            self._ws_url = self.DEFAULT_GATEWAY.with_query(token=self._ws_token)
+                    first_connect = False
+
                     self.socket = await session.ws_connect(str(self._ws_url), **arguments)
                     backoff = 1
 
@@ -75,7 +84,8 @@ class Gateway:
                         await self.poll_event()
                 except ReconnectWebSocket:
                     log.info("Websocket closed, reconnecting")
-                    await self.socket.close()
+                    if self.socket:
+                        await self.socket.close()
 
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, self._max_backoff)
