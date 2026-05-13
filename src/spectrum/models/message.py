@@ -4,6 +4,7 @@ from typing import Optional
 from . import lobby, abc, member
 from .content import ContentState, Media
 from .. import httpclient
+from ..util.entity_ranges import get_entity_ranges
 
 
 class Message(abc.Identifier):
@@ -132,6 +133,21 @@ class Message(abc.Identifier):
     @property
     def lobby(self) -> 'lobby.Lobby':
         return self._client.get_lobby(self._lobby_id)
+
+    async def edit(self, content: str):
+        entity_ranges = get_entity_ranges(content)
+        payload = await self._client._http.edit_message({
+            "message_id": self.id,
+            "content_state": {"blocks": [
+                {"key": "bpeol", "text": content, "type": "unstyled", "depth": 0,
+                 "inlineStyleRanges": [], "entityRanges": entity_ranges, "data": {}}], "entityMap": {}},
+            "plaintext": content, "media_id": None
+        })
+        self.__init__(self._client, payload)
+        return self
+
+    async def delete(self):
+        await self._client._http.delete_message({"message_id": self.id})
 
     def __repr__(self):
         return f"Message(id={repr(self.id)}, plaintext={repr(self.plaintext)}, author={repr(self.author)}, lobby={repr(self.lobby)})"

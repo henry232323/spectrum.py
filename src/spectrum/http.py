@@ -49,6 +49,11 @@ MOVE_ROLE = "/api/spectrum/role/move"
 SEARCH_USERS = "/api/spectrum/search/member/autocomplete"
 FETCH_LOBBY_INFO = "/api/spectrum/lobby/info"
 SET_STATUS = "/api/spectrum/member/presence/setStatus"
+EDIT_MESSAGE = "/api/spectrum/message/edit"
+DELETE_MESSAGE = "/api/spectrum/message/delete"
+ADD_FRIEND = "/api/spectrum/friend/add"
+REMOVE_FRIEND = "/api/spectrum/friend/remove"
+UNSUBSCRIBE = "/api/spectrum/subscription/remove"
 
 
 class InvalidTokenException(Exception):
@@ -59,6 +64,9 @@ log = logging.getLogger(__name__)
 
 
 class HTTP:
+    MAX_RETRIES = 3
+    RETRY_BACKOFF = 1.0
+
     def __init__(self, client, rsi_token, device_id):
         self._client = client
         self._rsi_token = rsi_token
@@ -66,8 +74,7 @@ class HTTP:
         self._device_id = device_id
         self._client_id = None
 
-        loop = asyncio.get_event_loop()
-        self._session = aiohttp.ClientSession(loop=loop, base_url=SPECTRUM_API_BASE)
+        self._session = aiohttp.ClientSession(base_url=SPECTRUM_API_BASE)
 
         self.cookies = {
             '_rsi_device': self._device_id or "",
@@ -292,6 +299,30 @@ class HTTP:
         """
         return await self.make_request(FETCH_LOBBY_INFO, payload)
 
+    async def edit_message(self, payload):
+        """{"message_id":"123","content_state":{...},"plaintext":"edited text","media_id":null}"""
+        return await self.make_request(EDIT_MESSAGE, payload)
+
+    async def delete_message(self, payload):
+        """{"message_id":"123"}"""
+        return await self.make_request(DELETE_MESSAGE, payload)
+
+    async def add_friend(self, payload):
+        """{"member_id":"123"}"""
+        return await self.make_request(ADD_FRIEND, payload)
+
+    async def remove_friend(self, payload):
+        """{"member_id":"123"}"""
+        return await self.make_request(REMOVE_FRIEND, payload)
+
+    async def set_status(self, payload):
+        """{"status":"playing","info":"Playing Star Citizen"}"""
+        return await self.make_request(SET_STATUS, payload)
+
+    async def unsubscribe(self, payload):
+        """{"subscription_keys":["key1","key2"]}"""
+        return await self.make_request(UNSUBSCRIBE, payload)
+
     async def make_request(self, endpoint: str, payload: dict):
         await self._client._ready_event.wait()
         log.debug("Sending request to %s with payload %s" % (endpoint, payload))
@@ -303,20 +334,39 @@ class HTTP:
         if self._client_id:
             headers['x-tavern-id'] = self._client_id
 
-        async with self._session.post(
-                endpoint,
-                json=payload,
-                headers=headers,
-                cookies=self.cookies
-        ) as resp:
-            response = await resp.json()
-            if response is None:
-                raise NullResponseError()
-            elif response.get('success'):
-                return response['data']
-            else:
-                log.error("Made bad request: %s", payload)
-                raise exception_map.get(response['code'], HTTPError)(response['msg'])
+        for attempt in range(self.MAX_RETRIES):
+            async with self._session.post(
+                    endpoint,
+                    json=payload,
+                    headers=headers,
+                    cookies=self.cookies
+            ) as resp:
+                if resp.status == 429:
+                    retry_after = float(resp.headers.get('Retry-After', self.RETRY_BACKOFF * (2 ** attempt)))
+                    log.warning("Rate limited on %s, retrying after %.1fs", endpoint, retry_after)
+                    await asyncio.sleep(retry_after)
+                    continue
+
+                if resp.status >= 500 and attempt < self.MAX_RETRIES - 1:
+                    wait = self.RETRY_BACKOFF * (2 ** attempt)
+                    log.warning("Server error %d on %s, retrying after %.1fs", resp.status, endpoint, wait)
+                    await asyncio.sleep(wait)
+                    continue
+
+                content_type = resp.headers.get('Content-Type', '')
+                if 'application/json' not in content_type:
+                    raise HTTPError(f"Unexpected response type '{content_type}' from {endpoint} (status {resp.status})")
+
+                response = await resp.json()
+                if response is None:
+                    raise NullResponseError()
+                elif response.get('success'):
+                    return response['data']
+                else:
+                    log.error("Made bad request: %s", payload)
+                    raise exception_map.get(response['code'], HTTPError)(response['msg'])
+
+        raise HTTPError(f"Max retries exceeded for {endpoint}")
 
     async def identify(self):
         log.info("Identifying")

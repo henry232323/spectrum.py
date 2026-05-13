@@ -48,21 +48,21 @@ class Lobby(abc.Identifier, abc.Subscription):
     def __init__(self, client: 'httpclient.HTTPClient', payload: dict):
         self._client = client
         self.id = int(payload["id"])
-        self.type = payload['type']
-        self.community_id = int(payload['community_id']) if payload['community_id'] else None
-        self.name = payload['name']
-        self.description = payload['description']
-        self.color = payload['color']
-        self.icon = payload['icon']
-        self.time_created = parse_timestamp(payload['time_created'])
-        self.subscription_key = payload['subscription_key']
-        self.leader_id = int(payload['leader_id']) if payload['leader_id'] else None
+        self.type = payload.get('type')
+        self.community_id = int(payload['community_id']) if payload.get('community_id') else None
+        self.name = payload.get('name')
+        self.description = payload.get('description')
+        self.color = payload.get('color')
+        self.icon = payload.get('icon')
+        self.time_created = parse_timestamp(payload['time_created']) if payload.get('time_created') else None
+        self.subscription_key = payload.get('subscription_key')
+        self.leader_id = int(payload['leader_id']) if payload.get('leader_id') else None
         self.online_members_count = payload.get('online_members_count')
         self.permissions = payload.get('permissions')
-        if payload['members'] is None:
+        if payload.get('members') is None:
             self._members = None
         else:
-            self._members = {member['id']: client._replace_member(member) for member in (payload['members'])}
+            self._members = {member['id']: client._replace_member(member) for member in payload['members']}
 
     @property
     def members(self):

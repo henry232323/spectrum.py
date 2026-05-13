@@ -189,7 +189,7 @@ class Client(HTTPClient, EventDispatchType):
     async def _on_member_roles_update_raw(self, payload):
         # {"type": "member.roles.update", "community_id": 1, "member_id": 15013, "roles": ["11", "12", "4", "5", "6"]}
         community = self.get_community(payload['community_id'])
-        member = self.get_community(payload['member_id'])
+        member = self.get_member(payload['member_id'])
         if not member:
             member = Object(self, id=payload['member_id'])
 
@@ -216,6 +216,9 @@ class Client(HTTPClient, EventDispatchType):
 
     async def subscribe_to_topic(self, *subscription_keys, scope=None):
         await self._gateway.subscribe_to_key(*subscription_keys, scope=scope)
+
+    async def unsubscribe_from_topic(self, *subscription_keys):
+        await self._http.unsubscribe({"subscription_keys": list(subscription_keys)})
 
     async def subscribe_to_all(self, max_threads=50):
         """Subscribe to all lobbies, threads, and channels to receive message/reply events."""
@@ -262,6 +265,7 @@ class Client(HTTPClient, EventDispatchType):
         asyncio.ensure_future(lobby.fetch_presence())
         return lobby
 
-    def close(self):
-        """End the run task"""
+    async def close(self):
+        """End the run task and clean up resources."""
         self._gateway.close()
+        await self._http.close()

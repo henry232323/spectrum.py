@@ -23,6 +23,7 @@ log = logging.getLogger(__name__)
 class Gateway:
     DEFAULT_GATEWAY = yarl.URL('wss://robertsspaceindustries.com/ws/spectrum')
     _max_heartbeat_timeout = 360
+    _max_backoff = 60
 
     def __init__(self, *, client: 'httpclient.HTTPClient', rsi_token: str, device_id: str):
         self._rsi_token = rsi_token
@@ -42,9 +43,7 @@ class Gateway:
             "subscription_scope": scope
         }
         log.debug("Sent payload: %s", payload)
-        await self.socket.send_json(
-            payload
-        )
+        await self.socket.send_json(payload)
 
     async def start(self, token=None):
         log.info('Starting gateway')
@@ -70,6 +69,7 @@ class Gateway:
             async with aiohttp.ClientSession() as session:
                 try:
                     self.socket = await session.ws_connect(str(self._ws_url), **arguments)
+                    backoff = 1
 
                     while True:
                         await self.poll_event()
@@ -78,7 +78,7 @@ class Gateway:
                     await self.socket.close()
 
                 await asyncio.sleep(backoff)
-                backoff *= 2
+                backoff = min(backoff * 2, self._max_backoff)
 
     async def poll_event(self) -> None:
         """Polls for a DISPATCH event and handles the general gateway loop.

@@ -36,6 +36,15 @@ class HTTPClient(EventDispatchType):
         self.log_handler = log_handler
         self.me: Optional[Member] = None
 
+    async def close(self):
+        await self._http.close()
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.close()
+
     def get_member(self, member_id: str | int) -> Optional[Member]:
         return self._members.get(int(member_id))
 
@@ -273,6 +282,15 @@ class HTTPClient(EventDispatchType):
 
             if payload['page'] >= payload['pages_total']:
                 return
+
+    async def set_status(self, status: str, info: str = None):
+        await self._http.set_status({"status": status, "info": info})
+
+    async def add_friend(self, member_id: int | str):
+        await self._http.add_friend({"member_id": str(member_id)})
+
+    async def remove_friend(self, member_id: int | str):
+        await self._http.remove_friend({"member_id": str(member_id)})
 
     @register_callback('identify')
     async def _on_identify_raw(self, payload):
