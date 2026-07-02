@@ -1,5 +1,6 @@
 from .client import Client
 from .httpclient import HTTPClient
+from .content_builder import ContentBuilder
 from .models import *
 from .errors import *
 
@@ -14,4 +15,4 @@ try:
 except ImportError:
     pass
 
-__version__ = "0.0.14"
+__version__ = "0.1.0"

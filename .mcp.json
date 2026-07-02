@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "spectrum": {
+      "command": "/Users/willemhs/.local/share/mise/installs/python/3.12.11/bin/python",
+      "args": ["/Users/willemhs/personal/spectrum-py/mcp_server.py"]
+    }
+  }
+}
