@@ -22,6 +22,7 @@ from .lobby import Lobby
 from .member import Member
 from .message import Message
 from .object import Object
+from .upload import Upload
 from .permissions import Permissions, GlobalPermissions, MessageLobbyPermissions, CustomEmojiPermissions, \
     ForumChannelPermissions
 from .presence import Presence

@@ -2,6 +2,7 @@ import asyncio
 import base64
 import json
 import logging
+import os
 
 import aiohttp
 import yarl
@@ -113,7 +114,41 @@ class HTTP:
         """
         {"type":"discussion","channel_id":"305988","label_id":null,"subject":"Create new thread","content_blocks":[{"id":1,"type":"text","data":{"blocks":[{"key":"dr2qu","text":"New thread","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}],"plaintext":"New thread","highlight_role_id":null,"is_locked":false,"is_reply_nesting_disabled":false}
         """
-        return await self.make_request(CREATE_THREAD, payload)
+        has_images = any(b.get("type") == "image" for b in payload.get("content_blocks", []))
+        max_attempts = 6 if has_images else 1
+        for attempt in range(max_attempts):
+            try:
+                return await self._create_thread_request(payload)
+            except HTTPError as e:
+                if "Invalid image block data" in str(e) and attempt < max_attempts - 1:
+                    log.warning("Image still processing, retrying in %ds (attempt %d/%d)", 3 * (attempt + 1), attempt + 1, max_attempts)
+                    await asyncio.sleep(3 * (attempt + 1))
+                    continue
+                raise
+
+    async def _create_thread_request(self, payload: dict):
+        await self._client._ready_event.wait()
+        headers = {**self.headers, 'X-Tavern-action-id': '1'}
+        if self._client_id:
+            headers['x-tavern-id'] = self._client_id
+
+        async with self._session.post(
+                CREATE_THREAD,
+                json=payload,
+                headers=headers,
+                cookies=self.cookies
+        ) as resp:
+            response = await resp.json()
+            if response is None:
+                raise NullResponseError()
+            elif response.get('success'):
+                return response['data']
+            else:
+                data = response.get('data', {})
+                detail = data.get('content_blocks', '') if isinstance(data, dict) else ''
+                if detail:
+                    raise HTTPError(detail)
+                raise exception_map.get(response.get('code', ''), HTTPError)(response.get('msg', ''))
 
     async def sink_threads(self, payload: dict):
         """
@@ -295,6 +330,10 @@ class HTTP:
         """
         return await self.make_request(FETCH_MOTD, payload)
 
+    async def set_motd(self, payload):
+        """{"lobby_id":"5632276","motd":"Test motd"}"""
+        return await self.make_request("/api/spectrum/lobby/setMotd", payload)
+
     async def fetch_lobby_info(self, payload):
         """
         {"member_id":"3100861"}
@@ -336,6 +375,41 @@ class HTTP:
     async def unsubscribe(self, payload):
         """{"subscription_keys":["key1","key2"]}"""
         return await self.make_request(UNSUBSCRIBE, payload)
+
+    async def fetch_embed(self, url: str):
+        """Fetch embed/media data for a URL. Returns the embed data dict."""
+        return await self.make_request('/api/spectrum/media/embed/fetch', {"url": url})
+
+    async def upload_image(self, file_path: str, filename: str = None, content_type: str = None):
+        """Upload an image to Spectrum. Returns the media data dict."""
+        import mimetypes
+        await self._client._ready_event.wait()
+
+        if filename is None:
+            filename = os.path.basename(file_path)
+        if content_type is None:
+            content_type = mimetypes.guess_type(file_path)[0] or "image/png"
+
+        headers = {**self.headers}
+        if self._client_id:
+            headers['x-tavern-id'] = self._client_id
+
+        data = aiohttp.FormData()
+        data.add_field('file', open(file_path, 'rb'), filename=filename, content_type=content_type)
+
+        async with self._session.post(
+                '/api/spectrum/media/upload/image',
+                data=data,
+                headers=headers,
+                cookies=self.cookies
+        ) as resp:
+            response = await resp.json()
+            if response is None:
+                raise NullResponseError()
+            elif response.get('success'):
+                return response['data']
+            else:
+                raise exception_map.get(response.get('code', 0), HTTPError)(response.get('msg', 'Upload failed'))
 
     async def make_request(self, endpoint: str, payload: dict):
         await self._client._ready_event.wait()

@@ -368,21 +368,21 @@ class Thread(abc.Identifier, abc.Subscription):
 
         self.member = self._client._replace_member(payload["member"])
 
-        self.replies_count = payload["replies_count"]
-        self.views_count = payload["views_count"]
-        self.latest = payload["latest"]
-        self.latest_activity = Activity(**payload["latest_activity"])
-        self.newest_unread = payload["newest_unread"]
-        self.last_read = payload["last_read"]
-        self.last_marker = payload["last_marker"]
-        self.votes = payload["votes"]
-        self.reactions = payload["reactions"]
-        self.tracked_replies_references = payload["tracked_replies_references"]
-        self.children_replies_references = payload["children_replies_references"]
-        self.notification_subscription = payload["notification_subscription"]
-        self.aspect = payload["aspect"]
-        self.nested_replies_ids = [int(x) for x in payload["nested_replies_ids"]]
-        self.replies = [self._client._replace_reply(reply) for reply in payload['replies']]
+        self.replies_count = payload.get("replies_count", 0)
+        self.views_count = payload.get("views_count", 0)
+        self.latest = payload.get("latest")
+        self.latest_activity = Activity(**payload["latest_activity"]) if payload.get("latest_activity") else None
+        self.newest_unread = payload.get("newest_unread")
+        self.last_read = payload.get("last_read")
+        self.last_marker = payload.get("last_marker")
+        self.votes = payload.get("votes", 0)
+        self.reactions = payload.get("reactions", [])
+        self.tracked_replies_references = payload.get("tracked_replies_references", [])
+        self.children_replies_references = payload.get("children_replies_references", [])
+        self.notification_subscription = payload.get("notification_subscription")
+        self.aspect = payload.get("aspect")
+        self.nested_replies_ids = [int(x) for x in payload.get("nested_replies_ids", [])]
+        self.replies = [self._client._replace_reply(reply) for reply in payload.get('replies', [])]
 
     @property
     def channel(self):
