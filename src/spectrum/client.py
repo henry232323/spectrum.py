@@ -1,16 +1,27 @@
+from __future__ import annotations
+
 import asyncio
 import traceback
+from typing import TYPE_CHECKING
 
 from .gateway import Gateway
 from .httpclient import HTTPClient
 from .models import Object
+from .models.channel import Channel
 from .models.lobby import Lobby
 from .models.member import Member
 from .models.message import Message
 from .models.presence import Presence
 from .models.reaction import Reaction
+from .models.reply import Reply
+from .models.thread import Thread, ThreadStub
+from .models.upload import Upload
 from .util import find, event_dispatch, register_callback
 from .util.event_dispatch import EventDispatchType
+
+if TYPE_CHECKING:
+    from .models.community import Community
+    from .models.role import Role
 
 
 @event_dispatch
@@ -18,6 +29,7 @@ class Client(HTTPClient, EventDispatchType):
     def __init__(self, *, rsi_token: str = None, device_id: str = None, **kwargs):
         super().__init__(rsi_token=rsi_token, device_id=device_id, **kwargs)
         self._gateway: Gateway = Gateway(client=self, rsi_token=rsi_token, device_id=device_id)
+        self._media_ready_events: dict[str, asyncio.Event] = {}
 
     async def run(self):
         gateway_token = await self.identify()
@@ -202,6 +214,85 @@ class Client(HTTPClient, EventDispatchType):
     async def on_member_roles_update(self, community, member, roles):
         pass
 
+    @register_callback('media.processing.ready')
+    async def _on_media_processing_ready_raw(self, payload):
+        media_data = payload.get('media', {})
+        upload = Upload(media_data)
+        self._media_ready_events.setdefault(upload.id, asyncio.Event()).set()
+        asyncio.ensure_future(self.on_media_ready(upload))
+
+    async def on_media_ready(self, upload: Upload):
+        """Called when an uploaded image finishes processing."""
+        pass
+
+    @register_callback('message_lobby.read.update')
+    async def _on_lobby_read_update_raw(self, payload):
+        lobby = self.get_lobby(payload.get('lobby_id')) or Object(self, id=payload.get('lobby_id'))
+        message = self.get_message(payload.get('message_id')) or Object(self, id=payload.get('message_id'))
+        asyncio.ensure_future(self.on_lobby_read_update(lobby, message))
+
+    async def on_lobby_read_update(self, lobby: Lobby | Object, message: Message | Object):
+        """Called when read marker updates in a lobby."""
+        pass
+
+    @register_callback('forum.thread.read.update')
+    async def _on_thread_read_update_raw(self, payload):
+        thread_id = int(payload.get('thread_id', 0))
+        thread = self.get_thread(thread_id) or self.get_thread_stub(thread_id) or Object(self, id=thread_id)
+        reply = self.get_reply(payload.get('reply_id')) or Object(self, id=payload.get('reply_id'))
+        asyncio.ensure_future(self.on_thread_read_update(thread, reply))
+
+    async def on_thread_read_update(self, thread: Thread | ThreadStub | Object, reply: Reply | Object):
+        """Called when read marker updates in a thread."""
+        pass
+
+    @register_callback('forum.channel.read.update')
+    async def _on_channel_read_update_raw(self, payload):
+        channel_id = int(payload.get('channel_id', 0))
+        thread_id = int(payload.get('thread_id', 0))
+        channel = self.get_channel(channel_id) or Object(self, id=channel_id)
+        thread = self.get_thread(thread_id) or self.get_thread_stub(thread_id) or Object(self, id=thread_id)
+        asyncio.ensure_future(self.on_channel_read_update(channel, thread))
+
+    async def on_channel_read_update(self, channel: Channel | Object, thread: Thread | ThreadStub | Object):
+        """Called when read marker updates in a forum channel."""
+        pass
+
+    @register_callback('notification.subscription.update')
+    async def _on_notification_subscription_update_raw(self, payload):
+        entity_type = payload.get('entity_type')
+        entity_id = payload.get('entity_id')
+        entity: Thread | ThreadStub | Channel | Lobby | Object
+        if entity_type == 'forum_thread':
+            entity = self.get_thread(entity_id) or self.get_thread_stub(entity_id) or Object(self, id=entity_id)
+        elif entity_type == 'forum_channel':
+            entity = self.get_channel(entity_id) or Object(self, id=entity_id)
+        elif entity_type == 'message_lobby':
+            entity = self.get_lobby(entity_id) or Object(self, id=entity_id)
+        else:
+            entity = Object(self, id=entity_id)
+        asyncio.ensure_future(self.on_notification_subscription_update(entity_type, entity, payload.get('subscription_type')))
+
+    async def on_notification_subscription_update(self, entity_type: str, entity: Thread | ThreadStub | Channel | Lobby | Object, subscription_type: str):
+        """Called when notification subscription changes (e.g. auto-subscribe to created thread)."""
+        pass
+
+    @register_callback('friendship.init_presences')
+    async def _on_friendship_init_presences_raw(self, payload):
+        presences: dict[Member | Object, list | None] = {}
+        for member_id, presence_data in payload.get('presences', {}).items():
+            member = self.get_member(member_id) or Object(self, id=member_id)
+            presences[member] = presence_data
+        asyncio.ensure_future(self.on_friendship_init_presences(presences))
+
+    async def on_friendship_init_presences(self, presences: dict[Member | Object, list | None]):
+        """Called on connect with initial friend presence states."""
+        pass
+
+    @register_callback('client.version')
+    async def _on_client_version_raw(self, payload):
+        pass
+
     @register_callback("unhandled_event")
     async def _on_unhandled_event_raw(self, payload):
         self.log_handler.info("Received unhandled event of type %s: %s", payload['type'], payload)
@@ -209,6 +300,28 @@ class Client(HTTPClient, EventDispatchType):
 
     async def on_unhandled_event(self, payload):
         pass
+
+    async def upload_image(self, file_path: str, filename: str = None, content_type: str = None, wait: bool = True, timeout: float = 30) -> Upload:
+        """Upload an image and optionally wait for processing via gateway event. Set wait=False to return immediately."""
+        upload = await super().upload_image(file_path, filename=filename, content_type=content_type)
+        if wait and upload.processing:
+            await self.wait_for_media(upload, timeout=timeout)
+            upload.processing = False
+        return upload
+
+    async def wait_for_media(self, upload: Upload = None, *, upload_id: str = None, timeout: float = 30) -> bool:
+        """Wait for an uploaded image to finish processing via gateway event. Returns True if ready, False on timeout."""
+        _id = upload.id if upload else upload_id
+        if not _id:
+            raise ValueError("Provide either upload or upload_id")
+        event = self._media_ready_events.setdefault(_id, asyncio.Event())
+        if event.is_set():
+            return True
+        try:
+            await asyncio.wait_for(event.wait(), timeout=timeout)
+            return True
+        except asyncio.TimeoutError:
+            return False
 
     async def subscribe_to_topic(self, *subscription_keys, scope=None):
         await self._gateway.subscribe_to_key(*subscription_keys, scope=scope)

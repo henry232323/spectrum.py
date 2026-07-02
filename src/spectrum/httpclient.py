@@ -1,13 +1,17 @@
+from __future__ import annotations
+
 import asyncio
 import logging
 import sys
 import traceback
+from collections.abc import AsyncIterator
 from typing import Optional
 
 from .errors import NullResponseError, ResourceNotFound
 from .http import HTTP
 from .models import Lobby, Member, Community, Message, Forum, channel, Thread, Reply, Role
 from .models.thread import ThreadStub
+from .models.upload import Upload
 from .util import register_callback, event_dispatch
 from .util.event_dispatch import EventDispatchType
 from .util.limited_size_dict import LimitedSizeDict
@@ -175,7 +179,7 @@ class HTTPClient(EventDispatchType):
         return self._thread_stubs.get(int(thread_id))
 
     @property
-    def thread_stubs(self) -> list[Thread]:
+    def thread_stubs(self) -> list[ThreadStub]:
         return list(self._thread_stubs.values())
 
     def _replace_thread_stub(self, payload: dict):
@@ -240,25 +244,24 @@ class HTTPClient(EventDispatchType):
             "reason": reason
         })
 
-    async def fetch_lobby(self, lobby_id):
+    async def fetch_lobby(self, lobby_id: int | str) -> Lobby:
         payload = await self._http.fetch_lobby_info(dict(lobby_id=lobby_id))
-        lobby = self._replace_lobby(payload)
-        return lobby
+        return self._replace_lobby(payload)
 
-    async def fetch_member_by_id(self, member_id):
+    async def fetch_member_by_id(self, member_id: int | str) -> Member:
         try:
             payload = await self._http.fetch_member_by_id(dict(member_id=member_id))
-            member = self._replace_member(payload['member'])
-            return member
+            return self._replace_member(payload['member'])
         except NullResponseError:
             raise ResourceNotFound("Member not found")
 
-    async def fetch_member_by_handle(self, handle):
+    async def fetch_member_by_handle(self, handle: str) -> Member:
         payload = await self._http.fetch_member_by_handle(dict(nickname=handle))
-        member = self._replace_member(payload['member'])
-        return member
+        return self._replace_member(payload['member'])
 
-    async def search_users(self, query: str, ignore_self=True, community=None, max_count=None, page_delay=1.0):
+    async def search_users(self, query: str, ignore_self: bool = True,
+                           community: Community | None = None, max_count: int | None = None,
+                           page_delay: float = 1.0) -> AsyncIterator[Member]:
         page = 1
         count = 0
         while True:
@@ -284,25 +287,25 @@ class HTTPClient(EventDispatchType):
             if page_delay:
                 await asyncio.sleep(page_delay)
 
-    async def set_status(self, status: str, info: str = None):
+    async def set_status(self, status: str, info: str | None = None) -> None:
         await self._http.set_status({"status": status, "info": info})
 
-    async def add_friend(self, member_id: int | str):
+    async def add_friend(self, member_id: int | str) -> None:
         await self._http.add_friend({"member_id": str(member_id)})
 
-    async def remove_friend(self, member_id: int | str):
+    async def remove_friend(self, member_id: int | str) -> None:
         await self._http.remove_friend({"member_id": str(member_id)})
 
-    async def block_member(self, member_id: int | str):
+    async def block_member(self, member_id: int | str) -> None:
         await self._http.blocklist_add({"member_id": str(member_id)})
 
-    async def unblock_member(self, member_id: int | str):
+    async def unblock_member(self, member_id: int | str) -> None:
         await self._http.blocklist_remove({"member_id": str(member_id)})
 
-    async def search_content(self, community_id: int | str = "1", text: str = "",
-                             content_types: list[str] = None, page: int = 1,
+    async def search_content(self, text: str = "", community_id: int | str = "1",
+                             content_types: list[str] | None = None, page: int = 1,
                              sort: str = "latest", range: str = "year",
-                             author: str = None, visibility: str = "nonerased"):
+                             author: str | None = None, visibility: str = "nonerased") -> list[dict]:
         payload = {
             "community_id": str(community_id),
             "type": content_types or ["op", "reply", "chat"],
@@ -342,6 +345,15 @@ class HTTPClient(EventDispatchType):
 
     async def identify(self):
         return await self._http.identify()
+
+    async def fetch_embed(self, url: str) -> dict:
+        """Fetch embed/media data for a URL (image, link preview, etc.)."""
+        return await self._http.fetch_embed(url)
+
+    async def upload_image(self, file_path: str, filename: str | None = None, content_type: str | None = None) -> Upload:
+        """Upload an image to Spectrum. Returns an Upload object that can be passed directly to ContentBuilder.image()."""
+        data = await self._http.upload_image(file_path, filename=filename, content_type=content_type)
+        return Upload(data)
 
     async def close(self):
         await self._http.close()

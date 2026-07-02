@@ -66,7 +66,11 @@ class ContentBlock:
 
     def __post_init__(self):
         self.id = int(self.id) if isinstance(self.id, str) and self.id.isnumeric() else self.id
-        self.blocks = [Block(**block) for block in (self.blocks if self.blocks is not None else self.data['blocks'])]
+        if self.type == "text":
+            source = self.blocks if self.blocks is not None else (self.data or {}).get('blocks', [])
+            self.blocks = [Block(**block) for block in source]
+        else:
+            self.blocks = []
 
     def plaintext(self):
         chunks = []

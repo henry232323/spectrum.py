@@ -1,8 +1,15 @@
+from __future__ import annotations
+
 import asyncio
+from typing import TYPE_CHECKING
 
 from . import abc
-from .thread import ThreadStub
+from .thread import Thread, ThreadStub
 from .. import httpclient, client
+from ..content_builder import ContentBuilder
+
+if TYPE_CHECKING:
+    from .label import Label
 
 
 class Label(abc.Identifier, abc.Subscription):
@@ -140,40 +147,31 @@ class Channel(abc.Identifier, abc.Subscription):
     async def create_thread(
             self,
             subject: str,
-            plaintext: str,
-            type="discussion",
-            label_id=None,
-            content_blocks=None,
-            highlight_role_id=None,
-            is_locked=False,
-            is_reply_nesting_disabled=False
-    ):
+            plaintext: str | None = None,
+            content: ContentBuilder | None = None,
+            *,
+            type: str = "discussion",
+            label_id: str | None = None,
+            content_blocks: list[dict] | None = None,
+            highlight_role_id: str | None = None,
+            is_locked: bool = False,
+            is_reply_nesting_disabled: bool = False
+    ) -> Thread:
+        """Create a forum thread. Pass a ContentBuilder for rich content, or plaintext for simple posts. For full control, pass content_blocks directly."""
+        if content is not None:
+            content_blocks = content.content_blocks
+            plaintext = content.plaintext
+        elif content_blocks is None:
+            content_blocks = ContentBuilder().text(plaintext or "").content_blocks
+            plaintext = plaintext or ""
+
         resp = await self._client._http.create_thread(
             {
                 "type": type,
                 "channel_id": self.id,
                 "label_id": label_id,
                 "subject": subject,
-                "content_blocks": content_blocks or [
-                    {
-                        "id": 1,
-                        "type": "text",
-                        "data": {
-                            "blocks": [
-                                {
-                                    "key": "dr2qu",
-                                    "text": plaintext,
-                                    "type": "unstyled",
-                                    "depth": 0,
-                                    "inlineStyleRanges": [],
-                                    "entityRanges": [],
-                                    "data": {}
-                                }
-                            ],
-                            "entityMap": {}
-                        }
-                    }
-                ],
+                "content_blocks": content_blocks,
                 "plaintext": plaintext,
                 "highlight_role_id": highlight_role_id,
                 "is_locked": is_locked,
@@ -181,11 +179,12 @@ class Channel(abc.Identifier, abc.Subscription):
             }
         )
 
-        thread = self._client._replace_thread(resp)
-        self.threads[thread.id] = thread
+        full_resp = await self._client._http.fetch_thread_nested({"slug": resp["slug"], "sort": "oldest"})
+        thread = self._client._replace_thread(full_resp)
+        self.threads.append(thread)
         return thread
 
-    async def fetch_thread_stubs(self, max_count=None, label_id=None):
+    async def fetch_thread_stubs(self, max_count: int | None = None, label_id: str | None = None) -> list[ThreadStub]:
         resp = await self._client._http.fetch_threads(
             {"channel_id": self.id, "page": 1, "sort": "hot", "label_id": label_id}
         )
