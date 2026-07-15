@@ -1,0 +1,9 @@
+fragment TyStockGAFragment on TyStock {
+    unlimited
+    show
+    available
+    backOrder
+    qty
+    backOrderQty
+    level
+  }

@@ -1,0 +1,8 @@
+fragment RSIShipGAFragment on RSIShip {
+    id
+    title
+    name
+    manufacturer {
+      code
+    }
+  }

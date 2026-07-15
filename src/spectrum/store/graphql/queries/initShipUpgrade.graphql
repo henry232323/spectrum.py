@@ -1,0 +1,50 @@
+query initShipUpgrade {
+  ships {
+    id
+    name
+    medias {
+      productThumbMediumAndSmall
+      slideShow
+    }
+    manufacturer {
+      id
+      name
+    }
+    focus
+    type
+    flyableStatus
+    owned
+    msrp
+    link
+    skus {
+      id
+      title
+      available
+      price
+      body
+      unlimitedStock
+      availableStock
+    }
+  }
+  manufacturers {
+    id
+    name
+  }
+  app {
+    version
+    env
+    pricing {
+      currencyCode
+      currencySymbol
+      exchangeRate
+      exponent
+      taxRate
+      isTaxInclusive
+    }
+    mode
+    isAnonymous
+    buyback {
+      credit
+    }
+  }
+}

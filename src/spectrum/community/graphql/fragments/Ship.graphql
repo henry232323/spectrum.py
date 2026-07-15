@@ -1,0 +1,4 @@
+fragment Ship on Ship {
+  id
+  name
+}

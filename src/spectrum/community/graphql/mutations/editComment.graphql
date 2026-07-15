@@ -1,0 +1,5 @@
+mutation editComment($commentParameters: EditCommentParameters!) {
+  editComment(comment: $commentParameters) {
+    ...Comment
+  }
+}

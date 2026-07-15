@@ -1,0 +1,5 @@
+mutation reportComment($report: ReportParameters!) {
+  reportComment(report: $report) {
+    ...Comment
+  }
+}

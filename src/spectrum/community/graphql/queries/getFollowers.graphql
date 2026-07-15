@@ -1,0 +1,8 @@
+query getFollowers($FollowsQuery: FollowsQuery!) {
+  followers(query: $FollowsQuery) {
+    hasNextPage
+    metaData {
+      ...AccountTooltip
+    }
+  }
+}

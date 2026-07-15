@@ -1,0 +1,9 @@
+query getShips {
+  ships {
+    metaData {
+      name
+      id
+    }
+    totalCount
+  }
+}

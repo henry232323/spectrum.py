@@ -1,0 +1,20 @@
+fragment ConnectedAccountData on ConnectedAccountData {
+        badges {
+            slug
+            title
+            uid
+        }
+        bio
+        citizenDossierUrl
+        displayName
+        live
+        nickname
+        probationUntil
+        stats {
+            ...AccountStats
+        }
+        thumbnailUrl
+        twitchUserId
+        uid
+        website
+    }

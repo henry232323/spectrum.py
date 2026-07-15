@@ -1,0 +1,5 @@
+mutation followAccount($nickname: String!) {
+  followAccount(nickname: $nickname) {
+    ...Account
+  }
+}

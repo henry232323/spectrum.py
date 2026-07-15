@@ -1,0 +1,5 @@
+query getAccountStats($CreatorQuery: CreatorQuery!) {
+  creatorStats(query: $CreatorQuery) {
+    ...AccountStats
+  }
+}

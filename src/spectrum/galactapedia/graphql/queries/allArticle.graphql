@@ -1,0 +1,25 @@
+query AllArticle($first: Int, $skip: Int, $after: String) {
+  allArticle(first: $first, skip: $skip, after: $after) {
+    edges {
+      node {
+        id
+        title
+        slug
+        body
+        thumbnail {
+          url
+          name
+          type
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

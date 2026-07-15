@@ -1,0 +1,18 @@
+query getReportedComments {
+  reportedComments {
+    hasNextPage
+    metaData {
+      authorName
+      commentBody
+      commentUid
+      createdAt
+      detail
+      membershipUrl
+      postSlug
+      postTitle
+      postUid
+      type
+      uid
+    }
+  }
+}

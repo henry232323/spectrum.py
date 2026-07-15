@@ -1,0 +1,24 @@
+query Category($id: ID!, $locale: String) {
+  Category(id: $id, locale: $locale) {
+    id
+    _meta {
+      locale
+      locales
+      publishedAt
+      updatedAt
+      id
+    }
+    name
+    slug
+    parent {
+      id
+      name
+      slug
+    }
+    thumbnail {
+      url
+      name
+      type
+    }
+  }
+}

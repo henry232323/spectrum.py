@@ -1,0 +1,9 @@
+mutation editPost($postParameters: EditPostParameters!) {
+  editPost(post: $postParameters) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

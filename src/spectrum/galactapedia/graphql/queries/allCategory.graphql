@@ -1,0 +1,14 @@
+query AllCategory($locale: String, $first: Int, $skip: Int, $before: String, $after: String, $sort: Category_Sort, $where: Category_Where) {
+  allCategory(locale: $locale, first: $first, skip: $skip, before: $before, after: $after, sort: $sort, where: $where) {
+    edges {
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

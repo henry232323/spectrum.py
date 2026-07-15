@@ -1,0 +1,9 @@
+mutation downvotePost($postUid: String) {
+  downvotePost(postUid: $postUid) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

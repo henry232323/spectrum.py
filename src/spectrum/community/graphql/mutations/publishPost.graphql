@@ -1,0 +1,9 @@
+mutation publishPost($postUid: String!) {
+  publishPost(postUid: $postUid) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

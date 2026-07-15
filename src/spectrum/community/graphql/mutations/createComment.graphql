@@ -1,0 +1,5 @@
+mutation createComment($commentParameters: CreateCommentParameters!) {
+  createComment(comment: $commentParameters) {
+    ...Comment
+  }
+}

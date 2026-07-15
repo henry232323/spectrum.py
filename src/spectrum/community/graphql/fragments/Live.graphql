@@ -1,0 +1,40 @@
+fragment Live on Live {
+  account {
+    ...LeanAccount
+  }
+  annotation {
+    body
+    date
+  }
+  body
+  createdAt
+  event {
+    ...Event
+  }
+  honor
+  media {
+    large
+    placeholder
+    type
+    uid
+    url
+    wide
+  }
+  membershipProvider
+  membershipUrl
+  modifiedAt
+  modifiedBy
+  reported
+  reportsCount
+  slug
+  status
+  summary
+  tags {
+    ...Tag
+  }
+  title
+  type
+  uid
+  viewersCount
+  voted
+}

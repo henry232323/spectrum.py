@@ -1,0 +1,17 @@
+query GetRewardsQuery($query: GetRewardsInput!) {
+    rewardBundle {
+      getRewards(query: $query) {
+        redeemed
+        reward {
+          slug
+          name
+          description
+          imageComposer {
+            url
+          }
+          publishStart
+          publishEnd
+        }
+      }
+    }
+  }
