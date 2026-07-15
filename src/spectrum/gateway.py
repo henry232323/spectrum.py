@@ -45,6 +45,20 @@ class Gateway:
         log.debug("Sent payload: %s", payload)
         await self.socket.send_json(payload)
 
+    async def send_event(self, event_type: str, data: dict):
+        """Send a generic event over the WebSocket (e.g. typing indicators).
+
+        Parameters
+        ----------
+        event_type : str
+            The event type string, e.g. ``"message_lobby.typing.start"``.
+        data : dict
+            Additional payload fields merged into the sent message.
+        """
+        payload = {"type": event_type, **data}
+        log.debug("Sent event: %s", payload)
+        await self.socket.send_json(payload)
+
     async def start(self, token=None):
         log.info('Starting gateway')
         self._running = True
