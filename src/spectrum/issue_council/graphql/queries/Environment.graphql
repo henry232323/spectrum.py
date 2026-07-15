@@ -1,0 +1,5 @@
+query Environment($id: ID!) {
+      environment(id: $id) {
+        ...EnvironmentFragment
+      }
+    }

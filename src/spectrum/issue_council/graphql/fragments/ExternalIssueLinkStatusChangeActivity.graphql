@@ -1,0 +1,9 @@
+fragment ExternalIssueLinkStatusChangeActivity on ExternalIssueLinkStatusChangeActivity {
+    id
+    type
+    externalLinkStatus
+    updatedOn
+    updatedBy {
+      ...UserProfileFragment
+    }
+  }

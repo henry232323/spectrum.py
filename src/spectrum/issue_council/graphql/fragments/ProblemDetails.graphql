@@ -1,0 +1,33 @@
+fragment ProblemDetails on ProblemDetail {
+    type
+    title
+    status
+    instance
+    help
+    debug {
+      name
+      message
+      stack
+    }
+    data {
+      ... on ValidationErrors {
+        errors {
+          field
+          code
+          message
+          help
+          fieldSpec {
+            minLength
+            maxLength
+            pattern
+            required
+          }
+        }
+      }
+      ... on ConflictErrors {
+        errors {
+          field
+        }
+      }
+    }
+  }

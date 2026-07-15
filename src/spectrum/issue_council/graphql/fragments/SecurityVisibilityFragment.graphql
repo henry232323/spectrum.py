@@ -1,0 +1,24 @@
+fragment SecurityVisibilityFragment on SecurityVisibility {
+    level
+    inheritancePolicy
+    restrictedTo {
+      ... on SecurityUserTrustee {
+        type
+        user {
+          id
+          displayName
+          avatarUrl
+        }
+      }
+      ... on SecurityGroupTrustee {
+        type
+        group {
+          id
+          code
+          name
+          role
+          isDeleted
+        }
+      }
+    }
+  }

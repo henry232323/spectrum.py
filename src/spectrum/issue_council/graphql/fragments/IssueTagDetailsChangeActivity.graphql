@@ -1,0 +1,9 @@
+fragment IssueTagDetailsChangeActivity on IssueTagDetailsChangeActivity {
+    id
+    type
+    issueTagType
+    updatedOn
+    updatedBy {
+      ...UserProfileFragment
+    }
+  }

@@ -1,0 +1,7 @@
+fragment ProjectFeatureFragment on ProjectFeature {
+    code
+    availability
+    status
+    createdOn
+    updatedOn
+  }

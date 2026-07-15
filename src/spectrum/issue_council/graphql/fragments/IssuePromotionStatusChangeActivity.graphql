@@ -1,0 +1,9 @@
+fragment IssuePromotionStatusChangeActivity on IssuePromotionStatusChangeActivity {
+    id
+    type
+    isPromoted
+    updatedOn
+    updatedBy {
+      ...UserProfileFragment
+    }
+  }

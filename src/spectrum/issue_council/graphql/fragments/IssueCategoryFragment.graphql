@@ -1,0 +1,7 @@
+fragment IssueCategoryFragment on IssueCategory {
+    id
+    code
+    name
+    intent
+    status
+  }

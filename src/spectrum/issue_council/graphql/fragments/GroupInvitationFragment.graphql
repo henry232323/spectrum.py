@@ -1,0 +1,14 @@
+fragment GroupInvitationFragment on UserGroupInvitation {
+    id
+    code
+    name
+    status
+    expirationDate
+    activationDate
+    groups {
+      code
+      id
+      name
+      role
+    }
+  }

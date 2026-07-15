@@ -1,0 +1,44 @@
+fragment ProjectFragment on Project {
+    id
+    name
+    code
+    issueCodePrefix
+    issueConfirmationThreshold
+    issueExpirationDelay
+    supportedPlatforms {
+      id
+      code
+      name
+      createdOn
+    }
+    themeCode
+    localizationPackageCode
+    statistics {
+      issueCount
+    }
+    viewerProperties {
+      canOpenIssue
+    }
+    organization {
+      name
+      avatarUrl
+    }
+    # #fixed-paging
+    issueCategories(query: { statuses: [ACTIVE], paging: { first: 100 }, sortBy: { field: NAME, direction: ASC } }) {
+      edges {
+        cursor
+        node {
+          ...IssueCategoryFragment
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+      totalCount
+      pages {
+        ...PagesFragment
+      }
+    }
+    createdOn
+    updatedOn
+  }

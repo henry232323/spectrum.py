@@ -1,0 +1,115 @@
+query Notifications($query: NotificationQueryInput!) {
+    notifications(query: $query) {
+      edges {
+        cursor
+        node {
+          id
+          type
+          context {
+            issues {
+              tags
+              issue {
+                id
+                code
+                title
+              }
+              project {
+                id
+                name
+                code
+                organization {
+                  name
+                  avatarUrl
+                }
+              }
+            }
+            contributions {
+              tags
+              issue {
+                id
+                code
+                title
+              }
+              project {
+                id
+                name
+                code
+                organization {
+                  name
+                  avatarUrl
+                }
+              }
+              contribution {
+                id
+                submittedBy {
+                  ...UserProfileFragment
+                }
+              }
+            }
+            comments {
+              tags
+              issue {
+                id
+                code
+                title
+              }
+              project {
+                id
+                name
+                code
+                organization {
+                  name
+                  avatarUrl
+                }
+              }
+              parent {
+                ... on IssueContributionDescriptor {
+                  id
+                  type
+                  submittedBy {
+                    ...UserProfileFragment
+                  }
+                }
+                ... on IssueCommentDescriptor {
+                  id
+                  type
+                  submittedBy {
+                    ...UserProfileFragment
+                  }
+                }
+              }
+              comment {
+                id
+                submittedBy {
+                  ...UserProfileFragment
+                }
+              }
+            }
+            actors {
+              tags
+              actor {
+                ...UserProfileFragment
+              }
+            }
+          }
+          properties {
+            key
+            values
+            valueType
+          }
+          readStatus
+          readOn
+          createdOn
+          updatedOn
+          occurenceCount
+        }
+      }
+      pageInfo {
+        ...PageInfoFragment
+      }
+      totalCount
+      pages {
+        ...PagesFragment
+      }
+    }
+  }

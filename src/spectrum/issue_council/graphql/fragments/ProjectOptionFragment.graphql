@@ -1,0 +1,10 @@
+fragment ProjectOptionFragment on ProjectOption {
+    code
+    values
+    valueType
+    createdOn
+    updatedOn
+    visibility {
+      ...SecurityVisibilityFragment
+    }
+  }

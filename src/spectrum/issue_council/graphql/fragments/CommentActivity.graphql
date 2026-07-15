@@ -1,0 +1,41 @@
+fragment CommentActivity on IssueCommentActivity {
+    id
+    type
+    comment {
+      id
+      content
+      contentAvailability
+      contentAvailabilityUpdatedBy {
+        ...UserProfileFragment
+      }
+      submittedBy {
+        ...UserProfileFragment
+      }
+      submittedOn
+      submittedAs
+      submittedAsOrganization
+      viewerProperties {
+        canViewContent
+        cannotViewContentReason
+        canModify
+        canDelete
+      }
+      lastModification {
+        id
+        comment
+        modifiedBy {
+          ...UserProfileFragment
+        }
+        modifiedOn
+        modifiedAs
+        changes {
+          property
+        }
+      }
+    }
+    replyCount
+    isPinned
+    pinnedBy {
+      ...UserProfileFragment
+    }
+  }

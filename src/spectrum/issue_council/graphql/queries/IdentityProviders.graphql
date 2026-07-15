@@ -1,0 +1,15 @@
+query IdentityProviders {
+    identityProviders {
+      id
+      name
+      slug
+      sessionManagementOptions {
+        interactionType
+        sessionType
+        sessionRefreshInterval
+        federatedSessionManagerSourceUrl
+      }
+      isEnabled
+      isDefault
+    }
+  }

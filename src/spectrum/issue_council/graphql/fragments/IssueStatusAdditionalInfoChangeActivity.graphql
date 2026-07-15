@@ -1,0 +1,9 @@
+fragment IssueStatusAdditionalInfoChangeActivity on IssueStatusAdditionalInfoChangeActivity {
+    id
+    type
+    additionalInfoStatus
+    updatedOn
+    updatedBy {
+      ...UserProfileFragment
+    }
+  }

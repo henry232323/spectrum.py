@@ -1,0 +1,11 @@
+fragment ReleaseFragment on Release {
+    id
+    code
+    version {
+      code
+    }
+    createdOn
+    updatedOn
+    publishedOn
+    hasCurrentDeployment
+  }
