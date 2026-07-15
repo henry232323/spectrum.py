@@ -1,0 +1,5 @@
+mutation editSettings($settingsParameters: EditSettingParameters!) {
+  editSettings(settings: $settingsParameters) {
+    ...Settings
+  }
+}

@@ -1,0 +1,8 @@
+query getEvents($EventQuery: EventQuery!) {
+  events(query: $EventQuery) {
+    metaData {
+      ...Event
+    }
+    totalCount
+  }
+}

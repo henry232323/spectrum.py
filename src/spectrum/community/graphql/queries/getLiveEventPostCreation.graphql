@@ -1,0 +1,30 @@
+query getLiveEventPostCreation($EventQuery: EventQuery!) {
+  events(query: $EventQuery) {
+    metaData {
+      eventGroup {
+        uid
+        title
+        mandatoryShipTagging
+      }
+      media {
+        fullsize
+        large
+        logoRectangleDesktop
+        logoRectangleMobile
+        logoSquareDesktop
+        logoSquareMobile
+        placeholder
+        type
+        uid
+      }
+      submissionStartedAt
+      submissionEndedAt
+      slug
+      title
+      uid
+      url
+      contestTitle
+      contestUrl
+    }
+  }
+}

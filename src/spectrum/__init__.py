@@ -12,6 +12,10 @@ from . import util
 try:
     from . import community
     from .community import CommunityHubClient
+    from . import galactapedia
+    from .galactapedia import GalactapediaClient
+    from . import store
+    from .store import StoreClient
 except ImportError:
     pass
 

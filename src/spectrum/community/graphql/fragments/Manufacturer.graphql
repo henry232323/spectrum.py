@@ -1,0 +1,8 @@
+fragment Manufacturer on Manufacturer {
+  code
+  icon
+  id
+  logo
+  name
+  status
+}

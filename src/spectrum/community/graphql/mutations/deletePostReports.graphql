@@ -1,0 +1,9 @@
+mutation deletePostReports($postUid: String!) {
+  deletePostReports(postUid: $postUid) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

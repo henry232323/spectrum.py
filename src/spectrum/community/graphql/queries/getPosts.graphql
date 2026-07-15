@@ -1,0 +1,13 @@
+query getPosts($PostsQuery: PostsQuery!) {
+  posts(query: $PostsQuery) {
+    hasNextPage
+    metaData {
+      ...AudioCard
+      ...ImageCard
+      ...LiveCard
+      ...TextCard
+      ...VideoCard
+    }
+    totalCount
+  }
+}

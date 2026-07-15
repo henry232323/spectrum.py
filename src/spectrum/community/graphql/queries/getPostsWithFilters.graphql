@@ -1,0 +1,45 @@
+query getPostsWithFilters($PostsQuery: PostsQuery!) {
+  posts(query: $PostsQuery) {
+    filters {
+      editions {
+        count
+        label
+        value
+      }
+      followed {
+        count
+        label
+        value
+      }
+      honors {
+        count
+        label
+        value
+      }
+      ships {
+        count
+        label
+        value
+      }
+      tags {
+        count
+        label
+        value
+      }
+      types {
+        count
+        label
+        value
+      }
+    }
+    hasNextPage
+    metaData {
+      ...AudioCard
+      ...ImageCard
+      ...LiveCard
+      ...TextCard
+      ...VideoCard
+    }
+    totalCount
+  }
+}

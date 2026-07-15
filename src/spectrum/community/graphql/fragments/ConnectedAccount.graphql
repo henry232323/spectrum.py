@@ -1,0 +1,8 @@
+fragment ConnectedAccount on ConnectedAccount {
+        user {
+            ...ConnectedAccountData
+        }
+        settings {
+            ...Settings
+        }
+    }

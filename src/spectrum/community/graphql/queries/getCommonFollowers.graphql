@@ -1,0 +1,9 @@
+query getCommonFollowers($nickname: String!) {
+  commonFollowers(nickname: $nickname) {
+    totalCount
+    metaData {
+      nickname
+      thumbnailUrl
+    }
+  }
+}

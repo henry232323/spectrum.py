@@ -1,0 +1,12 @@
+query getTagsWithThumbnails {
+  tags {
+    metaData {
+      ...Tag
+      thumbnail {
+        fullsize
+        uid
+      }
+    }
+    totalCount
+  }
+}

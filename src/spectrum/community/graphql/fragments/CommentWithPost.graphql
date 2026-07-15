@@ -1,0 +1,10 @@
+fragment CommentWithPost on Comment {
+  ...Comment
+  post {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

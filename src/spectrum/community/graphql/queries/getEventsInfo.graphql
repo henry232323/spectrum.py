@@ -1,0 +1,38 @@
+query getEventsInfo($EventQuery: EventQuery!) {
+  events(query: $EventQuery) {
+    metaData {
+      description
+      endedAt
+      eventGroup {
+        mandatoryShipTagging
+        slug
+        title
+        uid
+      }
+      isLive
+      label
+      media {
+        fullsize
+        large
+        logoRectangleDesktop
+        logoRectangleMobile
+        logoSquareDesktop
+        logoSquareMobile
+        placeholder
+        type
+        uid
+      }
+      postCount
+      slug
+      startedAt
+      submissionEndedAt
+      submissionStartedAt
+      summary
+      title
+      uid
+      url
+      contestTitle
+      contestUrl
+    }
+  }
+}

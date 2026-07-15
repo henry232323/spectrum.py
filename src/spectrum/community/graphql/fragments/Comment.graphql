@@ -1,0 +1,22 @@
+fragment Comment on Comment {
+  account {
+    displayName
+    live
+    nickname
+    thumbnailUrl
+  }
+  annotation {
+    body
+    date
+  }
+  body
+  createdAt
+  modifiedAt
+  parentUid
+  repliesCount
+  reported
+  reportsCount
+  uid
+  voted
+  votesCount
+}

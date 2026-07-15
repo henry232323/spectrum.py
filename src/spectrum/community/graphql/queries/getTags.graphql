@@ -1,0 +1,8 @@
+query getTags {
+  tags {
+    metaData {
+      ...Tag
+    }
+    totalCount
+  }
+}

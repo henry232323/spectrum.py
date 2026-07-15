@@ -1,0 +1,9 @@
+fragment AccountTooltip on Account {
+  displayName
+  live
+  nickname
+  stats {
+    ...AccountStats
+  }
+  thumbnailUrl
+}

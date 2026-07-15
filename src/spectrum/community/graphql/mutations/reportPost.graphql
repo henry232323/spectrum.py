@@ -1,0 +1,9 @@
+mutation reportPost($report: ReportParameters!) {
+  reportPost(report: $report) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

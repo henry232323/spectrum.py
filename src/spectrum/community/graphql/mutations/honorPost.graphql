@@ -1,0 +1,9 @@
+mutation honorPost($postUid: String!, $honor: PostHonor!) {
+  honorPost(postUid: $postUid, honor: $honor) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

@@ -1,0 +1,45 @@
+query Homepage($locale: String) {
+  Homepage(locale: $locale) {
+    id
+    _meta {
+      locale
+      locales
+      publishedAt
+      updatedAt
+      id
+    }
+    homepageTitle
+    featuredArticle {
+      id
+      title
+      slug
+      body
+    }
+    inTheNewsArticle {
+      id
+      title
+      slug
+      body
+    }
+    featuredCategory1 {
+      id
+      name
+      slug
+    }
+    featuredCategory2 {
+      id
+      name
+      slug
+    }
+    featuredCategory3 {
+      id
+      name
+      slug
+    }
+    featuredCategory4 {
+      id
+      name
+      slug
+    }
+  }
+}

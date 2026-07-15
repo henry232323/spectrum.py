@@ -1,0 +1,32 @@
+fragment ImageCardCarousel on Image {
+  account {
+    ...AccountCard
+  }
+  commentsCount
+  createdAt
+  event {
+    title
+    uid
+  }
+  honor
+  mediaCount
+  slug
+  status
+  summary
+  tags {
+    label
+    uid
+  }
+  thumbnailUrl
+  title
+  type
+  uid
+  viewsCount
+  voted
+  voters {
+    displayName
+    nickname
+    thumbnailUrl
+  }
+  votesCount
+}

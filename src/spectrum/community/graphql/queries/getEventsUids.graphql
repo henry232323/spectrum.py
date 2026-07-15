@@ -1,0 +1,10 @@
+query getEventsUids($EventQuery: EventQuery!) {
+  events(query: $EventQuery) {
+    metaData {
+      uid
+      eventGroup {
+        uid
+      }
+    }
+  }
+}

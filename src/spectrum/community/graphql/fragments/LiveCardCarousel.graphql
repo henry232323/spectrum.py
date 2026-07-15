@@ -1,0 +1,23 @@
+fragment LiveCardCarousel on Live {
+  account {
+    ...AccountCard
+  }
+  createdAt
+  event {
+    title
+    uid
+  }
+  honor
+  membershipUrl
+  slug
+  status
+  summary
+  tags {
+    label
+    uid
+  }
+  thumbnailUrl
+  title
+  type
+  uid
+}

@@ -1,0 +1,8 @@
+query getVoters($VotersQuery: VotersQuery!) {
+  voters(query: $VotersQuery) {
+    hasNextPage
+    metaData {
+      ...AccountTooltip
+    }
+  }
+}

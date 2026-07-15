@@ -1,0 +1,24 @@
+fragment Event on Event {
+  description
+  endedAt
+  eventGroup {
+    mandatoryShipTagging
+    slug
+    title
+    uid
+  }
+  isLive
+  label
+  media {
+    ...Media
+  }
+  postCount
+  slug
+  startedAt
+  summary
+  title
+  uid
+  url
+  contestTitle
+  contestUrl
+}

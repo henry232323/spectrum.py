@@ -1,0 +1,6 @@
+fragment AccountCard on Account {
+  displayName
+  live
+  nickname
+  thumbnailUrl
+}

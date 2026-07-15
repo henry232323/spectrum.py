@@ -1,0 +1,14 @@
+query Tag($id: ID!, $locale: String) {
+  Tag(id: $id, locale: $locale) {
+    id
+    _meta {
+      locale
+      locales
+      publishedAt
+      updatedAt
+      id
+    }
+    name
+    slug
+  }
+}

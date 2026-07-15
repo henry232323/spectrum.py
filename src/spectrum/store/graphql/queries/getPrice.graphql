@@ -1,0 +1,6 @@
+query getPrice($from: Int!, $to: Int!) {
+  price(from: $from, to: $to) {
+    amount
+    nativeAmount
+  }
+}

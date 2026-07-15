@@ -1,0 +1,13 @@
+query getManufacturers {
+  manufacturers {
+    metaData {
+      id
+      name
+      ships {
+        id
+        name
+      }
+    }
+    totalCount
+  }
+}
