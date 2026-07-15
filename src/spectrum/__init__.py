@@ -16,6 +16,8 @@ try:
     from .galactapedia import GalactapediaClient
     from . import store
     from .store import StoreClient
+    from . import cig
+    from .cig import CIGClient
 except ImportError:
     pass
 
