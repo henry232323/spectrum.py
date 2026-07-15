@@ -1,0 +1,5 @@
+query getPostLive($PostQuery: PostQuery!) {
+  postLive(query: $PostQuery) {
+    ...Live
+  }
+}

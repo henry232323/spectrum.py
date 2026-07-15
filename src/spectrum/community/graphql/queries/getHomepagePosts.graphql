@@ -1,0 +1,32 @@
+query getHomepagePosts($CarouselQuery: PostsQuery!, $LiveQuery: PostsQuery!, $FollowedQuery: PostsQuery!) {
+  carouselPosts: posts(query: $CarouselQuery) {
+    metaData {
+      ...AudioCardCarousel
+      ...ImageCardCarousel
+      ...LiveCardCarousel
+      ...TextCardCarousel
+      ...VideoCard
+    }
+    totalCount
+  }
+  livePosts: posts(query: $LiveQuery) {
+    metaData {
+      ...AudioCard
+      ...ImageCard
+      ...LiveCard
+      ...TextCard
+      ...VideoCard
+    }
+    totalCount
+  }
+  followedPosts: posts(query: $FollowedQuery) {
+    metaData {
+      ...AudioCard
+      ...ImageCard
+      ...LiveCard
+      ...TextCard
+      ...VideoCard
+    }
+    totalCount
+  }
+}

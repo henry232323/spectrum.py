@@ -1,0 +1,44 @@
+query FeaturedSkuQuery($query: SearchQuery) {
+    store(browse: true) {
+      search(query: $query) {
+        resources {
+          id
+          title
+          name
+          ... on TySku {
+            type
+            slug
+            excerpt
+            publicType {
+              code
+              label
+            }
+            customizable
+            isWarbond
+            isVip
+            isDirectCheckout
+            nativePrice {
+              amount
+              discounted
+              discountDescription
+            }
+            price {
+              amount
+              discounted
+              taxDescription
+              discountDescription
+            }
+            stock {
+              ...TyStockFragment
+            }
+            tags {
+              ...TyHeapTagFragment
+            }
+            gameItems {
+              name
+            }
+          }
+        }
+      }
+    }
+  }

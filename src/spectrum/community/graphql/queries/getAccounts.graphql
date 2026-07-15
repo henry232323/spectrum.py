@@ -1,0 +1,8 @@
+query getAccounts($CreatorsQuery: CreatorsQuery!) {
+  creators(query: $CreatorsQuery) {
+    totalCount
+    metaData {
+      ...Account
+    }
+  }
+}

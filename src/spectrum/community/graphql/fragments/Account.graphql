@@ -1,0 +1,12 @@
+fragment Account on Account {
+  bio
+  citizenDossierUrl
+  displayName
+  live
+  nickname
+  stats {
+    ...AccountStats
+  }
+  thumbnailUrl
+  website
+}

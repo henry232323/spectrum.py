@@ -1,0 +1,9 @@
+fragment LeanAccount on Account {
+  bio
+  citizenDossierUrl
+  displayName
+  live
+  nickname
+  thumbnailUrl
+  website
+}

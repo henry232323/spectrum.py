@@ -1,0 +1,49 @@
+fragment Video on Video {
+  account {
+    ...LeanAccount
+  }
+  annotation {
+    body
+    date
+  }
+  body
+  commentsCount
+  createdAt
+  duration
+  event {
+    ...Event
+  }
+  honor
+  media {
+    type
+    uid
+    url
+  }
+  membershipProvider
+  membershipUrl
+  modifiedAt
+  modifiedBy
+  reported
+  reportsCount
+  ships {
+    ...Ship
+  }
+  slug
+  status
+  summary
+  tags {
+    ...Tag
+  }
+  title
+  type
+  uid
+  viewsCount
+  voted
+  voters {
+    displayName
+    nickname
+    thumbnailUrl
+  }
+  votesCount
+  contest
+}

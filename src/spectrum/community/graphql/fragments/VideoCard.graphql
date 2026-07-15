@@ -1,0 +1,34 @@
+fragment VideoCard on Video {
+  account {
+    ...AccountCard
+  }
+  commentsCount
+  createdAt
+  duration
+  event {
+    title
+    uid
+  }
+  honor
+  membershipProvider
+  membershipUrl
+  slug
+  status
+  summary
+  tags {
+    label
+    uid
+  }
+  thumbnailUrl
+  title
+  type
+  uid
+  viewsCount
+  voted
+  voters {
+    displayName
+    nickname
+    thumbnailUrl
+  }
+  votesCount
+}

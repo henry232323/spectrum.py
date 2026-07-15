@@ -1,0 +1,13 @@
+query Article($id: ID) {
+  Article(id: $id) {
+    id
+    title
+    slug
+    body
+    thumbnail {
+      url
+      name
+      type
+    }
+  }
+}

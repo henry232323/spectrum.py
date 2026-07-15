@@ -1,0 +1,31 @@
+fragment TextCardCarousel on Text {
+  account {
+    ...AccountCard
+  }
+  commentsCount
+  createdAt
+  event {
+    title
+    uid
+  }
+  honor
+  slug
+  status
+  summary
+  tags {
+    label
+    uid
+  }
+  thumbnailUrl
+  title
+  type
+  uid
+  viewsCount
+  voted
+  voters {
+    displayName
+    nickname
+    thumbnailUrl
+  }
+  votesCount
+}

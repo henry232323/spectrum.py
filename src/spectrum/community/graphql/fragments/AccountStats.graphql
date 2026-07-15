@@ -1,0 +1,7 @@
+fragment AccountStats on AccountStats {
+  followed
+  followedCount
+  followingCount
+  upvotesCount
+  viewsCount
+}

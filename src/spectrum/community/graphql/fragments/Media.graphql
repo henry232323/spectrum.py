@@ -1,0 +1,13 @@
+fragment Media on Media {
+  caption
+  fullsize
+  gallerylarge
+  gallerysmall
+  large
+  placeholder
+  thumbnail
+  type
+  uid
+  url
+  wide
+}

@@ -1,0 +1,9 @@
+mutation createPost($postParameters: CreatePostParameters!) {
+  createPost(post: $postParameters) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

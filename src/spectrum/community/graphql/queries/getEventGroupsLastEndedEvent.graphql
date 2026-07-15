@@ -1,0 +1,29 @@
+query getEventGroupsLastEndedEvent {
+  eventGroups {
+    metaData {
+      lastEndedEvent {
+        description
+        endedAt
+        eventGroup {
+          title
+        }
+        media {
+          logoSquareDesktop
+          logoSquareMobile
+          placeholder
+          type
+          uid
+        }
+        slug
+        startedAt
+        summary
+        title
+        uid
+      }
+      postCount
+      title
+      uid
+    }
+    totalCount
+  }
+}

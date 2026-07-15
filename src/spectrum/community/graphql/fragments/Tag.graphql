@@ -1,0 +1,5 @@
+fragment Tag on Tag {
+  label
+  slug
+  uid
+}

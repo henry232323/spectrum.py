@@ -1,0 +1,7 @@
+query getSidebarAccounts($SidebarQuery: CreatorsQuery!) {
+  creators(query: $SidebarQuery) {
+    metaData {
+      ...AccountTooltip
+    }
+  }
+}

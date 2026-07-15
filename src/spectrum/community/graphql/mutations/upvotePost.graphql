@@ -1,0 +1,9 @@
+mutation upvotePost($postUid: String) {
+  upvotePost(postUid: $postUid) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

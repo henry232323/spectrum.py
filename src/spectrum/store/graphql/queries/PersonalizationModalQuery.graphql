@@ -1,0 +1,7 @@
+query PersonalizationModalQuery {
+    customer {
+      id
+      firstname
+      lastname
+    }
+  }

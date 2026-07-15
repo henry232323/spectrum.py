@@ -1,0 +1,14 @@
+fragment Settings on AccountSettings {
+        firstConnection
+        homeLive
+        homeTags {
+            ...Tag
+        }
+        postSortDiscover
+        postSortHome
+        postSortLivestream
+        postSortProfile
+        videoAutoplayCarousel
+        videoAutoplayPostDetail
+        videoAutoplayProfile
+    }

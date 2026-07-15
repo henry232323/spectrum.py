@@ -1,0 +1,44 @@
+fragment Image on Image {
+  account {
+    ...LeanAccount
+  }
+  annotation {
+    body
+    date
+  }
+  body
+  commentsCount
+  createdAt
+  event {
+    ...Event
+  }
+  honor
+  media {
+    ...Media
+  }
+  modifiedAt
+  modifiedBy
+  reported
+  reportsCount
+  ships {
+    ...Ship
+  }
+  slug
+  status
+  summary
+  tags {
+    ...Tag
+  }
+  title
+  type
+  uid
+  viewsCount
+  voted
+  voters {
+    displayName
+    nickname
+    thumbnailUrl
+  }
+  votesCount
+  contest
+}

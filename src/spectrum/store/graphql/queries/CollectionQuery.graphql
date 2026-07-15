@@ -1,0 +1,60 @@
+query CollectionQuery($ids: [ID]) {
+    playNowCollection(ids: $ids) {
+      id
+      title
+      type
+      skus {
+        id
+        slug
+        name
+        title
+        subtitle
+        url
+        excerpt
+        media {
+          thumbnail {
+            slideshow
+          }
+        }
+        publicType {
+          code
+          __typename
+        }
+        price {
+          amount
+          discounted
+          discountDescription
+          taxDescription
+          __typename
+        }
+        stock {
+          unlimited
+          qty
+          level
+          show
+          available
+          backOrder
+          backOrderQty
+          __typename
+        }
+        gameItems {
+          name
+          kind
+          media {
+            thumbnail {
+              storeSmall
+              skuWidgetModal
+              slideshowWide
+            }
+          }
+          ... on ShipGameItem {
+            manufacturer {
+              name
+              logo
+            }
+          }
+        }
+        __typename
+      }
+    }
+  }

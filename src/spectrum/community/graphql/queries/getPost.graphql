@@ -1,0 +1,9 @@
+query getPost($PostQuery: PostQuery!) {
+  post(query: $PostQuery) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

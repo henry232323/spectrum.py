@@ -1,0 +1,9 @@
+query getComments($CommentQuery: CommentQuery) {
+  comments(query: $CommentQuery) {
+    hasNextPage
+    metaData {
+      ...Comment
+    }
+    totalCount
+  }
+}

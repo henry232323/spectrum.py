@@ -1,0 +1,9 @@
+mutation unpublishPost($postUid: String!) {
+  unpublishPost(postUid: $postUid) {
+    ...Audio
+    ...Image
+    ...Live
+    ...Text
+    ...Video
+  }
+}

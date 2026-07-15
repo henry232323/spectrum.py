@@ -1,0 +1,18 @@
+mutation RedeemRewardQuery($token: String!, $rewardSlug: String!) {
+    rewardBundle {
+      redeemReward(token: $token, rewardSlug: $rewardSlug) {
+        success
+        data {
+          slug
+          name
+          description
+          imageComposer {
+            url
+          }
+          publishStart
+          publishEnd
+        }
+        code
+      }
+    }
+  }

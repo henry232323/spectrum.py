@@ -1,0 +1,18 @@
+query getReportedPosts {
+  reportedPosts {
+    hasNextPage
+    metaData {
+      authorName
+      createdAt
+      detail
+      membershipUrl
+      postSlug
+      postTitle
+      postType
+      postUid
+      type
+      uid
+    }
+    totalCount
+  }
+}

@@ -1,0 +1,14 @@
+query AllTag($locale: String, $first: Int, $skip: Int, $before: String, $after: String, $sort: Tag_Sort, $where: Tag_Where) {
+  allTag(locale: $locale, first: $first, skip: $skip, before: $before, after: $after, sort: $sort, where: $where) {
+    edges {
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}

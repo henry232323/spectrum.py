@@ -1,0 +1,5 @@
+mutation unfollowAccount($nickname: String!) {
+  unfollowAccount(nickname: $nickname) {
+    ...Account
+  }
+}

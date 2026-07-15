@@ -1,0 +1,10 @@
+query AccountBadgesQuery {
+    account {
+      ... on RsiAuthenticatedAccount {
+        badges {
+          id
+          title
+        }
+      }
+    }
+  }

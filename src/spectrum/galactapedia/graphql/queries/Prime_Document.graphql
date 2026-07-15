@@ -1,0 +1,5 @@
+query Prime_Document($id: String, $locale: String) {
+  Prime_Document(id: $id, locale: $locale) {
+    id
+  }
+}

@@ -1,0 +1,35 @@
+fragment TySkuGAFragment on TySku {
+    id
+    slug
+    title
+    name
+    sku
+    type
+    nativePrice {
+      amount
+      discounted
+      __typename
+    }
+    parentProduct {
+      slug
+      type
+      title
+      __typename
+    }
+    ships {
+      ...RSIShipGAFragment
+      __typename
+    }
+    gameItems {
+      name
+      code
+      kind
+      hasGamePurchase
+      __typename
+    }
+    stock {
+      ...TyStockGAFragment
+      __typename
+    }
+    __typename
+  }
