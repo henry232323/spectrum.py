@@ -1,0 +1,70 @@
+fragment SystemConfigSnapshot on SystemConfigurationSnapshot {
+    id
+    reference {
+      id
+    }
+    name
+    platform {
+      id
+      code
+      name
+      createdOn
+      updatedOn
+    }
+    operatingSystem {
+      type
+      name
+      language
+    }
+    hardware {
+      version
+      processor {
+        model
+      }
+      memory {
+        quantity
+        unit
+      }
+    }
+    graphics {
+      card {
+        manufacturer
+        model
+        chipType
+        memory {
+          quantity
+          unit
+        }
+        driver {
+          name
+          version
+        }
+      }
+      directX {
+        version
+      }
+    }
+    network {
+      provider
+      downloadThroughput {
+        quantity
+        unit
+      }
+      modem {
+        manufacturer
+        model
+      }
+      connectionType
+      mobileTelephonyGeneration
+      uploadThroughput {
+        quantity
+        unit
+      }
+    }
+    peripherals {
+      manufacturer
+      model
+    }
+    additionalInfo
+    createdOn
+  }

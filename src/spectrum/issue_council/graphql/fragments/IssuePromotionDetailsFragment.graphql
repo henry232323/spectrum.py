@@ -1,0 +1,6 @@
+fragment IssuePromotionDetailsFragment on IssuePromotionDetails {
+    status
+    promotedOn
+    unpromotedOn
+    additionalInfo
+  }

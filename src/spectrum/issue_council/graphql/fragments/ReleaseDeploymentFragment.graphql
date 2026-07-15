@@ -1,0 +1,12 @@
+fragment ReleaseDeploymentFragment on ReleaseDeployment {
+    id
+    isCurrent
+    release {
+      ...ReleaseFragment
+    }
+    environment {
+      ...EnvironmentFragment
+    }
+    status
+    completedOn
+  }

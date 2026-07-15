@@ -1,0 +1,15 @@
+fragment SystemConfigurationSpecificationFieldFragment on SystemConfigurationSpecificationField {
+    type
+    supported
+    required
+    minLength
+    maxLength
+    range {
+      ... on SystemConfigurationSpecificationFieldNumberRange {
+        start
+        startInclusive
+        end
+        endInclusive
+      }
+    }
+  }

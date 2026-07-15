@@ -1,0 +1,15 @@
+fragment IssueModificationFragment on IssueModification {
+    id
+    comment
+    modifiedBy {
+      ...UserProfileFragment
+    }
+    modifiedOn
+    modifiedAs
+    changes {
+      property
+    }
+    snapshot {
+      title
+    }
+  }

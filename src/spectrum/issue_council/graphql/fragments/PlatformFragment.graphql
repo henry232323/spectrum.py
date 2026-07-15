@@ -1,0 +1,7 @@
+fragment PlatformFragment on Platform {
+    id
+    code
+    name
+    createdOn
+    updatedOn
+  }

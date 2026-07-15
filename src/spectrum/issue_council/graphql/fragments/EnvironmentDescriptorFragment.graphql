@@ -1,0 +1,5 @@
+fragment EnvironmentDescriptorFragment on EnvironmentDescriptor {
+    id
+    code
+    name
+  }

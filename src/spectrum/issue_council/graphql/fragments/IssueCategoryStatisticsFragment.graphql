@@ -1,0 +1,5 @@
+fragment IssueCategoryStatisticsFragment on IssueCategory {
+    statistics {
+      issueCount
+    }
+  }

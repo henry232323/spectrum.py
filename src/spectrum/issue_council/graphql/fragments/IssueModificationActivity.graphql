@@ -1,0 +1,7 @@
+fragment IssueModificationActivity on IssueModificationActivity {
+    id
+    type
+    modification {
+      ...IssueModificationFragment
+    }
+  }

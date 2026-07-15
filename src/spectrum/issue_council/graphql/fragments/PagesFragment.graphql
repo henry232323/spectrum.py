@@ -1,0 +1,32 @@
+fragment PagesFragment on Pages {
+    current {
+      pageNumber
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+    first {
+      pageNumber
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+    last {
+      pageNumber
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+    next {
+      pageNumber
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+    previous {
+      pageNumber
+      pageInfo {
+        ...PageInfoFragment
+      }
+    }
+  }

@@ -1,0 +1,14 @@
+fragment IssueEvidenceFragment on IssueEvidence {
+    mediaResource {
+      ...ResourceFragment
+    }
+    contentAvailability
+    visibility {
+      ...SecurityVisibilityFragment
+    }
+    viewerProperties {
+      canViewContent
+      cannotViewContentReason
+      isVisibleOnlyToViewer
+    }
+  }

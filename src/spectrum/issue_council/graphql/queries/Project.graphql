@@ -1,0 +1,17 @@
+query Project($code: String!, $includeOperationalRequirements: Boolean!) {
+    projectByCode(code: $code) {
+      ...ProjectFragment
+      features {
+        ...ProjectFeatureFragment
+      }
+      options {
+        ...ProjectOptionFragment
+      }
+      visibility {
+        ...SecurityVisibilityFragment
+      }
+      operationalRequirements @include(if: $includeOperationalRequirements) {
+        ...ProjectOperationalRequirementFragment
+      }
+    }
+  }

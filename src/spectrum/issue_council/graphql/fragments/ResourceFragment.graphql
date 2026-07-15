@@ -1,0 +1,50 @@
+fragment ResourceFragment on MediaResource {
+    id
+    type
+    container
+    content {
+      url
+      mimeType
+      encoding
+    }
+    preview {
+      variations {
+        name
+        url
+      }
+    }
+    hostType
+    externalResource {
+      mediaId
+      hostType
+    }
+    metadata {
+      entries {
+        key
+        value
+      }
+    }
+    virusScan {
+      status
+    }
+    properties {
+      entries {
+        key
+        value
+      }
+    }
+    createdBy {
+      id
+      name {
+        first
+        last
+      }
+      username
+      displayName
+      email
+      avatarUrl
+      isAnonymized
+    }
+    createdOn
+    updatedOn
+  }

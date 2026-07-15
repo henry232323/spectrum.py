@@ -1,0 +1,13 @@
+fragment SoftwareConfigSnapshot on SoftwareConfigurationSnapshot {
+    id
+    reference {
+      id
+    }
+    fields {
+      specification {
+        ...SoftwareConfigSpecField
+      }
+      value
+    }
+    createdOn
+  }

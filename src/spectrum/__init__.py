@@ -18,6 +18,8 @@ try:
     from .store import StoreClient
     from . import cig
     from .cig import CIGClient
+    from . import issue_council
+    from .issue_council import IssueCouncilClient
 except ImportError:
     pass
 

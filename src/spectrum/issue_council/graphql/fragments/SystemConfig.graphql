@@ -1,0 +1,68 @@
+fragment SystemConfig on SystemConfiguration {
+    id
+    name
+    platform {
+      id
+      code
+      name
+      createdOn
+      updatedOn
+    }
+    operatingSystem {
+      type
+      name
+      language
+    }
+    hardware {
+      version
+      processor {
+        model
+      }
+      memory {
+        quantity
+        unit
+      }
+    }
+    graphics {
+      card {
+        manufacturer
+        model
+        chipType
+        memory {
+          quantity
+          unit
+        }
+        driver {
+          name
+          version
+        }
+      }
+      directX {
+        version
+      }
+    }
+    peripherals {
+      manufacturer
+      model
+    }
+    network {
+      provider
+      connectionType
+      mobileTelephonyGeneration
+      downloadThroughput {
+        quantity
+        unit
+      }
+      modem {
+        manufacturer
+        model
+      }
+      uploadThroughput {
+        quantity
+        unit
+      }
+    }
+    additionalInfo
+    createdOn
+    updatedOn
+  }

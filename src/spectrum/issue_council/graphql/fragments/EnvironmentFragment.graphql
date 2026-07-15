@@ -1,0 +1,22 @@
+fragment EnvironmentFragment on Environment {
+    id
+    code
+    name
+    status
+    provisionedOn
+    schedule {
+      openingOn
+      closingOn
+    }
+    settings {
+      issueConfirmationThreshold
+      issueExpirationDelay
+    }
+    visibility {
+      ...SecurityVisibilityFragment
+    }
+    viewerProperties {
+      canOpenIssue
+      canPostContribution
+    }
+  }

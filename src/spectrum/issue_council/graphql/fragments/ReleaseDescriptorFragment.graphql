@@ -1,0 +1,7 @@
+fragment ReleaseDescriptorFragment on ReleaseDescriptor {
+    id
+    code
+    version {
+      code
+    }
+  }

@@ -1,0 +1,12 @@
+fragment GroupFragment on UserGroup {
+    id
+    code
+    name
+    role
+    scope {
+      resources {
+        id
+        type
+      }
+    }
+  }
