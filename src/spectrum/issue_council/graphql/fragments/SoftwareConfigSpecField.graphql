@@ -1,0 +1,25 @@
+fragment SoftwareConfigSpecField on SoftwareConfigurationSpecificationField {
+    code
+    label
+    options {
+      code
+      label
+      valueType
+      value
+    }
+    constraints {
+      required
+      minLength
+      maxLength
+      range {
+        ... on SoftwareConfigurationSpecificationFieldNumberRange {
+          start
+          startInclusive
+          end
+          endInclusive
+        }
+      }
+    }
+    valueType
+    displayInSummary
+  }

@@ -1,0 +1,12 @@
+fragment UserProfileFragment on UserProfile {
+    id
+    name {
+      first
+      last
+    }
+    username
+    displayName
+    email
+    avatarUrl
+    isAnonymized
+  }

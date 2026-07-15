@@ -1,0 +1,9 @@
+fragment IssueVisibilityChangeActivity on IssueVisibilityChangeActivity {
+    id
+    type
+    visibilityLevel
+    updatedOn
+    updatedBy {
+      ...UserProfileFragment
+    }
+  }

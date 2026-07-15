@@ -1,0 +1,18 @@
+fragment VoteActivity on IssueVoteActivity {
+    id
+    type
+    summary {
+      sampleVotes {
+        castBy {
+          id
+          username
+          displayName
+        }
+      }
+      total
+    }
+    dateRange {
+      start
+      end
+    }
+  }

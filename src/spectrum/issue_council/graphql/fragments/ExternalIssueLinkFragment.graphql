@@ -1,0 +1,45 @@
+fragment ExternalIssueLinkFragment on ExternalIssueLink {
+    id
+    externalIssue {
+      id
+      code
+      hostId
+      url
+      fixedInReleaseCode
+      status
+      confirmedDetails {
+        confirmedOn
+        additionalInfo
+      }
+      archivedDetails {
+        archivedOn
+        reason
+        additionalInfo
+        duplicateOfIssueId
+      }
+      fixedDetails {
+        fixedOn
+        additionalInfo
+      }
+      underInvestigationDetails {
+        investigationStartedOn
+        additionalInfo
+      }
+    }
+    linkedOn
+    linkedBy {
+      id
+      name {
+        first
+        last
+      }
+      username
+      displayName
+      email
+      avatarUrl
+    }
+    updatedOn
+    linkedTo {
+      id
+    }
+  }

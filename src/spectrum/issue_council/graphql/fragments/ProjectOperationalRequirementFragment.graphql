@@ -1,0 +1,5 @@
+fragment ProjectOperationalRequirementFragment on ProjectOperationalRequirement {
+    code
+    category
+    status
+  }

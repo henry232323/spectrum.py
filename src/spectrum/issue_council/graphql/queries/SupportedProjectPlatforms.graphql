@@ -1,0 +1,10 @@
+query SupportedProjectPlatforms($code: String!) {
+    projectByCode(code: $code) {
+      id
+      supportedPlatforms {
+        id
+        code
+        name
+      }
+    }
+  }

@@ -1,0 +1,15 @@
+fragment InitialContributionActivity on IssueInitialContributionActivity {
+    id
+    type
+    openedBy {
+      id
+      name {
+        first
+        last
+      }
+      username
+      displayName
+      avatarUrl
+    }
+    openedOn
+  }

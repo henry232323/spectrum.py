@@ -1,0 +1,162 @@
+query Issues($query: SimilarIssuesQueryInput!) {
+    similarIssues(query: $query) {
+      totalCount
+      pages {
+        current {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          pageNumber
+        }
+        first {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          pageNumber
+        }
+        last {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          pageNumber
+        }
+        next {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          pageNumber
+        }
+        previous {
+          pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+          }
+          pageNumber
+        }
+      }
+      edges {
+        cursor
+        node {
+          id
+          code
+          status
+          search {
+            score
+            relevanceScore
+            highlights {
+              tag
+              field
+              matches
+            }
+            excerpts {
+              field
+              content
+            }
+          }
+          project {
+            id
+            code
+            name
+          }
+          details {
+            severity
+            title
+            category {
+              id
+              code
+              name
+            }
+            environment {
+              id
+              code
+              name
+            }
+          }
+          openDetails {
+            openedBy {
+              id
+              name {
+                first
+                last
+              }
+              username
+              displayName
+              avatarUrl
+            }
+            confirmationThreshold
+            openedOn
+            expiresOn
+          }
+          community {
+            contributionCount
+            reproductionCount
+            severity
+            voteCount
+            earlyReproductionContributors {
+              id
+              name {
+                first
+                last
+              }
+              email
+              avatarUrl
+              username
+              displayName
+            }
+          }
+          confirmedDetails {
+            confirmedOn
+          }
+          archivedDetails {
+            archivedOn
+            reason
+            duplicateOf {
+              id
+              code
+            }
+          }
+          underInvestigationDetails {
+            investigationStartedOn
+          }
+          fixedDetails {
+            fixedOn
+            fixedInReleaseCode
+          }
+          externalIssue {
+            code
+            url
+            fixedInReleaseCode
+            metadata {
+              key
+              value
+            }
+          }
+          viewerProperties {
+            canContribute
+            cannotContributeReason
+            favourited
+          }
+          visibility {
+            ...SecurityVisibilityFragment
+          }
+          promotionDetails {
+            ...IssueSummaryPromotionDetailsFragment
+          }
+        }
+      }
+    }
+  }

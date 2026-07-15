@@ -1,0 +1,119 @@
+fragment SystemConfigurationSpecificationComponentsFragment on SystemConfigurationSpecificationComponents {
+    operatingSystem {
+      type {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      name {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      language {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+    }
+    hardware {
+      manufacturer {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      model {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      version {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      processor {
+        model {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+      }
+      memory {
+        quantity {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        unit {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+      }
+    }
+    graphics {
+      card {
+        manufacturer {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        model {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        chipType {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        memory {
+          quantity {
+            ...SystemConfigurationSpecificationFieldFragment
+          }
+          unit {
+            ...SystemConfigurationSpecificationFieldFragment
+          }
+        }
+        driver {
+          name {
+            ...SystemConfigurationSpecificationFieldFragment
+          }
+          version {
+            ...SystemConfigurationSpecificationFieldFragment
+          }
+        }
+      }
+      directX {
+        version {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+      }
+    }
+    network {
+      provider {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      downloadThroughput {
+        quantity {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        unit {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+      }
+      uploadThroughput {
+        quantity {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        unit {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+      }
+      modem {
+        manufacturer {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        model {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+      }
+      connectionType {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      mobileTelephonyGeneration {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+    }
+    peripherals {
+      array {
+        ...SystemConfigurationSpecificationFieldFragment
+      }
+      items {
+        manufacturer {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+        model {
+          ...SystemConfigurationSpecificationFieldFragment
+        }
+      }
+    }
+  }

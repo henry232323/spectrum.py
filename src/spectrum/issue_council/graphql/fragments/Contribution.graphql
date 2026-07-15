@@ -1,0 +1,66 @@
+fragment Contribution on IssueContribution {
+    id
+    content
+    contentAvailability
+    contentAvailabilityUpdatedBy {
+      ...UserProfileFragment
+    }
+    submittedBy {
+      ...UserProfileFragment
+    }
+    assessment {
+      type
+      severity
+      possibleDuplicateOf {
+        id
+        code
+        title
+      }
+      environment {
+        id
+        code
+        name
+      }
+      release {
+        id
+        code
+        version {
+          code
+        }
+      }
+      systemConfiguration {
+        ...SystemConfigSnapshot
+      }
+      softwareConfiguration {
+        ...SoftwareConfigSnapshot
+      }
+      evidences {
+        ...IssueEvidenceFragment
+      }
+      mediaManagement {
+        workspace {
+          id
+        }
+      }
+    }
+    viewerProperties {
+      canViewContent
+      cannotViewContentReason
+      canDelete
+      canModify
+    }
+    lastModification {
+      id
+      comment
+      modifiedBy {
+        ...UserProfileFragment
+      }
+      modifiedOn
+      modifiedAs
+      changes {
+        property
+      }
+    }
+    submittedOn
+    updatedOn
+  }

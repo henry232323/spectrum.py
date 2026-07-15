@@ -1,0 +1,14 @@
+query Projects {
+    # #fixed-paging
+    projects(query: { paging: { first: 100 }, statuses: [ACTIVE], sortBy: { field: ORDER, direction: ASC } }) {
+      edges {
+        cursor
+        node {
+          ...ProjectFragment
+          operationalRequirements {
+            ...ProjectOperationalRequirementFragment
+          }
+        }
+      }
+    }
+  }

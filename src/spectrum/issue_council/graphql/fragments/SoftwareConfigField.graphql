@@ -1,0 +1,6 @@
+fragment SoftwareConfigField on SoftwareConfigurationField {
+    specification {
+      ...SoftwareConfigSpecField
+    }
+    value
+  }

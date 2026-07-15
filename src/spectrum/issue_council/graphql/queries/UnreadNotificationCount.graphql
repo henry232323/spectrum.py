@@ -1,0 +1,5 @@
+query UnreadNotificationCount {
+    unreadNotificationCount: notifications(query: { readStatus: UNREAD, paging: { first: 1 } }) {
+      totalCount
+    }
+  }

@@ -1,0 +1,10 @@
+mutation ChangeNotificationsReadStatus($input: ChangeNotificationsReadStatusInput!) {
+    changeNotificationsReadStatus(input: $input) {
+      code
+      success
+      message
+      problem {
+        ...ProblemDetails
+      }
+    }
+  }

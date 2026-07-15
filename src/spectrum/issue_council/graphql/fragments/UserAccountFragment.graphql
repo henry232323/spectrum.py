@@ -1,0 +1,11 @@
+fragment UserAccountFragment on UserAccount {
+    id
+    username
+    displayName
+    email
+    avatarUrl
+    profileUrl
+    contactPreferences {
+      directContactPolicy
+    }
+  }

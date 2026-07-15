@@ -1,0 +1,17 @@
+query PrivilegedGroups($query: UserGroupQueryInput!) {
+    userGroups(query: $query) {
+      edges {
+        cursor
+        node {
+          ...GroupFragment
+        }
+      }
+      totalCount
+      pageInfo {
+        ...PageInfoFragment
+      }
+      pages {
+        ...PagesFragment
+      }
+    }
+  }

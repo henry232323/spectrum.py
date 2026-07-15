@@ -1,0 +1,14 @@
+fragment IssueStatusUpdateActivity on IssueStatusUpdateActivity {
+    id
+    type
+    status
+    statusUpdateAdditionalInfo
+    duplicateOfIssue {
+      id
+      code
+    }
+    updatedOn
+    updatedBy {
+      ...UserProfileFragment
+    }
+  }

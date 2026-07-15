@@ -1,0 +1,11 @@
+fragment SoftwareConfig on SoftwareConfiguration {
+    id
+    specification {
+      ...SoftwareConfigSpec
+    }
+    fields {
+      ...SoftwareConfigField
+    }
+    createdOn
+    updatedOn
+  }

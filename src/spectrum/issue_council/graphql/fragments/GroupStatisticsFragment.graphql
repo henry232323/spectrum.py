@@ -1,0 +1,5 @@
+fragment GroupStatisticsFragment on UserGroup {
+    statistics {
+      memberCount
+    }
+  }

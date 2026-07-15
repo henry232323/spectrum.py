@@ -1,0 +1,10 @@
+fragment LinkDuplicateIssueToOriginalActivity on LinkDuplicateIssueToOriginalActivity {
+    id
+    type
+    duplicateReportIssueId
+    duplicateReportIssueCode
+    updatedOn
+    updatedBy {
+      ...UserProfileFragment
+    }
+  }
