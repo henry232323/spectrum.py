@@ -20,6 +20,14 @@ try:
     from .cig import CIGClient
     from . import issue_council
     from .issue_council import IssueCouncilClient
+    from . import orgs
+    from .orgs import OrgsClient
+    from . import starmap
+    from .starmap import StarmapClient
+    from . import roadmap
+    from .roadmap import RoadmapClient
+    from . import rsi
+    from .rsi import RSIClient
 except ImportError:
     pass
 
