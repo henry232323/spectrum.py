@@ -91,3 +91,6 @@ ENV/
 # etc
 .idea/
 .DS_STORE
+
+# Local MCP client config (contains machine-specific paths)
+.mcp.json
