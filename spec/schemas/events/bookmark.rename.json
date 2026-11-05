@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "bookmark.rename",
+  "description": "Server -> client `bookmark.rename`. Required keys are the ones `Client._on_bookmark_rename_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "bookmark.rename"
+    }
+  },
+  "additionalProperties": true
+}

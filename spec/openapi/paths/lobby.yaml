@@ -1,0 +1,986 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/lobby/acceptInvite:
+  post:
+    operationId: lobby_accept_invite
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_accept_invite
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_ACCEPT_INVITE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/cancelInvite:
+  post:
+    operationId: lobby_cancel_invite
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_cancel_invite
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_CANCEL_INVITE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/closePrivate:
+  post:
+    operationId: lobby_close_private
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_close_private
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_CLOSE_PRIVATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/create:
+  post:
+    operationId: create_lobby
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.create_lobby
+      auth: session
+      verified: false
+      write: true
+      constant: CREATE_LOBBY
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              name:
+                type:
+                - string
+                - 'null'
+              description:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              color:
+                type:
+                - string
+                - 'null'
+              type:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '100987'
+                name: poggerslob
+                description: '123'
+                color: C197C8
+                type: public
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/declineInvite:
+  post:
+    operationId: lobby_decline_invite
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_decline_invite
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_DECLINE_INVITE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/edit:
+  post:
+    operationId: edit_lobby
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.edit_lobby
+      auth: session
+      verified: false
+      write: true
+      constant: EDIT_LOBBY
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              name:
+                type:
+                - string
+                - 'null'
+              description:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              color:
+                type:
+                - string
+                - 'null'
+              type:
+                type:
+                - string
+                - 'null'
+              permissions:
+                type: object
+                additionalProperties: true
+          examples:
+            sample1:
+              value:
+                lobby_id: '5852041'
+                name: poggerslob
+                description: '123123'
+                color: C197C8
+                type: public
+                permissions:
+                  '660853':
+                    read: null
+                    send_message: null
+                    manage: null
+                    moderate: null
+                    set_motd: null
+                  '660854':
+                    read: null
+                    send_message: null
+                    manage: true
+                    moderate: null
+                    set_motd: true
+                  '660855':
+                    read: null
+                    send_message: null
+                    manage: null
+                    moderate: null
+                    set_motd: null
+                  '660856':
+                    read: null
+                    send_message: null
+                    manage: null
+                    moderate: null
+                    set_motd: null
+                  '660857':
+                    read: null
+                    send_message: null
+                    manage: null
+                    moderate: null
+                    set_motd: null
+                  '660858':
+                    read: null
+                    send_message: null
+                    manage: null
+                    moderate: null
+                    set_motd: null
+                  '660859':
+                    read: null
+                    send_message: null
+                    manage: null
+                    moderate: null
+                    set_motd: null
+                  '727710':
+                    read: null
+                    send_message: null
+                    manage: null
+                    moderate: null
+                    set_motd: null
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/erase:
+  post:
+    operationId: lobby_erase
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_erase
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_ERASE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/getMotd:
+  post:
+    operationId: fetch_motd
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.fetch_motd
+      auth: unknown
+      verified: false
+      write: false
+      constant: FETCH_MOTD
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '7'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/guideSessionHistory:
+  post:
+    operationId: lobby_guide_session_history
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_guide_session_history
+      auth: unknown
+      verified: false
+      write: false
+      constant: LOBBY_GUIDE_SESSION_HISTORY
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/info:
+  post:
+    operationId: fetch_lobby_info
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.fetch_lobby_info
+      auth: anonymous
+      verified: true
+      write: false
+      constant: FETCH_LOBBY_INFO
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data:
+                    $ref: ../../schemas/lobby.json
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/invite:
+  post:
+    operationId: lobby_invite
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_invite
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_INVITE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/kick:
+  post:
+    operationId: lobby_kick
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_kick
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_KICK
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/leave:
+  post:
+    operationId: lobby_leave
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_leave
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_LEAVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/listInvites:
+  post:
+    operationId: lobby_list_invites
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_list_invites
+      auth: unknown
+      verified: false
+      write: false
+      constant: LOBBY_LIST_INVITES
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/move:
+  post:
+    operationId: lobby_move
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_move
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_MOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              target_group_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              position:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+                target_group_id: '456'
+                position: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/online-members-count:
+  post:
+    operationId: fetch_online_count
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.fetch_online_count
+      auth: unknown
+      verified: false
+      write: false
+      constant: FETCH_ONLINE_MEMBERS_COUNT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '100987'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/presences:
+  post:
+    operationId: fetch_presences
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.fetch_presences
+      auth: unknown
+      verified: false
+      write: false
+      constant: FETCH_PRESENCES_ENDPOINT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/setMotd:
+  post:
+    operationId: set_motd
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.set_motd
+      auth: session
+      verified: false
+      write: true
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              motd:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                lobby_id: '5632276'
+                motd: Test motd
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/lobby/transferLeadership:
+  post:
+    operationId: lobby_transfer_leadership
+    tags:
+    - lobby
+    x-spectrum:
+      python: HTTP.lobby_transfer_leadership
+      auth: session
+      verified: false
+      write: true
+      constant: LOBBY_TRANSFER_LEADERSHIP
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

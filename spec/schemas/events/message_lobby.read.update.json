@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "message_lobby.read.update",
+  "description": "Server -> client `message_lobby.read.update`. Required keys are the ones `Client._on_lobby_read_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "message_lobby.read.update"
+    },
+    "lobby_id": {
+      "$ref": "../id.json"
+    },
+    "message_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

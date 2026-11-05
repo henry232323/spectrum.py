@@ -1,0 +1,124 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/media/embed/fetch:
+  post:
+    operationId: fetch_embed
+    tags:
+    - media
+    summary: Fetch embed/media data for a URL. Returns the embed data dict.
+    x-spectrum:
+      python: HTTP.fetch_embed
+      auth: unknown
+      verified: false
+      write: false
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              url:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                url: https://example.com/
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/media/upload/emoji:
+  post:
+    operationId: upload_emoji
+    tags:
+    - media
+    summary: Upload an emoji image to Spectrum. Returns the media data dict.
+    x-spectrum:
+      python: HTTP.upload_emoji
+      auth: session
+      verified: false
+      write: true
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+            - file
+            properties:
+              file:
+                type: string
+                format: binary
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/media/upload/image:
+  post:
+    operationId: upload_image
+    tags:
+    - media
+    summary: Upload an image to Spectrum. Returns the media data dict.
+    x-spectrum:
+      python: HTTP.upload_image
+      auth: session
+      verified: false
+      write: true
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+            - file
+            properties:
+              file:
+                type: string
+                format: binary
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

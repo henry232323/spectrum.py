@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum_thread.erase",
+  "description": "Server -> client `forum_thread.erase`. Required keys are the ones `Client._on_forum_thread_erase_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum_thread.erase"
+    },
+    "thread_id": {
+      "$ref": "../id.json"
+    },
+    "forum_thread_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

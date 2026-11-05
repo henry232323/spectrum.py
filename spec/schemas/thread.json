@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Thread",
+  "description": "spectrum.models.Thread (forum/thread/nested, forum/thread/classic)",
+  "type": "object",
+  "required": [
+    "id",
+    "time_created",
+    "time_modified",
+    "channel_id",
+    "community_id",
+    "type",
+    "slug",
+    "subject",
+    "is_locked",
+    "is_reply_nesting_disabled",
+    "is_pinned",
+    "is_sinked",
+    "is_erased",
+    "erased_by",
+    "tracked_post_role_id",
+    "content_reply_id",
+    "annotation_plaintext",
+    "subscription_key",
+    "content_blocks",
+    "highlight_role_id",
+    "member"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "time_created": {
+      "type": "integer",
+      "description": "Unix seconds"
+    },
+    "time_modified": {
+      "type": "integer",
+      "description": "Unix seconds"
+    },
+    "channel_id": {
+      "$ref": "id.json"
+    },
+    "community_id": {
+      "$ref": "id.json"
+    },
+    "label_id": {
+      "anyOf": [
+        {
+          "$ref": "id.json"
+        },
+        {
+          "const": ""
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "ID, or \"\"/null when unset"
+    },
+    "type": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "is_locked": {
+      "type": "boolean"
+    },
+    "is_reply_nesting_disabled": {
+      "type": "boolean"
+    },
+    "is_pinned": {
+      "type": "boolean"
+    },
+    "is_sinked": {
+      "type": "boolean"
+    },
+    "is_erased": {
+      "type": "boolean"
+    },
+    "erased_by": {
+      "anyOf": [
+        {
+          "$ref": "id.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "tracked_post_role_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "content_reply_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "annotation_plaintext": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "subscription_key": {
+      "type": "string"
+    },
+    "content_blocks": {
+      "type": "array",
+      "items": {
+        "$ref": "content-block.json"
+      }
+    },
+    "highlight_role_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "member": {
+      "$ref": "member.json"
+    },
+    "replies_count": {
+      "type": "integer"
+    },
+    "views_count": {
+      "type": "integer"
+    },
+    "latest_activity": {
+      "anyOf": [
+        {
+          "$ref": "activity.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "votes": {
+      "$ref": "votes.json"
+    },
+    "reactions": {
+      "type": "array"
+    },
+    "nested_replies_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "id.json"
+      }
+    },
+    "replies": {
+      "type": "array",
+      "items": {
+        "$ref": "reply.json"
+      }
+    }
+  },
+  "additionalProperties": true
+}

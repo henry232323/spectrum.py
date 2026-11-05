@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MemberInfo",
+  "description": "data of member/info/nickname and member/info/id",
+  "type": "object",
+  "required": [
+    "member"
+  ],
+  "properties": {
+    "member": {
+      "$ref": "member.json"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,220 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/community/fetch-emojis:
+  post:
+    operationId: fetch_emojis
+    tags:
+    - community
+    x-spectrum:
+      python: HTTP.fetch_emojis
+      auth: unknown
+      verified: false
+      write: false
+      constant: FETCH_EMOJIS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/community/members:
+  post:
+    operationId: fetch_community_members
+    tags:
+    - community
+    x-spectrum:
+      python: HTTP.fetch_community_members
+      auth: unknown
+      verified: false
+      write: false
+      constant: FETCH_COMMUNITY_MEMBERS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              page:
+                type:
+                - integer
+                - 'null'
+              pagesize:
+                type:
+                - integer
+                - 'null'
+              sort:
+                type:
+                - string
+                - 'null'
+              sort_descending:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '100987'
+                page: 1
+                pagesize: 12
+                sort: displayname
+                sort_descending: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/emoji/create:
+  post:
+    operationId: emoji_create
+    tags:
+    - community
+    x-spectrum:
+      python: HTTP.emoji_create
+      auth: session
+      verified: false
+      write: true
+      constant: EMOJI_CREATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              name:
+                type:
+                - string
+                - 'null'
+              media_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                name: emoji_name
+                media_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/emoji/erase:
+  post:
+    operationId: emoji_erase
+    tags:
+    - community
+    x-spectrum:
+      python: HTTP.emoji_erase
+      auth: session
+      verified: false
+      write: true
+      constant: EMOJI_ERASE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              emoji_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                emoji_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

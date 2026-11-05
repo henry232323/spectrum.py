@@ -1,0 +1,1267 @@
+{
+  "operationId": "identify",
+  "source": "recorded",
+  "recorded_at": "2026-11-04",
+  "auth": "anonymous",
+  "request": {},
+  "status": 200,
+  "response": {
+    "success": 1,
+    "code": "OK",
+    "msg": "OK",
+    "data": {
+      "config": {
+        "permissions_schema": {
+          "global": [
+            "manage_roles",
+            "kick_members",
+            "embed_link",
+            "upload_media",
+            "mention",
+            "reaction",
+            "vote",
+            "read_erased"
+          ],
+          "message_lobby": [
+            "read",
+            "send_message",
+            "manage",
+            "moderate",
+            "set_motd"
+          ],
+          "forum_channel": [
+            "read",
+            "create_thread",
+            "create_thread_reply",
+            "manage",
+            "moderate"
+          ],
+          "custom_emoji": [
+            "create",
+            "remove"
+          ]
+        }
+      },
+      "token": null,
+      "gameToken": null,
+      "playerId": null,
+      "member": null,
+      "settings": {
+        "presence_status": "online",
+        "theme": "dark",
+        "notitication_popup_enabled": true,
+        "notitication_browser_enabled": true,
+        "notitication_sound_enabled": true,
+        "reactions_enabled": true,
+        "emojis_enabled": true,
+        "convert_emoticons": true,
+        "media_embeds_enabled": true,
+        "forum_threads_media_preview_enabled": true,
+        "community_ordering": [],
+        "forum_channels_sort": "hot",
+        "forum_threads_sort": "votes",
+        "forum_threads_view_mode": "nested",
+        "24_hour_time_enabled": null,
+        "lobby_blocked_content_enabled": true,
+        "forum_threads_hide_blocked_authors": false,
+        "forum_bookmark_limit": 5,
+        "forum_bookmark_limit_enabled": true,
+        "private_group_limit": 5,
+        "private_group_limit_enabled": true,
+        "private_message_limit": 5,
+        "private_message_limit_enabled": true
+      },
+      "roles": {
+        "1": [
+          "13"
+        ]
+      },
+      "communities": [
+        {
+          "id": "1",
+          "type": "public",
+          "slug": "SC",
+          "name": "Star Citizen",
+          "avatar": "https://cdn.robertsspaceindustries.com/static/spectrum/images/community-avatar-star-citizen.webp",
+          "banner": "https://cdn.robertsspaceindustries.com/static/spectrum/images/community-banner-star-citizen.webp",
+          "lobbies": [
+            {
+              "id": "22066",
+              "type": "public",
+              "community_id": "1",
+              "name": "becoming-a-citizen",
+              "description": "Interested in joining Star Citizen? Introduce yourself and ask the community questions!",
+              "color": "63A3E6",
+              "icon": null,
+              "time_created": 1487781367,
+              "subscription_key": "community:1:message_lobby:22066:fee1b8bab29762e845d3a836d1bd28142462a7f1",
+              "leader_id": null,
+              "online_members_count": 355,
+              "permissions": {
+                "4": {
+                  "read": 1,
+                  "send_message": 1,
+                  "manage": 0
+                },
+                "5": {
+                  "read": 1,
+                  "manage": 0
+                },
+                "6": {
+                  "read": 1
+                },
+                "137732": {
+                  "manage": 0
+                }
+              },
+              "last_read": null,
+              "latest": null,
+              "members": null,
+              "new_messages": null,
+              "last_message": null,
+              "active_guide_session": null,
+              "blocked_recipients": null
+            },
+            {
+              "id": "1",
+              "type": "public",
+              "community_id": "1",
+              "name": "general",
+              "description": "Public place to discuss all things Star Citizen",
+              "color": "4aa3c9",
+              "icon": null,
+              "time_created": 1487370827,
+              "subscription_key": "community:1:message_lobby:1:6ee64f3c0beb2ec4a98d3cff7b25b25abfed252a",
+              "leader_id": null,
+              "online_members_count": 1034,
+              "permissions": {
+                "4": {
+                  "read": 1,
+                  "send_message": 1,
+                  "manage": 0
+                },
+                "5": {
+                  "manage": 0
+                },
+                "137732": {
+                  "manage": 0
+                },
+                "11": {
+                  "send_message": 0
+                }
+              },
+              "last_read": null,
+              "latest": null,
+              "members": null,
+              "new_messages": null,
+              "last_message": null,
+              "active_guide_session": null,
+              "blocked_recipients": null
+            },
+            {
+              "id": "6897716",
+              "type": "public",
+              "community_id": "1",
+              "name": "looking-for-a-group",
+              "description": "Find other players to team up with for new adventures!",
+              "color": "63A3E6",
+              "icon": null,
+              "time_created": 1778764369,
+              "subscription_key": "community:1:message_lobby:6897716:96575049d5532e56937853cda6f7e4596a0c91af",
+              "leader_id": null,
+              "online_members_count": 355,
+              "permissions": [],
+              "last_read": null,
+              "latest": null,
+              "members": null,
+              "new_messages": null,
+              "last_message": null,
+              "active_guide_session": null,
+              "blocked_recipients": null
+            }
+          ],
+          "forum_channel_groups": {
+            "0": {
+              "id": "1",
+              "community_id": "1",
+              "order": 0,
+              "name": "Official",
+              "channels": [
+                {
+                  "id": "1",
+                  "community_id": "1",
+                  "group_id": "1",
+                  "order": 0,
+                  "name": "Announcements",
+                  "description": "Official Star Citizen announcements.",
+                  "color": "e05248",
+                  "sort_filter": "time-created",
+                  "label_required": false,
+                  "threads_count": 481,
+                  "labels": [
+                    {
+                      "id": "1",
+                      "channel_id": "1",
+                      "name": "Community",
+                      "subscription_key": "community:1:forum_label:1:4e1f35a6529f9b108d07c7ac4a051932505d5c3f",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "3",
+                      "channel_id": "1",
+                      "name": "Live Service",
+                      "subscription_key": "community:1:forum_label:3:dc06b6e156e49cbd15814d86b0d3f0df5bf6f6e3",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2",
+                      "channel_id": "1",
+                      "name": "Patch",
+                      "subscription_key": "community:1:forum_label:2:e8048ebfe3009ad7d4a3ec5aa48bc4171af4ce7e",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:1:a107ee0cb8fb3b0e730feafe2bd30e437d434cf6",
+                  "permissions": {
+                    "755998": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    },
+                    "4": {
+                      "create_thread": 0,
+                      "manage": 0
+                    },
+                    "5": {
+                      "create_thread": 0,
+                      "manage": 0
+                    },
+                    "6": {
+                      "create_thread": 0,
+                      "manage": 0
+                    },
+                    "137732": {
+                      "create_thread": 0,
+                      "manage": 0
+                    },
+                    "8": {
+                      "read": 1
+                    },
+                    "9": {
+                      "read": 1
+                    },
+                    "375267": {
+                      "read": 1
+                    },
+                    "10": {
+                      "read": 1
+                    },
+                    "11": {
+                      "create_thread": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            },
+            "4": {
+              "id": "2",
+              "community_id": "1",
+              "order": 4,
+              "name": "Star Citizen",
+              "channels": [
+                {
+                  "id": "3",
+                  "community_id": "1",
+                  "group_id": "2",
+                  "order": 0,
+                  "name": "General",
+                  "description": "Main discussion channel for all things SC.",
+                  "color": "4aa3c9",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 154180,
+                  "labels": [
+                    {
+                      "id": "2751",
+                      "channel_id": "3",
+                      "name": "Arena Commander",
+                      "subscription_key": "community:1:forum_label:2751:83963e53a4172952310e40ff2ad2f66bce34bbe8",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "8",
+                      "channel_id": "3",
+                      "name": "Citizens",
+                      "subscription_key": "community:1:forum_label:8:e07eaa81ec76f0e2fc9ecf40811c1f17886e385a",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2380",
+                      "channel_id": "3",
+                      "name": "Concern",
+                      "subscription_key": "community:1:forum_label:2380:559df828b70888c05d031f71da51f7f0aa441b09",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:3:c4971f5eb61afda2399350cc8fa4a6ed642bcca5",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "50259",
+                  "community_id": "1",
+                  "group_id": "2",
+                  "order": 1,
+                  "name": "Ask The Devs",
+                  "description": "Have a question for a specific development discipline?",
+                  "color": "53C6C2",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 43811,
+                  "labels": [
+                    {
+                      "id": "2105",
+                      "channel_id": "50259",
+                      "name": "AI",
+                      "subscription_key": "community:1:forum_label:2105:1a60f1c660c46c18a3bd0d4a3619a086f9abac2c",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2106",
+                      "channel_id": "50259",
+                      "name": "Animation",
+                      "subscription_key": "community:1:forum_label:2106:be7fef9fb09151cd3d6c3a778e67f1d1feeb77a8",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2108",
+                      "channel_id": "50259",
+                      "name": "Art",
+                      "subscription_key": "community:1:forum_label:2108:3f06900dbdc09486736d7dfb705351a29370ef6a",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:50259:fc3a53a478aa25545009d31492005c043e1ca33f",
+                  "permissions": {
+                    "4": {
+                      "create_thread": 1,
+                      "create_thread_reply": 1
+                    },
+                    "5": {
+                      "create_thread": 1,
+                      "create_thread_reply": 1
+                    },
+                    "6": {
+                      "create_thread": 1,
+                      "create_thread_reply": 1
+                    },
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "50172",
+                  "community_id": "1",
+                  "group_id": "2",
+                  "order": 2,
+                  "name": "Modding",
+                  "description": "Show us what changes you're making to Star Citizen!",
+                  "color": "63A3E6",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 993,
+                  "labels": [
+                    {
+                      "id": "2066",
+                      "channel_id": "50172",
+                      "name": "Environments",
+                      "subscription_key": "community:1:forum_label:2066:33f382388114591dd10616eadce36514ab4be63c",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2068",
+                      "channel_id": "50172",
+                      "name": "Guides",
+                      "subscription_key": "community:1:forum_label:2068:6ce65af36a1c6e7273100e69d01869d944183198",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2067",
+                      "channel_id": "50172",
+                      "name": "Private Servers",
+                      "subscription_key": "community:1:forum_label:2067:732e2b0fe3139875c1e70c1c9c447132bcaf9ba5",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:50172:e282c3becd218869926a3fa34327f20602b2c894",
+                  "permissions": {
+                    "755998": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    },
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            },
+            "5": {
+              "id": "63927",
+              "community_id": "1",
+              "order": 5,
+              "name": "4.10.2 LIVE Discussion and Feedback",
+              "channels": [
+                {
+                  "id": "190048",
+                  "community_id": "1",
+                  "group_id": "63927",
+                  "order": 0,
+                  "name": "Patch Notes",
+                  "description": "",
+                  "color": "E9B45B",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 766,
+                  "labels": [
+                    {
+                      "id": "14664",
+                      "channel_id": "190048",
+                      "name": "Patch Notes",
+                      "subscription_key": "community:1:forum_label:14664:1dc3c8583b0fbec4fd3ed0584a1672f6c11f2929",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:190048:94bd62f8bcac37a2d733737480b5ec1c25fa2df4",
+                  "permissions": {
+                    "2": {
+                      "moderate": 1
+                    },
+                    "755998": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    },
+                    "3": {
+                      "create_thread": 0
+                    },
+                    "4": {
+                      "create_thread": 0
+                    },
+                    "5": {
+                      "create_thread": 0
+                    },
+                    "6": {
+                      "create_thread": 0
+                    },
+                    "7": {
+                      "create_thread": 0
+                    },
+                    "8": {
+                      "read": 1
+                    },
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    },
+                    "12": {
+                      "read": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "4",
+                  "community_id": "1",
+                  "group_id": "63927",
+                  "order": 1,
+                  "name": "Feedback",
+                  "description": "Want to discuss the latest Release? Look no further!",
+                  "color": "63A3E6",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 51487,
+                  "labels": [
+                    {
+                      "id": "13",
+                      "channel_id": "4",
+                      "name": "Concern",
+                      "subscription_key": "community:1:forum_label:13:293a9020296f21729e467bdd29ef3043091c3706",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "8388",
+                      "channel_id": "4",
+                      "name": "FAQ",
+                      "subscription_key": "community:1:forum_label:8388:8b194deea84ad9bb2d0cb1fb8f066d4918121eb9",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "14665",
+                      "channel_id": "4",
+                      "name": "Feedback",
+                      "subscription_key": "community:1:forum_label:14665:e0908e5cecd6255cfab1af20b7c0a66ee84598e3",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:4:ca29dc4714a8a59c739680f7f4a1ed398a32d174",
+                  "permissions": {
+                    "2": {
+                      "moderate": 1
+                    },
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            },
+            "6": {
+              "id": "22015",
+              "community_id": "1",
+              "order": 6,
+              "name": "Shipyards",
+              "channels": [
+                {
+                  "id": "65291",
+                  "community_id": "1",
+                  "group_id": "22015",
+                  "order": 0,
+                  "name": "Alien Ships",
+                  "description": "All things Alien!",
+                  "color": "919191",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 3450,
+                  "labels": [
+                    {
+                      "id": "24646",
+                      "channel_id": "65291",
+                      "name": "Blade",
+                      "subscription_key": "community:1:forum_label:24646:166836e5f1071b667c4b54b092d53ead09a91d87",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "24645",
+                      "channel_id": "65291",
+                      "name": "Defender",
+                      "subscription_key": "community:1:forum_label:24645:31adc04ae1a00ca78f748c132aeadafef57beaf4",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "24647",
+                      "channel_id": "65291",
+                      "name": "Glaive",
+                      "subscription_key": "community:1:forum_label:24647:fd8fb077356d38e68d91deab47f8bf5bef94a38a",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:65291:79241f713d3e650a4750727066cc9bab67d6fdbe",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "65292",
+                  "community_id": "1",
+                  "group_id": "22015",
+                  "order": 1,
+                  "name": "Aegis Dynamics",
+                  "description": "Aegis Dynamics discussion group",
+                  "color": "919191",
+                  "sort_filter": null,
+                  "label_required": true,
+                  "threads_count": 7104,
+                  "labels": [
+                    {
+                      "id": "3215",
+                      "channel_id": "65292",
+                      "name": "Avenger",
+                      "subscription_key": "community:1:forum_label:3215:ba11e0112ac281181c73d5ed80061804e9de9815",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "3315",
+                      "channel_id": "65292",
+                      "name": "Eclipse",
+                      "subscription_key": "community:1:forum_label:3315:1b159d268af800e0c76632ffa5c819e95efaff73",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "3216",
+                      "channel_id": "65292",
+                      "name": "Gladius",
+                      "subscription_key": "community:1:forum_label:3216:07315fac80a8da100aac0685e592e9fc3da837dc",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:65292:a5ecf59627f25f3ee5a620fca46373c91cc62c62",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "65293",
+                  "community_id": "1",
+                  "group_id": "22015",
+                  "order": 2,
+                  "name": "Anvil Aerospace",
+                  "description": "Anvil Aerospace discussion group",
+                  "color": "919191",
+                  "sort_filter": null,
+                  "label_required": true,
+                  "threads_count": 5893,
+                  "labels": [
+                    {
+                      "id": "11018",
+                      "channel_id": "65293",
+                      "name": "Arrow",
+                      "subscription_key": "community:1:forum_label:11018:521e6afe7a8d764caa9820e0c194c81cd911ee28",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "22148",
+                      "channel_id": "65293",
+                      "name": "Asgard",
+                      "subscription_key": "community:1:forum_label:22148:c98b256cf82179951a8cb03fa6a27bf56c4fc1fb",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "12976",
+                      "channel_id": "65293",
+                      "name": "Ballista",
+                      "subscription_key": "community:1:forum_label:12976:aed7f8b1025672c3c3c6125dff60f0ab10bc9fce",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:65293:5a82f62a1658a0461da5108575d67328f585ac71",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            },
+            "7": {
+              "id": "3",
+              "community_id": "1",
+              "order": 7,
+              "name": "Community",
+              "channels": [
+                {
+                  "id": "292434",
+                  "community_id": "1",
+                  "group_id": "3",
+                  "order": 0,
+                  "name": "Community Hub - Patch Notes",
+                  "description": "Patch Notes from the Community Hub",
+                  "color": "E9B45B",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 2,
+                  "labels": [
+                    {
+                      "id": "19484",
+                      "channel_id": "292434",
+                      "name": "Announcements",
+                      "subscription_key": "community:1:forum_label:19484:0163a3fca9cb930694d4c4a7d300045079b9e50e",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:292434:f88e96d48f2741fddd16a1f9917f72c0c4a76ed8",
+                  "permissions": {
+                    "2": {
+                      "manage": 1,
+                      "moderate": 1
+                    },
+                    "755998": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    },
+                    "4": {
+                      "create_thread": 0
+                    },
+                    "5": {
+                      "create_thread": 0
+                    },
+                    "6": {
+                      "create_thread": 0
+                    },
+                    "7": {
+                      "create_thread": 0
+                    },
+                    "11": {
+                      "create_thread": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "50177",
+                  "community_id": "1",
+                  "group_id": "3",
+                  "order": 1,
+                  "name": "Organizations",
+                  "description": "Find an Org, Find Recruits, or talk shop about Orgs here!",
+                  "color": "63A3E6",
+                  "sort_filter": "hot",
+                  "label_required": false,
+                  "threads_count": 12853,
+                  "labels": [
+                    {
+                      "id": "2084",
+                      "channel_id": "50177",
+                      "name": "Announcements",
+                      "subscription_key": "community:1:forum_label:2084:6232a940616ef34bb535ac4f31a0987ceaf3ca16",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2083",
+                      "channel_id": "50177",
+                      "name": "Guides",
+                      "subscription_key": "community:1:forum_label:2083:bf117326d59d0ab97a9065c6539bd8004e944f03",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2082",
+                      "channel_id": "50177",
+                      "name": "Need Members",
+                      "subscription_key": "community:1:forum_label:2082:8758ed869f66af027b1b7aac76c2915e4948cc06",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:50177:5fdc2c6b9c6bbd3629acf3bffe576a39bdc025b7",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "51473",
+                  "community_id": "1",
+                  "group_id": "3",
+                  "order": 2,
+                  "name": "Community Tech Support",
+                  "description": "Technical support for players from players!",
+                  "color": "FF6262",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 7997,
+                  "labels": [
+                    {
+                      "id": "2219",
+                      "channel_id": "51473",
+                      "name": "Crash",
+                      "subscription_key": "community:1:forum_label:2219:cdc373c0a6f5209254543a27c1ab5a4523f7b7a9",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2220",
+                      "channel_id": "51473",
+                      "name": "Disconnection",
+                      "subscription_key": "community:1:forum_label:2220:073604e4270fd88fe07aa2e2495a92a6b21d4589",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2218",
+                      "channel_id": "51473",
+                      "name": "Launcher",
+                      "subscription_key": "community:1:forum_label:2218:45e9a2df898b1464cd7c373bc10481753c95d277",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:51473:a4a78bcee00b97266964aa726cedc43644f7f914",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            },
+            "8": {
+              "id": "16953",
+              "community_id": "1",
+              "order": 8,
+              "name": "More Talk",
+              "channels": [
+                {
+                  "id": "50182",
+                  "community_id": "1",
+                  "group_id": "16953",
+                  "order": 1,
+                  "name": "Off Topic",
+                  "description": "Discuss non-SC related topics here!",
+                  "color": "53C6C2",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 3785,
+                  "labels": [
+                    {
+                      "id": "2091",
+                      "channel_id": "50182",
+                      "name": "Contests",
+                      "subscription_key": "community:1:forum_label:2091:68f209bbce6879cb8f98768de494643f99736cb1",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2090",
+                      "channel_id": "50182",
+                      "name": "Games",
+                      "subscription_key": "community:1:forum_label:2090:bd6ae7df83841cd1dcbeb5fd00241b01442bb9d5",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2092",
+                      "channel_id": "50182",
+                      "name": "Memes",
+                      "subscription_key": "community:1:forum_label:2092:94f47ec5af5b0c06b4643dfe968a648bede2301c",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:50182:89978b17d8bea9d87023e1dd66453bc5c9dd562d",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "55059",
+                  "community_id": "1",
+                  "group_id": "16953",
+                  "order": 2,
+                  "name": "Other Games",
+                  "description": "Your game lounge",
+                  "color": "C197C8",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 1580,
+                  "labels": [
+                    {
+                      "id": "2628",
+                      "channel_id": "55059",
+                      "name": "Board Games",
+                      "subscription_key": "community:1:forum_label:2628:e98365db6837fb75f2b59ee20a18181146371685",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2629",
+                      "channel_id": "55059",
+                      "name": "Card Games",
+                      "subscription_key": "community:1:forum_label:2629:f5d6582268c8da653ee1d76fee78ec6e90ed4ba7",
+                      "notification_subscription": null
+                    },
+                    {
+                      "id": "2630",
+                      "channel_id": "55059",
+                      "name": "RPG",
+                      "subscription_key": "community:1:forum_label:2630:c664999f95f01fd8451817ce32194dc21c8ce9d5",
+                      "notification_subscription": null
+                    }
+                  ],
+                  "subscription_key": "community:1:forum_channel:55059:a96e39a7cc341108322d563996e56200275a31b1",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            },
+            "9": {
+              "id": "59801",
+              "community_id": "1",
+              "order": 9,
+              "name": "Banu Language",
+              "channels": [
+                {
+                  "id": "177658",
+                  "community_id": "1",
+                  "group_id": "59801",
+                  "order": 0,
+                  "name": "Banu Language Discussion",
+                  "description": "Discuss the Banu language here!",
+                  "color": "FF6262",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 70,
+                  "labels": [],
+                  "subscription_key": "community:1:forum_channel:177658:3736a8ec97d9f23d705f822a0b7e08816dd08e15",
+                  "permissions": {
+                    "11": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "177659",
+                  "community_id": "1",
+                  "group_id": "59801",
+                  "order": 1,
+                  "name": "Banu Dictionary",
+                  "description": "Spectrum's base for Banu dictionary discussion and updates.",
+                  "color": "919191",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 9,
+                  "labels": [],
+                  "subscription_key": "community:1:forum_channel:177659:376cd4e13ac5adb4748626a29eb0966703a573c4",
+                  "permissions": {
+                    "755998": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    },
+                    "11": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "177660",
+                  "community_id": "1",
+                  "group_id": "59801",
+                  "order": 2,
+                  "name": "Banu Language Learning Resources",
+                  "description": "Need help learning Banu? Stop here!",
+                  "color": "E9B45B",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 4,
+                  "labels": [],
+                  "subscription_key": "community:1:forum_channel:177660:b9f9722eb251a35093a58243e13b82debc179a0c",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            },
+            "10": {
+              "id": "29628",
+              "community_id": "1",
+              "order": 10,
+              "name": "Xi’an Language",
+              "channels": [
+                {
+                  "id": "88013",
+                  "community_id": "1",
+                  "group_id": "29628",
+                  "order": 0,
+                  "name": "Xi’an Language Discussion",
+                  "description": "Discuss the Xi'an language here!",
+                  "color": "FF6262",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 154,
+                  "labels": [],
+                  "subscription_key": "community:1:forum_channel:88013:a04638c4339937622f3868b5f001a37f56fe75d3",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "88008",
+                  "community_id": "1",
+                  "group_id": "29628",
+                  "order": 1,
+                  "name": "Xi’an Dictionary",
+                  "description": "Spectrum's home base for Xi'an dictionary discussion and updates.",
+                  "color": "919191",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 18,
+                  "labels": [],
+                  "subscription_key": "community:1:forum_channel:88008:f4af415a9f884083d0efa03fd70694dc0bc61854",
+                  "permissions": {
+                    "755998": {
+                      "read": 0,
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    },
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                },
+                {
+                  "id": "88012",
+                  "community_id": "1",
+                  "group_id": "29628",
+                  "order": 2,
+                  "name": "Xi’an Language Learning Resources",
+                  "description": "Need help learning Xi'an? Stop here!",
+                  "color": "E9B45B",
+                  "sort_filter": null,
+                  "label_required": false,
+                  "threads_count": 25,
+                  "labels": [],
+                  "subscription_key": "community:1:forum_channel:88012:6c1f71fc8d625da38bfaca978fdc3b9970d51e28",
+                  "permissions": {
+                    "11": {
+                      "create_thread": 0,
+                      "create_thread_reply": 0
+                    }
+                  },
+                  "notification_subscription": null
+                }
+              ]
+            }
+          },
+          "roles": [
+            {
+              "id": "2",
+              "community_id": "1",
+              "type": "provider",
+              "order": 0,
+              "visible": true,
+              "highlightable": true,
+              "tracked": true,
+              "name": "staff",
+              "description": "CIG Staff",
+              "color": "DEC342",
+              "member_count": null,
+              "members_count": null,
+              "permissions": {
+                "global": {
+                  "manage_roles": false,
+                  "kick_members": true,
+                  "embed_link": true,
+                  "upload_media": true,
+                  "mention": true,
+                  "reaction": true,
+                  "vote": true,
+                  "read_erased": false
+                },
+                "message_lobby": {
+                  "read": true,
+                  "send_message": true,
+                  "manage": false,
+                  "moderate": false,
+                  "set_motd": true
+                },
+                "forum_channel": {
+                  "read": true,
+                  "create_thread": true,
+                  "create_thread_reply": true,
+                  "manage": false,
+                  "moderate": false
+                },
+                "custom_emoji": {
+                  "create": false,
+                  "remove": false
+                }
+              }
+            },
+            {
+              "id": "755998",
+              "community_id": "1",
+              "type": "provider",
+              "order": 0,
+              "visible": false,
+              "highlightable": false,
+              "tracked": false,
+              "name": "PTU Participant",
+              "description": "Users who participated in PTU",
+              "color": "757575",
+              "member_count": null,
+              "members_count": null,
+              "permissions": {
+                "global": {
+                  "manage_roles": false,
+                  "kick_members": false,
+                  "embed_link": true,
+                  "upload_media": true,
+                  "mention": true,
+                  "reaction": true,
+                  "vote": true,
+                  "read_erased": false
+                },
+                "message_lobby": {
+                  "read": true,
+                  "send_message": true,
+                  "manage": false,
+                  "moderate": false,
+                  "set_motd": false
+                },
+                "forum_channel": {
+                  "read": true,
+                  "create_thread": true,
+                  "create_thread_reply": true,
+                  "manage": false,
+                  "moderate": false
+                },
+                "custom_emoji": {
+                  "create": false,
+                  "remove": false
+                }
+              }
+            },
+            {
+              "id": "3",
+              "community_id": "1",
+              "type": "provider",
+              "order": 2,
+              "visible": true,
+              "highlightable": true,
+              "tracked": false,
+              "name": "mod",
+              "description": "Spectrum public moderator",
+              "color": "7D67E9",
+              "member_count": null,
+              "members_count": null,
+              "permissions": {
+                "global": {
+                  "manage_roles": false,
+                  "kick_members": true,
+                  "embed_link": true,
+                  "upload_media": true,
+                  "mention": true,
+                  "reaction": true,
+                  "vote": true,
+                  "read_erased": true
+                },
+                "message_lobby": {
+                  "read": true,
+                  "send_message": true,
+                  "manage": false,
+                  "moderate": true,
+                  "set_motd": false
+                },
+                "forum_channel": {
+                  "read": true,
+                  "create_thread": true,
+                  "create_thread_reply": true,
+                  "manage": false,
+                  "moderate": true
+                },
+                "custom_emoji": {
+                  "create": false,
+                  "remove": false
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "bookmarks": [
+        {
+          "entity": {
+            "id": "1",
+            "type": "public",
+            "community_id": "1",
+            "name": "general",
+            "description": "Public place to discuss all things Star Citizen",
+            "color": "4aa3c9",
+            "icon": null,
+            "time_created": 1487370827,
+            "leader_id": "",
+            "order": 1,
+            "latest": 67438609,
+            "subscription_key": "community:1:message_lobby:1:6ee64f3c0beb2ec4a98d3cff7b25b25abfed252a"
+          },
+          "type": "message_lobby",
+          "name": null
+        },
+        {
+          "entity": {
+            "id": "7",
+            "type": "public",
+            "community_id": "1",
+            "name": "helpdesk-volunteers",
+            "description": "The Helpdesk is attended by volunteer backers, fans of the game just like you. Please thank them for their time. Never tell your password or LOGIN ID to anyone. Period.",
+            "color": "5aa05c",
+            "icon": null,
+            "time_created": 1487370827,
+            "leader_id": "",
+            "order": 7,
+            "latest": 67438620,
+            "subscription_key": "community:1:message_lobby:7:9716a41480be4d939e743a2c023bf6194f38ebb0"
+          },
+          "type": "message_lobby",
+          "name": null
+        },
+        {
+          "entity": {
+            "id": "1",
+            "community_id": "1",
+            "group_id": "1",
+            "order": 0,
+            "name": "Announcements",
+            "description": "Official Star Citizen announcements.",
+            "color": "e05248",
+            "sort_filter": "time-created",
+            "label_required": false,
+            "latest": 574653,
+            "latest_timestamp": "1793718000",
+            "subscription_key": "community:1:forum_channel:1:a107ee0cb8fb3b0e730feafe2bd30e437d434cf6"
+          },
+          "type": "forum_channel",
+          "name": null
+        }
+      ],
+      "private_lobbies": null,
+      "group_lobbies": null,
+      "party_lobby": null,
+      "notifications": [],
+      "notifications_unread": 0,
+      "blocklist": null,
+      "friend_requests": null,
+      "invites": null,
+      "friends": null,
+      "guide_requests": null,
+      "active_guide_sessions": null,
+      "broadcast_message_subscription_key": "community:1:broadcast_message:1:1a75b9eef0c716d8a51dfc4463e0ee3f8a3ae23c"
+    }
+  }
+}

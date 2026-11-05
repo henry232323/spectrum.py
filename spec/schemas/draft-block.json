@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DraftBlock",
+  "description": "Draft.js block",
+  "type": "object",
+  "required": [
+    "key",
+    "text",
+    "type"
+  ],
+  "properties": {
+    "key": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "depth": {
+      "type": "integer"
+    },
+    "inlineStyleRanges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "offset",
+          "length",
+          "style"
+        ]
+      }
+    },
+    "entityRanges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "offset",
+          "length",
+          "key"
+        ]
+      }
+    },
+    "data": {
+      "oneOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "array",
+          "maxItems": 0
+        }
+      ],
+      "description": "PHP-style: an empty object comes back as []"
+    }
+  },
+  "additionalProperties": true
+}

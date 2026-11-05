@@ -1,0 +1,189 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/search/content/extended:
+  post:
+    operationId: extended_search
+    tags:
+    - search
+    x-spectrum:
+      python: HTTP.extended_search
+      auth: unknown
+      verified: false
+      write: false
+      constant: EXTENDED_SEARCH
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              type:
+                type: array
+              text:
+                type:
+                - string
+                - 'null'
+              page:
+                type:
+                - integer
+                - 'null'
+              sort:
+                type:
+                - string
+                - 'null'
+              range:
+                type:
+                - string
+                - 'null'
+              author:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              visibility:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                type:
+                - op
+                - reply
+                - chat
+                text: ''
+                page: 1
+                sort: latest
+                range: year
+                author: '200762'
+                visibility: nonerased
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/search/content/simple:
+  post:
+    operationId: search_content_simple
+    tags:
+    - search
+    x-spectrum:
+      python: HTTP.search_content_simple
+      auth: unknown
+      verified: false
+      write: false
+      constant: SEARCH_CONTENT_SIMPLE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              text:
+                type:
+                - string
+                - 'null'
+              page:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                text: Redacted text 1.
+                page: 1
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/search/member/autocomplete:
+  post:
+    operationId: search_users
+    tags:
+    - search
+    x-spectrum:
+      python: HTTP.search_users
+      auth: unknown
+      verified: false
+      write: false
+      constant: SEARCH_USERS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id: {}
+              text:
+                type:
+                - string
+                - 'null'
+              ignore_self:
+                type:
+                - boolean
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: null
+                text: Redacted text 1.
+                ignore_self: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

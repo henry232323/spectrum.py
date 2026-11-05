@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "invite.accept",
+  "description": "Server -> client `invite.accept`. Required keys are the ones `Client._on_invite_accept_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "invite.accept"
+    }
+  },
+  "additionalProperties": true
+}

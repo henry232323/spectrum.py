@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "bookmark.add",
+  "description": "Server -> client `bookmark.add`. Required keys are the ones `Client._on_bookmark_add_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "bookmark.add"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,879 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+asyncapi: 3.0.0
+info:
+  title: RSI Spectrum websocket (unofficial)
+  version: 2026.11.0
+  description: 'JSON text frames shaped `{"type": "<event>", ...payload}`. Connect with the JWT from `auth/identify`
+    as `?token=`. Unsubscribing is an HTTP call (`subscription/remove`), not a frame. There are no heartbeats; spectrum.py
+    reconnects after 360 s without a frame (backoff 1 -> 60 s) and re-identifies for a fresh token. The experimental
+    gRPC transport is deliberately not described here.'
+  license:
+    name: MIT
+servers:
+  production:
+    host: robertsspaceindustries.com
+    pathname: /ws/spectrum
+    protocol: wss
+    security:
+    - $ref: '#/components/securitySchemes/jwt'
+channels:
+  spectrum:
+    address: /ws/spectrum
+    messages:
+      bookmark_add:
+        name: bookmark.add
+        title: bookmark.add
+        x-spectrum:
+          python_callbacks:
+          - on_bookmark_add
+        payload:
+          $ref: ../schemas/events/bookmark.add.json
+      bookmark_move:
+        name: bookmark.move
+        title: bookmark.move
+        x-spectrum:
+          python_callbacks:
+          - on_bookmark_move
+        payload:
+          $ref: ../schemas/events/bookmark.move.json
+      bookmark_remove:
+        name: bookmark.remove
+        title: bookmark.remove
+        x-spectrum:
+          python_callbacks:
+          - on_bookmark_remove
+        payload:
+          $ref: ../schemas/events/bookmark.remove.json
+      bookmark_rename:
+        name: bookmark.rename
+        title: bookmark.rename
+        x-spectrum:
+          python_callbacks:
+          - on_bookmark_rename
+        payload:
+          $ref: ../schemas/events/bookmark.rename.json
+      broadcaster_ready:
+        name: broadcaster.ready
+        title: broadcaster.ready
+        x-spectrum:
+          python_callbacks:
+          - on_ready
+        payload:
+          $ref: ../schemas/events/broadcaster.ready.json
+      client_version:
+        name: client.version
+        title: client.version
+        x-spectrum:
+          python_callbacks: []
+        payload:
+          $ref: ../schemas/events/client.version.json
+      community_update:
+        name: community.update
+        title: community.update
+        x-spectrum:
+          python_callbacks:
+          - on_community_update
+        payload:
+          $ref: ../schemas/events/community.update.json
+      custom_emoji_create:
+        name: custom_emoji.create
+        title: custom_emoji.create
+        x-spectrum:
+          python_callbacks:
+          - on_custom_emoji_create
+        payload:
+          $ref: ../schemas/events/custom_emoji.create.json
+      custom_emoji_remove:
+        name: custom_emoji.remove
+        title: custom_emoji.remove
+        x-spectrum:
+          python_callbacks:
+          - on_custom_emoji_remove
+        payload:
+          $ref: ../schemas/events/custom_emoji.remove.json
+      emoji_new:
+        name: emoji.new
+        title: emoji.new
+        x-spectrum:
+          python_callbacks:
+          - on_emoji_new
+        payload:
+          $ref: ../schemas/events/emoji.new.json
+      emoji_remove:
+        name: emoji.remove
+        title: emoji.remove
+        x-spectrum:
+          python_callbacks:
+          - on_emoji_remove
+        payload:
+          $ref: ../schemas/events/emoji.remove.json
+      forum_channel_read_update:
+        name: forum.channel.read.update
+        title: forum.channel.read.update
+        x-spectrum:
+          python_callbacks:
+          - on_channel_read_update
+        payload:
+          $ref: ../schemas/events/forum.channel.read.update.json
+      forum_label_read:
+        name: forum.label.read
+        title: forum.label.read
+        x-spectrum:
+          python_callbacks:
+          - on_forum_label_read
+        payload:
+          $ref: ../schemas/events/forum.label.read.json
+      forum_label_read_update:
+        name: forum.label.read.update
+        title: forum.label.read.update
+        x-spectrum:
+          python_callbacks:
+          - on_forum_label_read_update
+        payload:
+          $ref: ../schemas/events/forum.label.read.update.json
+      forum_thread_edit:
+        name: forum.thread.edit
+        title: forum.thread.edit
+        x-spectrum:
+          python_callbacks:
+          - on_forum_thread_edit
+        payload:
+          $ref: ../schemas/events/forum.thread.edit.json
+      forum_thread_marker_update:
+        name: forum.thread.marker.update
+        title: forum.thread.marker.update
+        x-spectrum:
+          python_callbacks:
+          - on_forum_thread_marker_update
+        payload:
+          $ref: ../schemas/events/forum.thread.marker.update.json
+      forum_thread_read_update:
+        name: forum.thread.read.update
+        title: forum.thread.read.update
+        x-spectrum:
+          python_callbacks:
+          - on_thread_read_update
+        payload:
+          $ref: ../schemas/events/forum.thread.read.update.json
+      forum_thread_replies_count_update:
+        name: forum.thread.replies_count.update
+        title: forum.thread.replies_count.update
+        x-spectrum:
+          python_callbacks:
+          - on_forum_thread_replies_count_update
+        payload:
+          $ref: ../schemas/events/forum.thread.replies_count.update.json
+      forum_thread_reply_edit:
+        name: forum.thread.reply.edit
+        title: forum.thread.reply.edit
+        x-spectrum:
+          python_callbacks:
+          - on_forum_thread_reply_edit
+        payload:
+          $ref: ../schemas/events/forum.thread.reply.edit.json
+      forum_thread_reply_new:
+        name: forum.thread.reply.new
+        title: forum.thread.reply.new
+        x-spectrum:
+          python_callbacks:
+          - on_forum_thread_reply
+        payload:
+          $ref: ../schemas/events/forum.thread.reply.new.json
+      forum_channel_new:
+        name: forum_channel.new
+        title: forum_channel.new
+        x-spectrum:
+          python_callbacks:
+          - on_channel_new
+        payload:
+          $ref: ../schemas/events/forum_channel.new.json
+      forum_channel_remove:
+        name: forum_channel.remove
+        title: forum_channel.remove
+        x-spectrum:
+          python_callbacks:
+          - on_channel_remove
+        payload:
+          $ref: ../schemas/events/forum_channel.remove.json
+      forum_channel_group_new:
+        name: forum_channel_group.new
+        title: forum_channel_group.new
+        x-spectrum:
+          python_callbacks:
+          - on_forum_channel_group_new
+        payload:
+          $ref: ../schemas/events/forum_channel_group.new.json
+      forum_channel_group_remove:
+        name: forum_channel_group.remove
+        title: forum_channel_group.remove
+        x-spectrum:
+          python_callbacks:
+          - on_forum_channel_group_remove
+        payload:
+          $ref: ../schemas/events/forum_channel_group.remove.json
+      forum_channel_group_update:
+        name: forum_channel_group.update
+        title: forum_channel_group.update
+        x-spectrum:
+          python_callbacks:
+          - on_forum_channel_group_update
+        payload:
+          $ref: ../schemas/events/forum_channel_group.update.json
+      forum_label_edit:
+        name: forum_label.edit
+        title: forum_label.edit
+        x-spectrum:
+          python_callbacks:
+          - on_forum_label_edit
+        payload:
+          $ref: ../schemas/events/forum_label.edit.json
+      forum_label_new:
+        name: forum_label.new
+        title: forum_label.new
+        x-spectrum:
+          python_callbacks:
+          - on_forum_label_new
+        payload:
+          $ref: ../schemas/events/forum_label.new.json
+      forum_label_remove:
+        name: forum_label.remove
+        title: forum_label.remove
+        x-spectrum:
+          python_callbacks:
+          - on_forum_label_remove
+        payload:
+          $ref: ../schemas/events/forum_label.remove.json
+      forum_thread_erase:
+        name: forum_thread.erase
+        title: forum_thread.erase
+        x-spectrum:
+          python_callbacks:
+          - on_forum_thread_erase
+        payload:
+          $ref: ../schemas/events/forum_thread.erase.json
+      friend_request_accept:
+        name: friend_request.accept
+        title: friend_request.accept
+        x-spectrum:
+          python_callbacks:
+          - on_friend_request_accept
+        payload:
+          $ref: ../schemas/events/friend_request.accept.json
+      friend_request_cancel:
+        name: friend_request.cancel
+        title: friend_request.cancel
+        x-spectrum:
+          python_callbacks:
+          - on_friend_request_cancel
+        payload:
+          $ref: ../schemas/events/friend_request.cancel.json
+      friend_request_decline:
+        name: friend_request.decline
+        title: friend_request.decline
+        x-spectrum:
+          python_callbacks:
+          - on_friend_request_decline
+        payload:
+          $ref: ../schemas/events/friend_request.decline.json
+      friend_request_new:
+        name: friend_request.new
+        title: friend_request.new
+        x-spectrum:
+          python_callbacks:
+          - on_friend_request_new
+        payload:
+          $ref: ../schemas/events/friend_request.new.json
+      friendship_init_presences:
+        name: friendship.init_presences
+        title: friendship.init_presences
+        x-spectrum:
+          python_callbacks:
+          - on_friendship_init_presences
+        payload:
+          $ref: ../schemas/events/friendship.init_presences.json
+      friendship_new:
+        name: friendship.new
+        title: friendship.new
+        x-spectrum:
+          python_callbacks:
+          - on_friendship_new
+        payload:
+          $ref: ../schemas/events/friendship.new.json
+      friendship_remove:
+        name: friendship.remove
+        title: friendship.remove
+        x-spectrum:
+          python_callbacks:
+          - on_friendship_remove
+        payload:
+          $ref: ../schemas/events/friendship.remove.json
+      guide_request_accept:
+        name: guide_request.accept
+        title: guide_request.accept
+        x-spectrum:
+          python_callbacks:
+          - on_guide_request_accept
+        payload:
+          $ref: ../schemas/events/guide_request.accept.json
+      guide_request_cancel:
+        name: guide_request.cancel
+        title: guide_request.cancel
+        x-spectrum:
+          python_callbacks:
+          - on_guide_request_cancel
+        payload:
+          $ref: ../schemas/events/guide_request.cancel.json
+      guide_request_decline:
+        name: guide_request.decline
+        title: guide_request.decline
+        x-spectrum:
+          python_callbacks:
+          - on_guide_request_decline
+        payload:
+          $ref: ../schemas/events/guide_request.decline.json
+      guide_request_new:
+        name: guide_request.new
+        title: guide_request.new
+        x-spectrum:
+          python_callbacks:
+          - on_guide_request_new
+        payload:
+          $ref: ../schemas/events/guide_request.new.json
+      guide_request_remove:
+        name: guide_request.remove
+        title: guide_request.remove
+        x-spectrum:
+          python_callbacks:
+          - on_guide_request_remove
+        payload:
+          $ref: ../schemas/events/guide_request.remove.json
+      guide_request_remove_all:
+        name: guide_request.remove_all
+        title: guide_request.remove_all
+        x-spectrum:
+          python_callbacks:
+          - on_guide_request_remove_all
+        payload:
+          $ref: ../schemas/events/guide_request.remove_all.json
+      guide_request_timeout:
+        name: guide_request.timeout
+        title: guide_request.timeout
+        x-spectrum:
+          python_callbacks:
+          - on_guide_request_timeout
+        payload:
+          $ref: ../schemas/events/guide_request.timeout.json
+      guide_session_create:
+        name: guide_session.create
+        title: guide_session.create
+        x-spectrum:
+          python_callbacks:
+          - on_guide_session_create
+        payload:
+          $ref: ../schemas/events/guide_session.create.json
+      guide_session_endorse:
+        name: guide_session.endorse
+        title: guide_session.endorse
+        x-spectrum:
+          python_callbacks:
+          - on_guide_session_endorse
+        payload:
+          $ref: ../schemas/events/guide_session.endorse.json
+      guide_session_terminate:
+        name: guide_session.terminate
+        title: guide_session.terminate
+        x-spectrum:
+          python_callbacks:
+          - on_guide_session_terminate
+        payload:
+          $ref: ../schemas/events/guide_session.terminate.json
+      invite_accept:
+        name: invite.accept
+        title: invite.accept
+        x-spectrum:
+          python_callbacks:
+          - on_invite_accept
+        payload:
+          $ref: ../schemas/events/invite.accept.json
+      invite_cancel:
+        name: invite.cancel
+        title: invite.cancel
+        x-spectrum:
+          python_callbacks:
+          - on_invite_cancel
+        payload:
+          $ref: ../schemas/events/invite.cancel.json
+      invite_decline:
+        name: invite.decline
+        title: invite.decline
+        x-spectrum:
+          python_callbacks:
+          - on_invite_decline
+        payload:
+          $ref: ../schemas/events/invite.decline.json
+      invite_new:
+        name: invite.new
+        title: invite.new
+        x-spectrum:
+          python_callbacks:
+          - on_invite_new
+        payload:
+          $ref: ../schemas/events/invite.new.json
+      media_processing_ready:
+        name: media.processing.ready
+        title: media.processing.ready
+        x-spectrum:
+          python_callbacks:
+          - on_media_ready
+        payload:
+          $ref: ../schemas/events/media.processing.ready.json
+      member_presence_update:
+        name: member.presence.update
+        title: member.presence.update
+        x-spectrum:
+          python_callbacks:
+          - on_presence_update
+        payload:
+          $ref: ../schemas/events/member.presence.update.json
+      member_roles_update:
+        name: member.roles.update
+        title: member.roles.update
+        x-spectrum:
+          python_callbacks:
+          - on_member_roles_update
+        payload:
+          $ref: ../schemas/events/member.roles.update.json
+      member_update:
+        name: member.update
+        title: member.update
+        x-spectrum:
+          python_callbacks:
+          - on_member_update
+        payload:
+          $ref: ../schemas/events/member.update.json
+      message_edit:
+        name: message.edit
+        title: message.edit
+        x-spectrum:
+          python_callbacks:
+          - on_message_edit
+        payload:
+          $ref: ../schemas/events/message.edit.json
+      message_erase:
+        name: message.erase
+        title: message.erase
+        x-spectrum:
+          python_callbacks:
+          - on_message_erase
+        payload:
+          $ref: ../schemas/events/message.erase.json
+      message_new:
+        name: message.new
+        title: message.new
+        x-spectrum:
+          python_callbacks:
+          - on_message
+        payload:
+          $ref: ../schemas/events/message.new.json
+      message_lobby_erase:
+        name: message_lobby.erase
+        title: message_lobby.erase
+        x-spectrum:
+          python_callbacks:
+          - on_lobby_erase
+        payload:
+          $ref: ../schemas/events/message_lobby.erase.json
+      message_lobby_kick:
+        name: message_lobby.kick
+        title: message_lobby.kick
+        x-spectrum:
+          python_callbacks:
+          - on_lobby_kick
+        payload:
+          $ref: ../schemas/events/message_lobby.kick.json
+      message_lobby_latest_update:
+        name: message_lobby.latest.update
+        title: message_lobby.latest.update
+        x-spectrum:
+          python_callbacks:
+          - on_lobby_latest_update
+        payload:
+          $ref: ../schemas/events/message_lobby.latest.update.json
+      message_lobby_leave:
+        name: message_lobby.leave
+        title: message_lobby.leave
+        x-spectrum:
+          python_callbacks:
+          - on_lobby_leave
+        payload:
+          $ref: ../schemas/events/message_lobby.leave.json
+      message_lobby_new:
+        name: message_lobby.new
+        title: message_lobby.new
+        x-spectrum:
+          python_callbacks:
+          - on_lobby_new
+        payload:
+          $ref: ../schemas/events/message_lobby.new.json
+      message_lobby_presence_join:
+        name: message_lobby.presence.join
+        title: message_lobby.presence.join
+        x-spectrum:
+          python_callbacks:
+          - on_presence_join
+        payload:
+          $ref: ../schemas/events/message_lobby.presence.join.json
+      message_lobby_presence_leave:
+        name: message_lobby.presence.leave
+        title: message_lobby.presence.leave
+        x-spectrum:
+          python_callbacks:
+          - on_presence_leave
+        payload:
+          $ref: ../schemas/events/message_lobby.presence.leave.json
+      message_lobby_read_update:
+        name: message_lobby.read.update
+        title: message_lobby.read.update
+        x-spectrum:
+          python_callbacks:
+          - on_lobby_read_update
+        payload:
+          $ref: ../schemas/events/message_lobby.read.update.json
+      message_lobby_typing_end:
+        name: message_lobby.typing.end
+        title: message_lobby.typing.end
+        x-spectrum:
+          python_callbacks:
+          - on_typing_end
+        payload:
+          $ref: ../schemas/events/message_lobby.typing.end.json
+      message_lobby_typing_start:
+        name: message_lobby.typing.start
+        title: message_lobby.typing.start
+        x-spectrum:
+          python_callbacks:
+          - on_typing_start
+        payload:
+          $ref: ../schemas/events/message_lobby.typing.start.json
+      message_lobby_update:
+        name: message_lobby.update
+        title: message_lobby.update
+        x-spectrum:
+          python_callbacks:
+          - on_lobby_update
+        payload:
+          $ref: ../schemas/events/message_lobby.update.json
+      notification_new:
+        name: notification.new
+        title: notification.new
+        x-spectrum:
+          python_callbacks:
+          - on_notification_new
+        payload:
+          $ref: ../schemas/events/notification.new.json
+      notification_read:
+        name: notification.read
+        title: notification.read
+        x-spectrum:
+          python_callbacks:
+          - on_notification_read
+        payload:
+          $ref: ../schemas/events/notification.read.json
+      notification_read_all:
+        name: notification.read_all
+        title: notification.read_all
+        x-spectrum:
+          python_callbacks:
+          - on_notification_read_all
+        payload:
+          $ref: ../schemas/events/notification.read_all.json
+      notification_remove:
+        name: notification.remove
+        title: notification.remove
+        x-spectrum:
+          python_callbacks:
+          - on_notification_remove
+        payload:
+          $ref: ../schemas/events/notification.remove.json
+      notification_remove_all:
+        name: notification.remove_all
+        title: notification.remove_all
+        x-spectrum:
+          python_callbacks:
+          - on_notification_remove_all
+        payload:
+          $ref: ../schemas/events/notification.remove_all.json
+      notification_subscription_update:
+        name: notification.subscription.update
+        title: notification.subscription.update
+        x-spectrum:
+          python_callbacks:
+          - on_notification_subscription_update
+        payload:
+          $ref: ../schemas/events/notification.subscription.update.json
+      notification_update:
+        name: notification.update
+        title: notification.update
+        x-spectrum:
+          python_callbacks:
+          - on_notification_update
+        payload:
+          $ref: ../schemas/events/notification.update.json
+      private_lobbies_update:
+        name: private_lobbies.update
+        title: private_lobbies.update
+        x-spectrum:
+          python_callbacks:
+          - on_private_lobbies_update
+        payload:
+          $ref: ../schemas/events/private_lobbies.update.json
+      reaction_add:
+        name: reaction.add
+        title: reaction.add
+        x-spectrum:
+          python_callbacks:
+          - on_reaction_add
+        payload:
+          $ref: ../schemas/events/reaction.add.json
+      reaction_remove:
+        name: reaction.remove
+        title: reaction.remove
+        x-spectrum:
+          python_callbacks:
+          - on_reaction_remove
+        payload:
+          $ref: ../schemas/events/reaction.remove.json
+      role_move:
+        name: role.move
+        title: role.move
+        x-spectrum:
+          python_callbacks:
+          - on_role_move
+        payload:
+          $ref: ../schemas/events/role.move.json
+      role_new:
+        name: role.new
+        title: role.new
+        x-spectrum:
+          python_callbacks:
+          - on_role_new
+        payload:
+          $ref: ../schemas/events/role.new.json
+      role_remove:
+        name: role.remove
+        title: role.remove
+        x-spectrum:
+          python_callbacks:
+          - on_role_remove
+        payload:
+          $ref: ../schemas/events/role.remove.json
+      role_reorder:
+        name: role.reorder
+        title: role.reorder
+        x-spectrum:
+          python_callbacks:
+          - on_role_reorder
+        payload:
+          $ref: ../schemas/events/role.reorder.json
+      role_update:
+        name: role.update
+        title: role.update
+        x-spectrum:
+          python_callbacks:
+          - on_role_update
+        payload:
+          $ref: ../schemas/events/role.update.json
+      server_stop:
+        name: server.stop
+        title: server.stop
+        x-spectrum:
+          python_callbacks:
+          - on_server_stop
+        payload:
+          $ref: ../schemas/events/server.stop.json
+      settings_update:
+        name: settings.update
+        title: settings.update
+        x-spectrum:
+          python_callbacks:
+          - on_settings_update
+        payload:
+          $ref: ../schemas/events/settings.update.json
+      thread_new:
+        name: thread.new
+        title: thread.new
+        x-spectrum:
+          python_callbacks:
+          - on_forum_thread_new
+        payload:
+          $ref: ../schemas/events/thread.new.json
+      vote_add:
+        name: vote.add
+        title: vote.add
+        x-spectrum:
+          python_callbacks:
+          - on_vote_add
+        payload:
+          $ref: ../schemas/events/vote.add.json
+      vote_remove:
+        name: vote.remove
+        title: vote.remove
+        x-spectrum:
+          python_callbacks:
+          - on_vote_remove
+        payload:
+          $ref: ../schemas/events/vote.remove.json
+      client_subscribe:
+        name: subscribe
+        payload:
+          type: object
+          required:
+          - type
+          - subscription_keys
+          properties:
+            type:
+              const: subscribe
+            subscription_keys:
+              type: array
+              items:
+                type: string
+            subscription_scope:
+              type:
+              - string
+              - 'null'
+              enum:
+              - null
+              - content
+      client_typing_start:
+        name: message_lobby.typing.start
+        payload:
+          type: object
+          required:
+          - type
+          - lobby_id
+          properties:
+            type:
+              const: message_lobby.typing.start
+            lobby_id:
+              $ref: ../schemas/id.json
+      client_typing_end:
+        name: message_lobby.typing.end
+        payload:
+          type: object
+          required:
+          - type
+          - lobby_id
+          properties:
+            type:
+              const: message_lobby.typing.end
+            lobby_id:
+              $ref: ../schemas/id.json
+operations:
+  receiveEvents:
+    action: receive
+    channel:
+      $ref: '#/channels/spectrum'
+    messages:
+    - $ref: '#/channels/spectrum/messages/bookmark_add'
+    - $ref: '#/channels/spectrum/messages/bookmark_move'
+    - $ref: '#/channels/spectrum/messages/bookmark_remove'
+    - $ref: '#/channels/spectrum/messages/bookmark_rename'
+    - $ref: '#/channels/spectrum/messages/broadcaster_ready'
+    - $ref: '#/channels/spectrum/messages/community_update'
+    - $ref: '#/channels/spectrum/messages/custom_emoji_create'
+    - $ref: '#/channels/spectrum/messages/custom_emoji_remove'
+    - $ref: '#/channels/spectrum/messages/emoji_new'
+    - $ref: '#/channels/spectrum/messages/emoji_remove'
+    - $ref: '#/channels/spectrum/messages/forum_channel_read_update'
+    - $ref: '#/channels/spectrum/messages/forum_label_read'
+    - $ref: '#/channels/spectrum/messages/forum_label_read_update'
+    - $ref: '#/channels/spectrum/messages/forum_thread_edit'
+    - $ref: '#/channels/spectrum/messages/forum_thread_marker_update'
+    - $ref: '#/channels/spectrum/messages/forum_thread_read_update'
+    - $ref: '#/channels/spectrum/messages/forum_thread_replies_count_update'
+    - $ref: '#/channels/spectrum/messages/forum_thread_reply_edit'
+    - $ref: '#/channels/spectrum/messages/forum_thread_reply_new'
+    - $ref: '#/channels/spectrum/messages/forum_channel_new'
+    - $ref: '#/channels/spectrum/messages/forum_channel_remove'
+    - $ref: '#/channels/spectrum/messages/forum_channel_group_new'
+    - $ref: '#/channels/spectrum/messages/forum_channel_group_remove'
+    - $ref: '#/channels/spectrum/messages/forum_channel_group_update'
+    - $ref: '#/channels/spectrum/messages/forum_label_edit'
+    - $ref: '#/channels/spectrum/messages/forum_label_new'
+    - $ref: '#/channels/spectrum/messages/forum_label_remove'
+    - $ref: '#/channels/spectrum/messages/forum_thread_erase'
+    - $ref: '#/channels/spectrum/messages/friend_request_accept'
+    - $ref: '#/channels/spectrum/messages/friend_request_cancel'
+    - $ref: '#/channels/spectrum/messages/friend_request_decline'
+    - $ref: '#/channels/spectrum/messages/friend_request_new'
+    - $ref: '#/channels/spectrum/messages/friendship_init_presences'
+    - $ref: '#/channels/spectrum/messages/friendship_new'
+    - $ref: '#/channels/spectrum/messages/friendship_remove'
+    - $ref: '#/channels/spectrum/messages/guide_request_accept'
+    - $ref: '#/channels/spectrum/messages/guide_request_cancel'
+    - $ref: '#/channels/spectrum/messages/guide_request_decline'
+    - $ref: '#/channels/spectrum/messages/guide_request_new'
+    - $ref: '#/channels/spectrum/messages/guide_request_remove'
+    - $ref: '#/channels/spectrum/messages/guide_request_remove_all'
+    - $ref: '#/channels/spectrum/messages/guide_request_timeout'
+    - $ref: '#/channels/spectrum/messages/guide_session_create'
+    - $ref: '#/channels/spectrum/messages/guide_session_endorse'
+    - $ref: '#/channels/spectrum/messages/guide_session_terminate'
+    - $ref: '#/channels/spectrum/messages/invite_accept'
+    - $ref: '#/channels/spectrum/messages/invite_cancel'
+    - $ref: '#/channels/spectrum/messages/invite_decline'
+    - $ref: '#/channels/spectrum/messages/invite_new'
+    - $ref: '#/channels/spectrum/messages/media_processing_ready'
+    - $ref: '#/channels/spectrum/messages/member_presence_update'
+    - $ref: '#/channels/spectrum/messages/member_roles_update'
+    - $ref: '#/channels/spectrum/messages/member_update'
+    - $ref: '#/channels/spectrum/messages/message_edit'
+    - $ref: '#/channels/spectrum/messages/message_erase'
+    - $ref: '#/channels/spectrum/messages/message_new'
+    - $ref: '#/channels/spectrum/messages/message_lobby_erase'
+    - $ref: '#/channels/spectrum/messages/message_lobby_kick'
+    - $ref: '#/channels/spectrum/messages/message_lobby_latest_update'
+    - $ref: '#/channels/spectrum/messages/message_lobby_leave'
+    - $ref: '#/channels/spectrum/messages/message_lobby_new'
+    - $ref: '#/channels/spectrum/messages/message_lobby_presence_join'
+    - $ref: '#/channels/spectrum/messages/message_lobby_presence_leave'
+    - $ref: '#/channels/spectrum/messages/message_lobby_read_update'
+    - $ref: '#/channels/spectrum/messages/message_lobby_typing_end'
+    - $ref: '#/channels/spectrum/messages/message_lobby_typing_start'
+    - $ref: '#/channels/spectrum/messages/message_lobby_update'
+    - $ref: '#/channels/spectrum/messages/notification_new'
+    - $ref: '#/channels/spectrum/messages/notification_read'
+    - $ref: '#/channels/spectrum/messages/notification_read_all'
+    - $ref: '#/channels/spectrum/messages/notification_remove'
+    - $ref: '#/channels/spectrum/messages/notification_remove_all'
+    - $ref: '#/channels/spectrum/messages/notification_subscription_update'
+    - $ref: '#/channels/spectrum/messages/notification_update'
+    - $ref: '#/channels/spectrum/messages/private_lobbies_update'
+    - $ref: '#/channels/spectrum/messages/reaction_add'
+    - $ref: '#/channels/spectrum/messages/reaction_remove'
+    - $ref: '#/channels/spectrum/messages/role_move'
+    - $ref: '#/channels/spectrum/messages/role_new'
+    - $ref: '#/channels/spectrum/messages/role_remove'
+    - $ref: '#/channels/spectrum/messages/role_reorder'
+    - $ref: '#/channels/spectrum/messages/role_update'
+    - $ref: '#/channels/spectrum/messages/server_stop'
+    - $ref: '#/channels/spectrum/messages/settings_update'
+    - $ref: '#/channels/spectrum/messages/thread_new'
+    - $ref: '#/channels/spectrum/messages/vote_add'
+    - $ref: '#/channels/spectrum/messages/vote_remove'
+  sendFrames:
+    action: send
+    channel:
+      $ref: '#/channels/spectrum'
+    messages:
+    - $ref: '#/channels/spectrum/messages/client_version'
+    - $ref: '#/channels/spectrum/messages/client_subscribe'
+    - $ref: '#/channels/spectrum/messages/client_typing_start'
+    - $ref: '#/channels/spectrum/messages/client_typing_end'
+components:
+  securitySchemes:
+    jwt:
+      type: httpApiKey
+      in: query
+      name: token
+      description: JWT from auth/identify `data.token`; also send header x-rsi-token.

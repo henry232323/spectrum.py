@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "vote.add",
+  "description": "Server -> client `vote.add`. Required keys are the ones `Client._on_vote_add_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "vote.add"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "message_lobby.presence.join",
+  "description": "Server -> client `message_lobby.presence.join`. Required keys are the ones `Client._on_presence_join_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "member"
+  ],
+  "properties": {
+    "type": {
+      "const": "message_lobby.presence.join"
+    },
+    "member": {
+      "$ref": "../member.json"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "friend_request.cancel",
+  "description": "Server -> client `friend_request.cancel`. Required keys are the ones `Client._on_friend_request_cancel_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "friend_request.cancel"
+    },
+    "member_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "notification.read_all",
+  "description": "Server -> client `notification.read_all`. Required keys are the ones `Client._on_notification_read_all_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "notification.read_all"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum.label.read.update",
+  "description": "Server -> client `forum.label.read.update`. Required keys are the ones `Client._on_forum_label_read_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum.label.read.update"
+    }
+  },
+  "additionalProperties": true
+}

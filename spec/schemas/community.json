@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Community",
+  "description": "spectrum.models.Community",
+  "type": "object",
+  "required": [
+    "id",
+    "slug",
+    "name",
+    "avatar",
+    "banner",
+    "roles",
+    "lobbies",
+    "forum_channel_groups"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "type": {
+      "type": "string"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "banner": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "$ref": "role.json"
+      }
+    },
+    "lobbies": {
+      "type": "array",
+      "items": {
+        "$ref": "lobby.json"
+      }
+    },
+    "forum_channel_groups": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "forum-channel-group.json"
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "forum-channel-group.json"
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}

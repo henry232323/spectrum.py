@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "invite.decline",
+  "description": "Server -> client `invite.decline`. Required keys are the ones `Client._on_invite_decline_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "invite.decline"
+    }
+  },
+  "additionalProperties": true
+}

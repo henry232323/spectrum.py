@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Message",
+  "description": "spectrum.models.Message (lobby chat message)",
+  "type": "object",
+  "required": [
+    "id",
+    "time_created",
+    "time_modified",
+    "member_id",
+    "lobby_id",
+    "content_state"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "time_created": {
+      "type": "integer",
+      "description": "Unix seconds"
+    },
+    "time_modified": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "member_id": {
+      "$ref": "id.json"
+    },
+    "lobby_id": {
+      "$ref": "id.json"
+    },
+    "content_state": {
+      "$ref": "content-state.json"
+    },
+    "plaintext": {
+      "type": "string"
+    },
+    "media_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "media": {
+      "anyOf": [
+        {
+          "$ref": "media.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "highlight_role_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "member": {
+      "$ref": "member.json"
+    },
+    "reactions": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

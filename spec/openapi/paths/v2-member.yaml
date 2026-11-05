@@ -1,0 +1,287 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/v2/member/profile:
+  post:
+    operationId: v2_member_profile
+    tags:
+    - v2-member
+    x-spectrum:
+      python: HTTP.v2_member_profile
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_MEMBER_PROFILE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/member/role/add:
+  post:
+    operationId: v2_member_role_add
+    tags:
+    - v2-member
+    x-spectrum:
+      python: HTTP.v2_member_role_add
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_MEMBER_ROLE_ADD
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+                role_id: '456'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/member/role/remove:
+  post:
+    operationId: v2_member_role_remove
+    tags:
+    - v2-member
+    x-spectrum:
+      python: HTTP.v2_member_role_remove
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_MEMBER_ROLE_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+                role_id: '456'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/member/role/set:
+  post:
+    operationId: v2_member_role_set
+    tags:
+    - v2-member
+    x-spectrum:
+      python: HTTP.v2_member_role_set
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_MEMBER_ROLE_SET
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              role_ids:
+                type: array
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+                role_ids:
+                - '456'
+                - '789'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/member/settings:
+  post:
+    operationId: v2_member_settings
+    tags:
+    - v2-member
+    x-spectrum:
+      python: HTTP.v2_member_settings
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_MEMBER_SETTINGS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/member/settings/save:
+  post:
+    operationId: v2_member_settings_save
+    tags:
+    - v2-member
+    x-spectrum:
+      python: HTTP.v2_member_settings_save
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_MEMBER_SETTINGS_SAVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              settings:
+                type: object
+                additionalProperties: true
+          examples:
+            sample1:
+              value:
+                settings:
+                  notification_email: true
+                  notification_push: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

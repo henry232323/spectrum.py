@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Member",
+  "description": "spectrum.models.Member. Required keys are the ones Member.__init__ indexes directly.",
+  "type": "object",
+  "required": [
+    "id",
+    "displayname",
+    "nickname",
+    "avatar",
+    "signature",
+    "isGM",
+    "spoken_languages",
+    "meta"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "displayname": {
+      "type": "string"
+    },
+    "nickname": {
+      "type": "string"
+    },
+    "avatar": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string"
+    },
+    "isGM": {
+      "type": "boolean"
+    },
+    "spoken_languages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "meta": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "badges": {
+              "type": "array",
+              "items": {
+                "$ref": "badge.json"
+              }
+            }
+          },
+          "additionalProperties": true
+        },
+        {
+          "type": "array",
+          "maxItems": 0
+        }
+      ]
+    },
+    "presence": {
+      "$ref": "presence.json"
+    },
+    "roles": {
+      "anyOf": [
+        {
+          "type": "object",
+          "description": "community_id -> [role_id]",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "id.json"
+            }
+          }
+        },
+        {
+          "type": "array",
+          "maxItems": 0
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}

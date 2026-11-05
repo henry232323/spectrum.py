@@ -94,3 +94,6 @@ ENV/
 
 # Local MCP client config (contains machine-specific paths)
 .mcp.json
+
+# macOS AppleDouble files (exFAT volumes)
+._*

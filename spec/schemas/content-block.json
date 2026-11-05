@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContentBlock",
+  "description": "Forum post block. spectrum.models.ContentBlock(**payload) accepts only id, type, blocks, data, reply_id.",
+  "type": "object",
+  "required": [
+    "id",
+    "type"
+  ],
+  "properties": {
+    "id": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "1, 2, ... for older posts; opaque strings in newer ones"
+    },
+    "type": {
+      "type": "string",
+      "examples": [
+        "text",
+        "image",
+        "embed",
+        "quote"
+      ]
+    },
+    "data": {
+      "description": "content-state for type=text; image list / embed for media blocks"
+    },
+    "blocks": {},
+    "reply_id": {}
+  },
+  "additionalProperties": true
+}

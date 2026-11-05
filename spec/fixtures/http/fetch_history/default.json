@@ -1,0 +1,199 @@
+{
+  "operationId": "fetch_history",
+  "source": "recorded",
+  "recorded_at": "2026-11-04",
+  "auth": "anonymous",
+  "request": {
+    "lobby_id": "1",
+    "timeframe": "before",
+    "message_id": null,
+    "size": 10
+  },
+  "status": 200,
+  "response": {
+    "success": 1,
+    "code": "OK",
+    "msg": "OK",
+    "data": {
+      "messages": [
+        {
+          "id": "67438529",
+          "time_created": 1793839071,
+          "time_modified": 1793839071,
+          "lobby_id": "1",
+          "member_id": "1000001",
+          "content_state": {
+            "blocks": [
+              {
+                "key": "97f4u",
+                "text": "Redacted text 1.",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              }
+            ],
+            "entityMap": []
+          },
+          "media_id": "",
+          "highlight_role_id": null,
+          "member": {
+            "id": "1000001",
+            "displayname": "Citizen1",
+            "nickname": "Citizen1",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "2953 Vanduul Aggressor ",
+                  "icon": "https://media.robertsspaceindustries.com/68qrnljf4aev4/heap_thumb.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": false,
+            "spoken_languages": [
+              "en"
+            ],
+            "presence": {
+              "info": "In Menus",
+              "since": 1793840429,
+              "status": "playing"
+            },
+            "roles": {
+              "1": [
+                "11",
+                "4"
+              ]
+            }
+          },
+          "reactions": []
+        },
+        {
+          "id": "67438535",
+          "time_created": 1793839182,
+          "time_modified": 1793839182,
+          "lobby_id": "1",
+          "member_id": "1000002",
+          "content_state": {
+            "blocks": [
+              {
+                "key": "272uk",
+                "text": "Redacted text 2.",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              }
+            ],
+            "entityMap": []
+          },
+          "media_id": "",
+          "highlight_role_id": null,
+          "member": {
+            "id": "1000002",
+            "displayname": "Citizen2",
+            "nickname": "Citizen2",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "Grand Admiral",
+                  "icon": "https://media.robertsspaceindustries.com/ypj2zo0u5fsfb/heap_thumb.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": false,
+            "spoken_languages": [
+              "en"
+            ],
+            "presence": {
+              "info": "In Menus",
+              "since": 1793840808,
+              "status": "playing"
+            },
+            "roles": {
+              "1": [
+                "11",
+                "4"
+              ]
+            }
+          },
+          "reactions": []
+        },
+        {
+          "id": "67438537",
+          "time_created": 1793839234,
+          "time_modified": 1793839234,
+          "lobby_id": "1",
+          "member_id": "1000001",
+          "content_state": {
+            "blocks": [
+              {
+                "key": "4cnra",
+                "text": "Redacted text 3.",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              }
+            ],
+            "entityMap": []
+          },
+          "media_id": "",
+          "highlight_role_id": null,
+          "member": {
+            "id": "1000001",
+            "displayname": "Citizen1",
+            "nickname": "Citizen1",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "2953 Vanduul Aggressor ",
+                  "icon": "https://media.robertsspaceindustries.com/68qrnljf4aev4/heap_thumb.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": false,
+            "spoken_languages": [
+              "en"
+            ],
+            "presence": {
+              "info": "In Menus",
+              "since": 1793840429,
+              "status": "playing"
+            },
+            "roles": {
+              "1": [
+                "11",
+                "4"
+              ]
+            }
+          },
+          "reactions": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ForumLabel",
+  "description": "spectrum.models.channel.Label",
+  "type": "object",
+  "required": [
+    "id",
+    "channel_id",
+    "name",
+    "subscription_key",
+    "notification_subscription"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "channel_id": {
+      "$ref": "id.json"
+    },
+    "name": {
+      "type": "string"
+    },
+    "subscription_key": {
+      "type": "string"
+    },
+    "notification_subscription": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

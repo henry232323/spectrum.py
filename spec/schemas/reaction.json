@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reaction",
+  "description": "spectrum.models.Reaction (reaction.add / reaction.remove events)",
+  "type": "object",
+  "required": [
+    "reaction_type",
+    "entity_type",
+    "entity_id",
+    "member"
+  ],
+  "properties": {
+    "reaction_type": {
+      "type": "string"
+    },
+    "entity_type": {
+      "type": "string"
+    },
+    "entity_id": {
+      "$ref": "id.json"
+    },
+    "member": {
+      "$ref": "member.json"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,39 @@
+# Shared, non-schema protocol facts. Hand-written. Both hand-written client layers
+# (Python today, JS later) should read these instead of hard-coding them.
+# tests/test_policy.py checks that the Python code still matches.
+spec_version_file: VERSION
+
+http:
+  base_url: https://robertsspaceindustries.com
+  api_prefix: /api/spectrum/
+  method: POST
+  content_type: application/json
+  user_agent: "spectrum.py/{version} (+https://github.com/henry232323/spectrum.py)"
+  headers:
+    csrf_token: X-Rsi-Token          # same value as the Rsi-Token cookie
+    action_id: X-Tavern-action-id    # always "1"
+    tavern_id: x-tavern-id           # client_id from the identify JWT, once known
+  cookies:
+    token: Rsi-Token
+    device: _rsi_device
+
+websocket:
+  url: wss://robertsspaceindustries.com/ws/spectrum
+  token_query_param: token          # JWT from auth/identify data.token
+  token_header: x-rsi-token
+  receive_timeout_seconds: 360      # reconnect after this long without a frame
+  backoff_seconds: {initial: 1, max: 60}
+
+retry:
+  max_attempts: 3
+  backoff_seconds: 1.0              # exponential: 1, 2, 4
+  retry_on_status: [429, "5xx"]       # 429 honours Retry-After; any status >= 500 backs off
+  honour_retry_after: true
+
+pacing:
+  # Current behaviour. A default client-side pacer is planned (design §3.6).
+  paginated_iterator_delay_seconds: 1.0
+
+errors:
+  # Envelope `code` -> exception class in spectrum.errors. Anything else -> HTTPError.
+  ErrAccessDenied: ErrAccessDenied

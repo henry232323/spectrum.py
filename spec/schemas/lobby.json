@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lobby",
+  "description": "spectrum.models.Lobby (message lobby). Only `id` is indexed directly; the rest are read with .get().",
+  "type": "object",
+  "required": [
+    "id"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "type": {
+      "type": "string",
+      "examples": [
+        "public",
+        "private",
+        "group"
+      ]
+    },
+    "community_id": {
+      "anyOf": [
+        {
+          "$ref": "id.json"
+        },
+        {
+          "const": ""
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "ID, or \"\"/null when unset"
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "color": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "icon": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "time_created": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "subscription_key": {
+      "type": "string"
+    },
+    "leader_id": {
+      "anyOf": [
+        {
+          "$ref": "id.json"
+        },
+        {
+          "const": ""
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "ID, or \"\"/null when unset"
+    },
+    "online_members_count": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "permissions": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "members": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "member.json"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}

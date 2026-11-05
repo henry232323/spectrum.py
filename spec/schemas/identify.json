@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Identify",
+  "description": "data of auth/identify: bootstrap state plus the websocket JWT. Anonymous calls get member=null and the public communities.",
+  "type": "object",
+  "required": [],
+  "properties": {
+    "token": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "null when anonymous. JWT for the websocket; spectrum.py reads client_id/member_id from it unverified"
+    },
+    "member": {
+      "anyOf": [
+        {
+          "$ref": "member.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "communities": {
+      "type": "array",
+      "items": {
+        "$ref": "community.json"
+      }
+    },
+    "friends": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "member.json"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "group_lobbies": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "lobby.json"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "private_lobbies": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "lobby.json"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "config": {
+      "type": "object"
+    },
+    "settings": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "array"
+        }
+      ]
+    },
+    "broadcast_message_subscription_key": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

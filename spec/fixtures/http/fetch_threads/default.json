@@ -1,0 +1,343 @@
+{
+  "operationId": "fetch_threads",
+  "source": "recorded",
+  "recorded_at": "2026-11-04",
+  "auth": "anonymous",
+  "request": {
+    "channel_id": "1",
+    "page": 1,
+    "sort": "newest",
+    "label_id": null
+  },
+  "status": 200,
+  "response": {
+    "success": 1,
+    "code": "OK",
+    "msg": "OK",
+    "data": {
+      "threads": [
+        {
+          "id": "575799",
+          "time_created": 1793718000,
+          "time_modified": 1793802959,
+          "channel_id": "1",
+          "type": "discussion",
+          "slug": "redacted-thread-1",
+          "subject": "Redacted text 1",
+          "is_locked": false,
+          "is_reply_nesting_disabled": false,
+          "is_pinned": true,
+          "is_sinked": false,
+          "is_erased": false,
+          "erased_by": null,
+          "tracked_post_role_id": "2",
+          "content_reply_id": "9209843",
+          "annotation_plaintext": null,
+          "label": null,
+          "subscription_key": "community:1:forum_thread:575799:04bd5e1a50bde86ad1ee8a43844cc9d11f430234",
+          "member": {
+            "id": "1000001",
+            "displayname": "Citizen1",
+            "nickname": "Citizen1",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "Civilian",
+                  "icon": "https://media.robertsspaceindustries.com/9qvh53v4nyx8d/heap_note.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": true,
+            "spoken_languages": [
+              "en",
+              "fr"
+            ],
+            "presence": {
+              "info": null,
+              "since": 1793840442,
+              "status": "online"
+            },
+            "roles": {
+              "1": [
+                "11",
+                "2",
+                "3",
+                "4"
+              ]
+            }
+          },
+          "votes": {
+            "count": 57,
+            "voted": 0
+          },
+          "replies_count": 34,
+          "views_count": 1576,
+          "first_tracked_reply": "9210720",
+          "highlight_role_id": "2",
+          "latest_activity": {
+            "time_created": 1793802959,
+            "member": {
+              "id": "1000002",
+              "displayname": "Citizen2",
+              "nickname": "Citizen2",
+              "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+              "signature": "",
+              "meta": {
+                "badges": [
+                  {
+                    "name": "Freelancer",
+                    "icon": "https://media.robertsspaceindustries.com/iq9u3x48sdl2n/heap_thumb.png"
+                  }
+                ]
+              },
+              "isGM": false,
+              "spoken_languages": [
+                "en"
+              ],
+              "roles": {
+                "1": [
+                  "11",
+                  "4"
+                ]
+              }
+            },
+            "highlight_role_id": null
+          },
+          "media_preview": {
+            "type": "gallery",
+            "thumbnail": {
+              "url": "https://example.invalid/redacted"
+            }
+          },
+          "aspect": "teaser"
+        },
+        {
+          "id": "574653",
+          "time_created": 1793115780,
+          "time_modified": 1793827011,
+          "channel_id": "1",
+          "type": "discussion",
+          "slug": "redacted-thread-2",
+          "subject": "Redacted text 2",
+          "is_locked": false,
+          "is_reply_nesting_disabled": false,
+          "is_pinned": true,
+          "is_sinked": false,
+          "is_erased": false,
+          "erased_by": null,
+          "tracked_post_role_id": "2",
+          "content_reply_id": "9195468",
+          "annotation_plaintext": null,
+          "label": null,
+          "subscription_key": "community:1:forum_thread:574653:f8c8ac1fc6a00f7f0337ab104e492f8775158781",
+          "member": {
+            "id": "1000003",
+            "displayname": "Citizen3",
+            "nickname": "Citizen3",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "Praetorian",
+                  "icon": "https://media.robertsspaceindustries.com/lj4p8w81l1hf0/heap_note.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": false,
+            "spoken_languages": [
+              "en"
+            ],
+            "presence": {
+              "info": null,
+              "since": 1793836104,
+              "status": "invisible"
+            },
+            "roles": {
+              "1": [
+                "11",
+                "2",
+                "3",
+                "4"
+              ]
+            }
+          },
+          "votes": {
+            "count": 101,
+            "voted": 0
+          },
+          "replies_count": 401,
+          "views_count": 4814,
+          "first_tracked_reply": "9202140",
+          "highlight_role_id": "2",
+          "latest_activity": {
+            "time_created": 1793827011,
+            "member": {
+              "id": "1000004",
+              "displayname": "Citizen4",
+              "nickname": "Citizen4",
+              "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+              "signature": "",
+              "meta": {
+                "badges": [
+                  {
+                    "name": "Praetorian",
+                    "icon": "https://media.robertsspaceindustries.com/lj4p8w81l1hf0/heap_note.png"
+                  },
+                  {
+                    "name": "Example Org",
+                    "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                    "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                  }
+                ]
+              },
+              "isGM": false,
+              "spoken_languages": [
+                "de",
+                "en"
+              ],
+              "roles": {
+                "1": [
+                  "11",
+                  "4"
+                ]
+              }
+            },
+            "highlight_role_id": null
+          },
+          "media_preview": {
+            "type": "image",
+            "thumbnail": {
+              "url": "https://example.invalid/redacted"
+            }
+          },
+          "aspect": "teaser"
+        },
+        {
+          "id": "571353",
+          "time_created": 1792598400,
+          "time_modified": 1793654289,
+          "channel_id": "1",
+          "type": "discussion",
+          "slug": "redacted-thread-3",
+          "subject": "Redacted text 3",
+          "is_locked": false,
+          "is_reply_nesting_disabled": false,
+          "is_pinned": true,
+          "is_sinked": false,
+          "is_erased": false,
+          "erased_by": null,
+          "tracked_post_role_id": "2",
+          "content_reply_id": "9146193",
+          "annotation_plaintext": null,
+          "label": null,
+          "subscription_key": "community:1:forum_thread:571353:627cd35318b52747f18a215d4f5b8c1dbe6917ef",
+          "member": {
+            "id": "1000005",
+            "displayname": "Citizen5",
+            "nickname": "Citizen5",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "Developer",
+                  "icon": "https://robertsspaceindustries.com/spectrum/media/bkxsdklvwlhfqr/heap_note/Developer.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": true,
+            "spoken_languages": [
+              "fr"
+            ],
+            "presence": {
+              "info": null,
+              "since": 1793840445,
+              "status": "online"
+            },
+            "roles": {
+              "1": [
+                "11",
+                "2",
+                "3",
+                "4"
+              ]
+            }
+          },
+          "votes": {
+            "count": 51,
+            "voted": 0
+          },
+          "replies_count": 91,
+          "views_count": 3023,
+          "highlight_role_id": "2",
+          "latest_activity": {
+            "time_created": 1793501882,
+            "member": {
+              "id": "1000006",
+              "displayname": "Citizen6",
+              "nickname": "Citizen6",
+              "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+              "signature": "",
+              "meta": {
+                "badges": [
+                  {
+                    "name": "2953 CDF Gold",
+                    "icon": "https://media.robertsspaceindustries.com/5eb89g5mzji0t/heap_note.png"
+                  },
+                  {
+                    "name": "Example Org",
+                    "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                    "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                  }
+                ]
+              },
+              "isGM": false,
+              "spoken_languages": [
+                "en",
+                "fr"
+              ],
+              "roles": {
+                "1": [
+                  "11",
+                  "4",
+                  "285270"
+                ]
+              }
+            },
+            "highlight_role_id": null
+          },
+          "media_preview": {
+            "type": "image",
+            "thumbnail": {
+              "url": "https://example.invalid/redacted",
+              "image_width": 150,
+              "image_height": 150
+            }
+          },
+          "aspect": "teaser"
+        }
+      ],
+      "threads_count": 481,
+      "latest": 575799,
+      "latest_timestamp": 1793718000
+    }
+  }
+}

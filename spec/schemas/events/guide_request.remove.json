@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "guide_request.remove",
+  "description": "Server -> client `guide_request.remove`. Required keys are the ones `Client._on_guide_request_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "guide_request.remove"
+    }
+  },
+  "additionalProperties": true
+}

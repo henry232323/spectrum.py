@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum_channel.new",
+  "description": "Server -> client `forum_channel.new`. Required keys are the ones `Client._on_channel_new_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "forum_channel"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum_channel.new"
+    },
+    "forum_channel": {
+      "$ref": "../forum-channel.json"
+    }
+  },
+  "additionalProperties": true
+}

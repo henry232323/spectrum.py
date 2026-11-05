@@ -1,0 +1,244 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/role/create:
+  post:
+    operationId: create_role
+    tags:
+    - role
+    x-spectrum:
+      python: HTTP.create_role
+      auth: session
+      verified: false
+      write: true
+      constant: CREATE_ROLE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              name:
+                type:
+                - string
+                - 'null'
+              description:
+                type:
+                - string
+                - 'null'
+              permissions:
+                type: object
+                additionalProperties: true
+              visible:
+                type:
+                - integer
+                - 'null'
+              highlightable:
+                type:
+                - integer
+                - 'null'
+              tracked:
+                type:
+                - integer
+                - 'null'
+              color:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '100987'
+                name: New role
+                description: With perms
+                permissions:
+                  global:
+                    manage_roles: false
+                    kick_members: false
+                    embed_link: false
+                    upload_media: false
+                    mention: false
+                    reaction: false
+                    vote: false
+                    read_erased: false
+                  message_lobby:
+                    read: true
+                    send_message: false
+                    manage: false
+                    moderate: false
+                    set_motd: false
+                  forum_channel:
+                    read: false
+                    create_thread: false
+                    create_thread_reply: false
+                    manage: false
+                    moderate: false
+                  custom_emoji:
+                    create: false
+                    remove: false
+                visible: 1
+                highlightable: 0
+                tracked: 0
+                color: '919191'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/role/edit:
+  post:
+    operationId: edit_role
+    tags:
+    - role
+    x-spectrum:
+      python: HTTP.edit_role
+      auth: session
+      verified: false
+      write: true
+      constant: ROLE_EDIT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/role/move:
+  post:
+    operationId: move_role
+    tags:
+    - role
+    x-spectrum:
+      python: HTTP.move_role
+      auth: session
+      verified: false
+      write: true
+      constant: MOVE_ROLE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              source_role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              target_role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '100987'
+                source_role_id: '660855'
+                target_role_id: '660857'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/role/remove:
+  post:
+    operationId: remove_role
+    tags:
+    - role
+    x-spectrum:
+      python: HTTP.remove_role
+      auth: session
+      verified: false
+      write: true
+      constant: ROLE_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                role_id: '660855'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

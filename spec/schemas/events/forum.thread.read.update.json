@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum.thread.read.update",
+  "description": "Server -> client `forum.thread.read.update`. Required keys are the ones `Client._on_thread_read_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum.thread.read.update"
+    },
+    "thread_id": {
+      "$ref": "../id.json"
+    },
+    "reply_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

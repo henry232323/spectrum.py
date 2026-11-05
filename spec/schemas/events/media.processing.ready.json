@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "media.processing.ready",
+  "description": "Server -> client `media.processing.ready`. Required keys are the ones `Client._on_media_processing_ready_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "media.processing.ready"
+    },
+    "media": {}
+  },
+  "additionalProperties": true
+}

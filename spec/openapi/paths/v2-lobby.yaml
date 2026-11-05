@@ -1,0 +1,420 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/v2/lobby/chats/list:
+  post:
+    operationId: v2_lobby_chats_list
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_chats_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_LOBBY_CHATS_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              page:
+                type:
+                - integer
+                - 'null'
+              pagesize:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                page: 1
+                pagesize: 20
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/chats/search:
+  post:
+    operationId: v2_lobby_chats_search
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_chats_search
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_LOBBY_CHATS_SEARCH
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              text:
+                type:
+                - string
+                - 'null'
+              page:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                text: Redacted text 1.
+                page: 1
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/group/list:
+  post:
+    operationId: v2_lobby_group_list
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_group_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_LOBBY_GROUP_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/private/close:
+  post:
+    operationId: v2_lobby_private_close
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_private_close
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_LOBBY_PRIVATE_CLOSE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/private/list:
+  post:
+    operationId: v2_lobby_private_list
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_private_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_LOBBY_PRIVATE_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/private/open:
+  post:
+    operationId: v2_lobby_private_open
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_private_open
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_LOBBY_PRIVATE_OPEN
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_ids:
+                type: array
+          examples:
+            sample1:
+              value:
+                member_ids:
+                - '1000001'
+                - '1000002'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/public/list:
+  post:
+    operationId: v2_lobby_public_list
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_public_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_LOBBY_PUBLIC_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/public/move:
+  post:
+    operationId: v2_lobby_public_move
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_public_move
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_LOBBY_PUBLIC_MOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              position:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                lobby_id: '123'
+                position: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/lobby/public/reorder:
+  post:
+    operationId: v2_lobby_public_reorder
+    tags:
+    - v2-lobby
+    x-spectrum:
+      python: HTTP.v2_lobby_public_reorder
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_LOBBY_PUBLIC_REORDER
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              position:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                lobby_id: '123'
+                position: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

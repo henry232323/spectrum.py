@@ -1,0 +1,749 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/blocklist:
+  post:
+    operationId: blocklist_get
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.blocklist_get
+      auth: unknown
+      verified: false
+      write: false
+      constant: BLOCKLIST_GET
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/blocklist/add:
+  post:
+    operationId: blocklist_add
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.blocklist_add
+      auth: session
+      verified: false
+      write: true
+      constant: BLOCKLIST_ADD
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/blocklist/ids:
+  post:
+    operationId: blocklist_ids
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.blocklist_ids
+      auth: unknown
+      verified: false
+      write: false
+      constant: BLOCKLIST_IDS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/blocklist/remove:
+  post:
+    operationId: blocklist_remove
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.blocklist_remove
+      auth: session
+      verified: false
+      write: true
+      constant: BLOCKLIST_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/bookmark/move:
+  post:
+    operationId: bookmark_move
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.bookmark_move
+      auth: session
+      verified: false
+      write: true
+      constant: BOOKMARK_MOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              bookmark_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              target_folder_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              position:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                bookmark_id: '123'
+                target_folder_id: '456'
+                position: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/bookmark/remove:
+  post:
+    operationId: bookmark_remove
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.bookmark_remove
+      auth: session
+      verified: false
+      write: true
+      constant: BOOKMARK_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              bookmark_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                bookmark_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/bookmark/rename:
+  post:
+    operationId: bookmark_rename
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.bookmark_rename
+      auth: unknown
+      verified: false
+      write: false
+      constant: BOOKMARK_RENAME
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              bookmark_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              name:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                bookmark_id: '123'
+                name: New Name
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/bookmarks:
+  post:
+    operationId: bookmarks_list
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.bookmarks_list
+      auth: unknown
+      verified: false
+      write: false
+      constant: BOOKMARKS_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend-request/accept:
+  post:
+    operationId: friend_request_accept
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.friend_request_accept
+      auth: session
+      verified: false
+      write: true
+      constant: FRIEND_REQUEST_ACCEPT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend-request/cancel:
+  post:
+    operationId: friend_request_cancel
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.friend_request_cancel
+      auth: session
+      verified: false
+      write: true
+      constant: FRIEND_REQUEST_CANCEL
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend-request/create:
+  post:
+    operationId: friend_request_create
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.friend_request_create
+      auth: session
+      verified: false
+      write: true
+      constant: FRIEND_REQUEST_CREATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend-request/decline:
+  post:
+    operationId: friend_request_decline
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.friend_request_decline
+      auth: session
+      verified: false
+      write: true
+      constant: FRIEND_REQUEST_DECLINE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend-request/list:
+  post:
+    operationId: friend_request_list
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.friend_request_list
+      auth: unknown
+      verified: false
+      write: false
+      constant: FRIEND_REQUEST_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend/add:
+  post:
+    operationId: add_friend
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.add_friend
+      auth: session
+      verified: false
+      write: true
+      constant: ADD_FRIEND
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend/list:
+  post:
+    operationId: friend_list
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.friend_list
+      auth: unknown
+      verified: false
+      write: false
+      constant: FRIEND_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend/remove:
+  post:
+    operationId: remove_friend
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.remove_friend
+      auth: session
+      verified: false
+      write: true
+      constant: REMOVE_FRIEND
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                member_id: '1000001'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/friend/search:
+  post:
+    operationId: friend_search
+    tags:
+    - social
+    x-spectrum:
+      python: HTTP.friend_search
+      auth: unknown
+      verified: false
+      write: false
+      constant: FRIEND_SEARCH
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              text:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                text: Redacted text 1.
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reply",
+  "description": "spectrum.models.Reply (forum thread reply)",
+  "type": "object",
+  "required": [
+    "id",
+    "thread_id",
+    "time_created",
+    "time_modified",
+    "content_blocks",
+    "is_erased",
+    "erased_by",
+    "annotation_plaintext",
+    "member",
+    "votes",
+    "reactions",
+    "parent_reply_reference",
+    "children_replies_references",
+    "tracked_replies_references",
+    "read",
+    "replies_count",
+    "replies"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "thread_id": {
+      "$ref": "id.json"
+    },
+    "time_created": {
+      "type": "integer",
+      "description": "Unix seconds"
+    },
+    "time_modified": {
+      "type": "integer",
+      "description": "Unix seconds"
+    },
+    "content_blocks": {
+      "type": "array",
+      "items": {
+        "$ref": "content-block.json"
+      }
+    },
+    "is_erased": {
+      "type": "boolean"
+    },
+    "erased_by": {
+      "anyOf": [
+        {
+          "$ref": "id.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "annotation_plaintext": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "member": {
+      "$ref": "member.json"
+    },
+    "votes": {
+      "$ref": "votes.json"
+    },
+    "reactions": {
+      "type": "array"
+    },
+    "parent_reply_reference": {
+      "anyOf": [
+        {
+          "$ref": "reply-reference.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "children_replies_references": {
+      "type": "array",
+      "items": {
+        "$ref": "reply-reference.json"
+      }
+    },
+    "tracked_replies_references": {
+      "type": "array",
+      "items": {
+        "$ref": "reply-reference.json"
+      }
+    },
+    "read": {
+      "type": "boolean"
+    },
+    "replies_count": {
+      "type": "integer"
+    },
+    "replies": {
+      "type": "array",
+      "items": {
+        "$ref": "reply.json"
+      }
+    }
+  },
+  "additionalProperties": true
+}

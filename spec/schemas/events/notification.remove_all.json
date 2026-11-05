@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "notification.remove_all",
+  "description": "Server -> client `notification.remove_all`. Required keys are the ones `Client._on_notification_remove_all_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "notification.remove_all"
+    }
+  },
+  "additionalProperties": true
+}

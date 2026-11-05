@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "reaction.remove",
+  "description": "Server -> client `reaction.remove`. Required keys are the ones `Client._on_reaction_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "reaction"
+  ],
+  "properties": {
+    "type": {
+      "const": "reaction.remove"
+    },
+    "reaction": {
+      "$ref": "../reaction.json"
+    }
+  },
+  "additionalProperties": true
+}

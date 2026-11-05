@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Permissions",
+  "description": "Role permissions. Permissions.from_payload needs all four groups.",
+  "type": "object",
+  "required": [
+    "global",
+    "message_lobby",
+    "forum_channel",
+    "custom_emoji"
+  ],
+  "properties": {
+    "global": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "message_lobby": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "forum_channel": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "custom_emoji": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    }
+  },
+  "additionalProperties": true
+}

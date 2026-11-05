@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "emoji.new",
+  "description": "Server -> client `emoji.new`. Required keys are the ones `Client._on_emoji_new_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "emoji.new"
+    }
+  },
+  "additionalProperties": true
+}

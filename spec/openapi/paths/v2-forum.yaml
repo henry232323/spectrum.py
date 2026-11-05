@@ -1,0 +1,417 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/v2/forum/channel/group/list:
+  post:
+    operationId: v2_forum_channel_group_list
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_channel_group_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_FORUM_CHANNEL_GROUP_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/forum/channel/group/move:
+  post:
+    operationId: v2_forum_channel_group_move
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_channel_group_move
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_FORUM_CHANNEL_GROUP_MOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              group_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              position:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                group_id: '123'
+                position: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/forum/channel/group/reorder:
+  post:
+    operationId: v2_forum_channel_group_reorder
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_channel_group_reorder
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_FORUM_CHANNEL_GROUP_REORDER
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              group_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              position:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                group_id: '123'
+                position: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/forum/channel/list:
+  post:
+    operationId: v2_forum_channel_list
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_channel_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_FORUM_CHANNEL_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/forum/channel/move:
+  post:
+    operationId: v2_forum_channel_move
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_channel_move
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_FORUM_CHANNEL_MOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              channel_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              group_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                channel_id: '123'
+                group_id: '456'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/forum/channel/reorder:
+  post:
+    operationId: v2_forum_channel_reorder
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_channel_reorder
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_FORUM_CHANNEL_REORDER
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              channel_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              position:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                channel_id: '123'
+                position: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/forum/channel/threads:
+  post:
+    operationId: v2_forum_channel_threads
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_channel_threads
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_FORUM_CHANNEL_THREADS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              channel_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              page:
+                type:
+                - integer
+                - 'null'
+              sort:
+                type:
+                - string
+                - 'null'
+              label_id: {}
+          examples:
+            sample1:
+              value:
+                channel_id: '123'
+                page: 1
+                sort: hot
+                label_id: null
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/forum/thread/get:
+  post:
+    operationId: v2_forum_thread_get
+    tags:
+    - v2-forum
+    x-spectrum:
+      python: HTTP.v2_forum_thread_get
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_FORUM_THREAD_GET
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              thread_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                thread_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

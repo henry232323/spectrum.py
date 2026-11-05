@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum.thread.reply.new",
+  "description": "Server -> client `forum.thread.reply.new`. Required keys are the ones `Client._on_forum_thread_reply_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "thread_id",
+    "reply_id",
+    "channel_id"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum.thread.reply.new"
+    },
+    "thread_id": {
+      "$ref": "../id.json"
+    },
+    "reply_id": {
+      "$ref": "../id.json"
+    },
+    "channel_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

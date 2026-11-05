@@ -1,0 +1,218 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/reaction/add:
+  post:
+    operationId: add_reaction
+    tags:
+    - reaction
+    x-spectrum:
+      python: HTTP.add_reaction
+      auth: session
+      verified: false
+      write: true
+      constant: ADD_REACTION
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              reaction_type:
+                type:
+                - string
+                - 'null'
+              entity_type:
+                type:
+                - string
+                - 'null'
+              entity_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                reaction_type: ':-1:'
+                entity_type: forum_thread
+                entity_id: '391573'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/reaction/remove:
+  post:
+    operationId: remove_reaction
+    tags:
+    - reaction
+    x-spectrum:
+      python: HTTP.remove_reaction
+      auth: session
+      verified: false
+      write: true
+      constant: REMOVE_REACTION
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              entity_type:
+                type:
+                - string
+                - 'null'
+              entity_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                entity_type: forum_thread_reply
+                entity_id: '6385009'
+            sample2:
+              value:
+                entity_type: forum_thread
+                entity_id: '391573'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/vote/add:
+  post:
+    operationId: add_vote
+    tags:
+    - reaction
+    x-spectrum:
+      python: HTTP.add_vote
+      auth: session
+      verified: false
+      write: true
+      constant: ADD_VOTE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              entity_type:
+                type:
+                - string
+                - 'null'
+              entity_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                entity_type: forum_thread_reply
+                entity_id: '6385009'
+            sample2:
+              value:
+                entity_type: forum_thread
+                entity_id: '391573'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/vote/remove:
+  post:
+    operationId: remove_vote
+    tags:
+    - reaction
+    x-spectrum:
+      python: HTTP.remove_vote
+      auth: session
+      verified: false
+      write: true
+      constant: REMOVE_VOTE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              entity_type:
+                type:
+                - string
+                - 'null'
+              entity_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                entity_type: forum_thread_reply
+                entity_id: '6385009'
+            sample2:
+              value:
+                entity_type: forum_thread
+                entity_id: '391573'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

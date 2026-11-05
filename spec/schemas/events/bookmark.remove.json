@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "bookmark.remove",
+  "description": "Server -> client `bookmark.remove`. Required keys are the ones `Client._on_bookmark_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "bookmark.remove"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "guide_request.cancel",
+  "description": "Server -> client `guide_request.cancel`. Required keys are the ones `Client._on_guide_request_cancel_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "guide_request.cancel"
+    }
+  },
+  "additionalProperties": true
+}

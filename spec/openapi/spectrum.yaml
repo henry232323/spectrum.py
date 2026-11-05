@@ -1,0 +1,437 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+openapi: 3.1.0
+info:
+  title: RSI Spectrum HTTP API (unofficial)
+  version: 2026.11.0
+  summary: Community description of the undocumented endpoints the Spectrum web client uses.
+  description: 'Not made, endorsed or supported by Cloud Imperium Games or Roberts Space Industries. Every operation
+    is a POST with a JSON body (multipart for uploads) returning the envelope in schemas/envelope.json. `x-spectrum.verified:
+    false` means the shape comes only from code and docstring samples, not from a recorded response.'
+  license:
+    name: MIT
+    identifier: MIT
+servers:
+- url: https://robertsspaceindustries.com
+security:
+- {}
+- rsiToken: []
+  rsiTokenCookie: []
+  rsiDevice: []
+tags:
+- name: auth
+- name: community
+- name: forum
+- name: guide
+- name: lobby
+- name: media
+- name: member
+- name: message
+- name: moderation
+- name: notification
+- name: reaction
+- name: role
+- name: search
+- name: social
+- name: v2-community
+- name: v2-forum
+- name: v2-guide
+- name: v2-lobby
+- name: v2-member
+- name: v2-misc
+- name: v2-social
+paths:
+  /api/spectrum/auth/identify:
+    $ref: paths/auth.yaml#/~1api~1spectrum~1auth~1identify
+  /api/spectrum/blocklist:
+    $ref: paths/social.yaml#/~1api~1spectrum~1blocklist
+  /api/spectrum/blocklist/add:
+    $ref: paths/social.yaml#/~1api~1spectrum~1blocklist~1add
+  /api/spectrum/blocklist/ids:
+    $ref: paths/social.yaml#/~1api~1spectrum~1blocklist~1ids
+  /api/spectrum/blocklist/remove:
+    $ref: paths/social.yaml#/~1api~1spectrum~1blocklist~1remove
+  /api/spectrum/bookmark/move:
+    $ref: paths/social.yaml#/~1api~1spectrum~1bookmark~1move
+  /api/spectrum/bookmark/remove:
+    $ref: paths/social.yaml#/~1api~1spectrum~1bookmark~1remove
+  /api/spectrum/bookmark/rename:
+    $ref: paths/social.yaml#/~1api~1spectrum~1bookmark~1rename
+  /api/spectrum/bookmarks:
+    $ref: paths/social.yaml#/~1api~1spectrum~1bookmarks
+  /api/spectrum/broadcast-message/create:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1broadcast-message~1create
+  /api/spectrum/broadcast-message/edit:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1broadcast-message~1edit
+  /api/spectrum/broadcast-message/remove:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1broadcast-message~1remove
+  /api/spectrum/community/fetch-emojis:
+    $ref: paths/community.yaml#/~1api~1spectrum~1community~1fetch-emojis
+  /api/spectrum/community/members:
+    $ref: paths/community.yaml#/~1api~1spectrum~1community~1members
+  /api/spectrum/emoji/create:
+    $ref: paths/community.yaml#/~1api~1spectrum~1emoji~1create
+  /api/spectrum/emoji/erase:
+    $ref: paths/community.yaml#/~1api~1spectrum~1emoji~1erase
+  /api/spectrum/flag/:
+    $ref: paths/moderation.yaml#/~1api~1spectrum~1flag~1
+  /api/spectrum/forum/channel/create:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1create
+  /api/spectrum/forum/channel/edit:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1edit
+  /api/spectrum/forum/channel/erase:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1erase
+  /api/spectrum/forum/channel/group/create:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1group~1create
+  /api/spectrum/forum/channel/group/edit:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1group~1edit
+  /api/spectrum/forum/channel/group/erase:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1group~1erase
+  /api/spectrum/forum/channel/group/move:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1group~1move
+  /api/spectrum/forum/channel/move:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1move
+  /api/spectrum/forum/channel/threads:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1channel~1threads
+  /api/spectrum/forum/thread/bulk/edit:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1edit
+  /api/spectrum/forum/thread/bulk/erase:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1erase
+  /api/spectrum/forum/thread/bulk/lock:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1lock
+  /api/spectrum/forum/thread/bulk/pin:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1pin
+  /api/spectrum/forum/thread/bulk/sink:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1sink
+  /api/spectrum/forum/thread/bulk/unlock:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1unlock
+  /api/spectrum/forum/thread/bulk/unpin:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1unpin
+  /api/spectrum/forum/thread/bulk/unsink:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1bulk~1unsink
+  /api/spectrum/forum/thread/classic:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1classic
+  /api/spectrum/forum/thread/create:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1create
+  /api/spectrum/forum/thread/edit:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1edit
+  /api/spectrum/forum/thread/erase:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1erase
+  /api/spectrum/forum/thread/nested:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1nested
+  /api/spectrum/forum/thread/replies/:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1replies~1
+  /api/spectrum/forum/thread/reply:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1reply
+  /api/spectrum/forum/thread/reply/childrens:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1reply~1childrens
+  /api/spectrum/forum/thread/reply/create:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1reply~1create
+  /api/spectrum/forum/thread/reply/edit:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1reply~1edit
+  /api/spectrum/forum/thread/reply/erase:
+    $ref: paths/forum.yaml#/~1api~1spectrum~1forum~1thread~1reply~1erase
+  /api/spectrum/friend-request/accept:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend-request~1accept
+  /api/spectrum/friend-request/cancel:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend-request~1cancel
+  /api/spectrum/friend-request/create:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend-request~1create
+  /api/spectrum/friend-request/decline:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend-request~1decline
+  /api/spectrum/friend-request/list:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend-request~1list
+  /api/spectrum/friend/add:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend~1add
+  /api/spectrum/friend/list:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend~1list
+  /api/spectrum/friend/remove:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend~1remove
+  /api/spectrum/friend/search:
+    $ref: paths/social.yaml#/~1api~1spectrum~1friend~1search
+  /api/spectrum/guide/deregister:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1deregister
+  /api/spectrum/guide/endorsement/create:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1endorsement~1create
+  /api/spectrum/guide/endorsement/decline:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1endorsement~1decline
+  /api/spectrum/guide/profile/update:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1profile~1update
+  /api/spectrum/guide/register:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1register
+  /api/spectrum/guide/registration/criteria:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1registration~1criteria
+  /api/spectrum/guide/request/accept:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1request~1accept
+  /api/spectrum/guide/request/cancel:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1request~1cancel
+  /api/spectrum/guide/request/create:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1request~1create
+  /api/spectrum/guide/request/decline:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1request~1decline
+  /api/spectrum/guide/request/remove:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1request~1remove
+  /api/spectrum/guide/request/removeAll:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1request~1removeAll
+  /api/spectrum/guide/search:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1search
+  /api/spectrum/guide/session/terminate:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1session~1terminate
+  /api/spectrum/guide/topics/list:
+    $ref: paths/guide.yaml#/~1api~1spectrum~1guide~1topics~1list
+  /api/spectrum/lobby/acceptInvite:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1acceptInvite
+  /api/spectrum/lobby/cancelInvite:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1cancelInvite
+  /api/spectrum/lobby/closePrivate:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1closePrivate
+  /api/spectrum/lobby/create:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1create
+  /api/spectrum/lobby/declineInvite:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1declineInvite
+  /api/spectrum/lobby/edit:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1edit
+  /api/spectrum/lobby/erase:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1erase
+  /api/spectrum/lobby/getMotd:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1getMotd
+  /api/spectrum/lobby/guideSessionHistory:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1guideSessionHistory
+  /api/spectrum/lobby/info:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1info
+  /api/spectrum/lobby/invite:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1invite
+  /api/spectrum/lobby/kick:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1kick
+  /api/spectrum/lobby/leave:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1leave
+  /api/spectrum/lobby/listInvites:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1listInvites
+  /api/spectrum/lobby/move:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1move
+  /api/spectrum/lobby/online-members-count:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1online-members-count
+  /api/spectrum/lobby/presences:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1presences
+  /api/spectrum/lobby/setMotd:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1setMotd
+  /api/spectrum/lobby/transferLeadership:
+    $ref: paths/lobby.yaml#/~1api~1spectrum~1lobby~1transferLeadership
+  /api/spectrum/media/embed/fetch:
+    $ref: paths/media.yaml#/~1api~1spectrum~1media~1embed~1fetch
+  /api/spectrum/media/upload/emoji:
+    $ref: paths/media.yaml#/~1api~1spectrum~1media~1upload~1emoji
+  /api/spectrum/media/upload/image:
+    $ref: paths/media.yaml#/~1api~1spectrum~1media~1upload~1image
+  /api/spectrum/member/counters:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1counters
+  /api/spectrum/member/info/id:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1info~1id
+  /api/spectrum/member/info/nickname:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1info~1nickname
+  /api/spectrum/member/presence/setStatus:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1presence~1setStatus
+  /api/spectrum/member/role/add:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1role~1add
+  /api/spectrum/member/role/remove:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1role~1remove
+  /api/spectrum/member/roles:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1roles
+  /api/spectrum/member/spoken-languages:
+    $ref: paths/member.yaml#/~1api~1spectrum~1member~1spoken-languages
+  /api/spectrum/message/create:
+    $ref: paths/message.yaml#/~1api~1spectrum~1message~1create
+  /api/spectrum/message/delete:
+    $ref: paths/message.yaml#/~1api~1spectrum~1message~1delete
+  /api/spectrum/message/edit:
+    $ref: paths/message.yaml#/~1api~1spectrum~1message~1edit
+  /api/spectrum/message/erase:
+    $ref: paths/message.yaml#/~1api~1spectrum~1message~1erase
+  /api/spectrum/message/history:
+    $ref: paths/message.yaml#/~1api~1spectrum~1message~1history
+  /api/spectrum/message/removeMedia:
+    $ref: paths/message.yaml#/~1api~1spectrum~1message~1removeMedia
+  /api/spectrum/message/soft-erase:
+    $ref: paths/message.yaml#/~1api~1spectrum~1message~1soft-erase
+  /api/spectrum/moderation/kickban:
+    $ref: paths/moderation.yaml#/~1api~1spectrum~1moderation~1kickban
+  /api/spectrum/notification/read:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1notification~1read
+  /api/spectrum/notification/read-all:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1notification~1read-all
+  /api/spectrum/notification/remove:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1notification~1remove
+  /api/spectrum/notification/remove-all:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1notification~1remove-all
+  /api/spectrum/notification/subscribe:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1notification~1subscribe
+  /api/spectrum/reaction/add:
+    $ref: paths/reaction.yaml#/~1api~1spectrum~1reaction~1add
+  /api/spectrum/reaction/remove:
+    $ref: paths/reaction.yaml#/~1api~1spectrum~1reaction~1remove
+  /api/spectrum/role/create:
+    $ref: paths/role.yaml#/~1api~1spectrum~1role~1create
+  /api/spectrum/role/edit:
+    $ref: paths/role.yaml#/~1api~1spectrum~1role~1edit
+  /api/spectrum/role/move:
+    $ref: paths/role.yaml#/~1api~1spectrum~1role~1move
+  /api/spectrum/role/remove:
+    $ref: paths/role.yaml#/~1api~1spectrum~1role~1remove
+  /api/spectrum/search/content/extended:
+    $ref: paths/search.yaml#/~1api~1spectrum~1search~1content~1extended
+  /api/spectrum/search/content/simple:
+    $ref: paths/search.yaml#/~1api~1spectrum~1search~1content~1simple
+  /api/spectrum/search/member/autocomplete:
+    $ref: paths/search.yaml#/~1api~1spectrum~1search~1member~1autocomplete
+  /api/spectrum/subscription/remove:
+    $ref: paths/notification.yaml#/~1api~1spectrum~1subscription~1remove
+  /api/spectrum/v2/bookmark/add:
+    $ref: paths/v2-social.yaml#/~1api~1spectrum~1v2~1bookmark~1add
+  /api/spectrum/v2/bookmark/list:
+    $ref: paths/v2-social.yaml#/~1api~1spectrum~1v2~1bookmark~1list
+  /api/spectrum/v2/bookmark/move:
+    $ref: paths/v2-social.yaml#/~1api~1spectrum~1v2~1bookmark~1move
+  /api/spectrum/v2/bookmark/remove:
+    $ref: paths/v2-social.yaml#/~1api~1spectrum~1v2~1bookmark~1remove
+  /api/spectrum/v2/bookmark/rename:
+    $ref: paths/v2-social.yaml#/~1api~1spectrum~1v2~1bookmark~1rename
+  /api/spectrum/v2/community/emoji/create:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1emoji~1create
+  /api/spectrum/v2/community/emoji/remove:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1emoji~1remove
+  /api/spectrum/v2/community/emoji/upload:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1emoji~1upload
+  /api/spectrum/v2/community/emojis:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1emojis
+  /api/spectrum/v2/community/list:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1list
+  /api/spectrum/v2/community/members:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1members
+  /api/spectrum/v2/community/my-roles:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1my-roles
+  /api/spectrum/v2/community/role/create:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1role~1create
+  /api/spectrum/v2/community/role/edit:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1role~1edit
+  /api/spectrum/v2/community/role/remove:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1role~1remove
+  /api/spectrum/v2/community/role/reorder:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1role~1reorder
+  /api/spectrum/v2/community/roles:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1roles
+  /api/spectrum/v2/community/{community_id}/member/{nickname}/profile:
+    $ref: paths/v2-community.yaml#/~1api~1spectrum~1v2~1community~1{community_id}~1member~1{nickname}~1profile
+  /api/spectrum/v2/forum/channel/group/list:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1channel~1group~1list
+  /api/spectrum/v2/forum/channel/group/move:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1channel~1group~1move
+  /api/spectrum/v2/forum/channel/group/reorder:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1channel~1group~1reorder
+  /api/spectrum/v2/forum/channel/list:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1channel~1list
+  /api/spectrum/v2/forum/channel/move:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1channel~1move
+  /api/spectrum/v2/forum/channel/reorder:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1channel~1reorder
+  /api/spectrum/v2/forum/channel/threads:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1channel~1threads
+  /api/spectrum/v2/forum/thread/get:
+    $ref: paths/v2-forum.yaml#/~1api~1spectrum~1v2~1forum~1thread~1get
+  /api/spectrum/v2/game/party:
+    $ref: paths/v2-misc.yaml#/~1api~1spectrum~1v2~1game~1party
+  /api/spectrum/v2/getIdentityInfos:
+    $ref: paths/v2-misc.yaml#/~1api~1spectrum~1v2~1getIdentityInfos
+  /api/spectrum/v2/guide/deregister:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1deregister
+  /api/spectrum/v2/guide/me:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1me
+  /api/spectrum/v2/guide/profile/update:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1profile~1update
+  /api/spectrum/v2/guide/register:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1register
+  /api/spectrum/v2/guide/registration/criteria/check:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1registration~1criteria~1check
+  /api/spectrum/v2/guide/request/create:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1create
+  /api/spectrum/v2/guide/request/incoming:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1incoming
+  /api/spectrum/v2/guide/request/outgoing:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1outgoing
+  /api/spectrum/v2/guide/request/remove-all:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1remove-all
+  /api/spectrum/v2/guide/request/{request_id}/accept:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1{request_id}~1accept
+  /api/spectrum/v2/guide/request/{request_id}/cancel:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1{request_id}~1cancel
+  /api/spectrum/v2/guide/request/{request_id}/decline:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1{request_id}~1decline
+  /api/spectrum/v2/guide/request/{request_id}/remove:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1request~1{request_id}~1remove
+  /api/spectrum/v2/guide/search:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1search
+  /api/spectrum/v2/guide/session/active:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1session~1active
+  /api/spectrum/v2/guide/session/{session_id}/endorse:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1session~1{session_id}~1endorse
+  /api/spectrum/v2/guide/session/{session_id}/endorse/decline:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1session~1{session_id}~1endorse~1decline
+  /api/spectrum/v2/guide/session/{session_id}/terminate:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1session~1{session_id}~1terminate
+  /api/spectrum/v2/guide/stats:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1stats
+  /api/spectrum/v2/guide/topic/list:
+    $ref: paths/v2-guide.yaml#/~1api~1spectrum~1v2~1guide~1topic~1list
+  /api/spectrum/v2/lobby/chats/list:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1chats~1list
+  /api/spectrum/v2/lobby/chats/search:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1chats~1search
+  /api/spectrum/v2/lobby/group/list:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1group~1list
+  /api/spectrum/v2/lobby/private/close:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1private~1close
+  /api/spectrum/v2/lobby/private/list:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1private~1list
+  /api/spectrum/v2/lobby/private/open:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1private~1open
+  /api/spectrum/v2/lobby/public/list:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1public~1list
+  /api/spectrum/v2/lobby/public/move:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1public~1move
+  /api/spectrum/v2/lobby/public/reorder:
+    $ref: paths/v2-lobby.yaml#/~1api~1spectrum~1v2~1lobby~1public~1reorder
+  /api/spectrum/v2/member/profile:
+    $ref: paths/v2-member.yaml#/~1api~1spectrum~1v2~1member~1profile
+  /api/spectrum/v2/member/role/add:
+    $ref: paths/v2-member.yaml#/~1api~1spectrum~1v2~1member~1role~1add
+  /api/spectrum/v2/member/role/remove:
+    $ref: paths/v2-member.yaml#/~1api~1spectrum~1v2~1member~1role~1remove
+  /api/spectrum/v2/member/role/set:
+    $ref: paths/v2-member.yaml#/~1api~1spectrum~1v2~1member~1role~1set
+  /api/spectrum/v2/member/settings:
+    $ref: paths/v2-member.yaml#/~1api~1spectrum~1v2~1member~1settings
+  /api/spectrum/v2/member/settings/save:
+    $ref: paths/v2-member.yaml#/~1api~1spectrum~1v2~1member~1settings~1save
+  /api/spectrum/v2/message/send:
+    $ref: paths/v2-misc.yaml#/~1api~1spectrum~1v2~1message~1send
+  /api/spectrum/v2/moderation/kickban:
+    $ref: paths/v2-misc.yaml#/~1api~1spectrum~1v2~1moderation~1kickban
+  /api/spectrum/v2/search/member/mapping:
+    $ref: paths/v2-misc.yaml#/~1api~1spectrum~1v2~1search~1member~1mapping
+  /api/spectrum/vote/add:
+    $ref: paths/reaction.yaml#/~1api~1spectrum~1vote~1add
+  /api/spectrum/vote/remove:
+    $ref: paths/reaction.yaml#/~1api~1spectrum~1vote~1remove
+components:
+  securitySchemes:
+    rsiToken:
+      type: apiKey
+      in: header
+      name: X-Rsi-Token
+      description: Same value as the Rsi-Token cookie; acts as the CSRF token.
+    rsiTokenCookie:
+      type: apiKey
+      in: cookie
+      name: Rsi-Token
+    rsiDevice:
+      type: apiKey
+      in: cookie
+      name: _rsi_device

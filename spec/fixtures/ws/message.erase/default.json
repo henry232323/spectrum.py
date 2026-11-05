@@ -1,0 +1,9 @@
+{
+  "source": "synthesized: payload objects taken from the recorded (redacted) HTTP fixtures; frame shape from the Client handler",
+  "expect": "on_message_erase",
+  "event": {
+    "type": "message.erase",
+    "message_id": "67438529",
+    "lobby_id": "1"
+  }
+}

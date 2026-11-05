@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "member.presence.update",
+  "description": "Server -> client `member.presence.update`. Required keys are the ones `Client._on_presence_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "member_id",
+    "presence"
+  ],
+  "properties": {
+    "type": {
+      "const": "member.presence.update"
+    },
+    "member_id": {
+      "$ref": "../id.json"
+    },
+    "presence": {
+      "$ref": "../presence.json"
+    }
+  },
+  "additionalProperties": true
+}

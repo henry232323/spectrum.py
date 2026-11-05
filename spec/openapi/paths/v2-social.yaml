@@ -1,0 +1,255 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/v2/bookmark/add:
+  post:
+    operationId: v2_bookmark_add
+    tags:
+    - v2-social
+    x-spectrum:
+      python: HTTP.v2_bookmark_add
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_BOOKMARK_ADD
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              entity_type:
+                type:
+                - string
+                - 'null'
+              entity_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              folder_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                entity_type: lobby
+                entity_id: '123'
+                folder_id: '456'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/bookmark/list:
+  post:
+    operationId: v2_bookmark_list
+    tags:
+    - v2-social
+    x-spectrum:
+      python: HTTP.v2_bookmark_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_BOOKMARK_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/bookmark/move:
+  post:
+    operationId: v2_bookmark_move
+    tags:
+    - v2-social
+    x-spectrum:
+      python: HTTP.v2_bookmark_move
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_BOOKMARK_MOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              bookmark_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              folder_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                bookmark_id: '123'
+                folder_id: '456'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/bookmark/remove:
+  post:
+    operationId: v2_bookmark_remove
+    tags:
+    - v2-social
+    x-spectrum:
+      python: HTTP.v2_bookmark_remove
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_BOOKMARK_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              bookmark_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                bookmark_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/bookmark/rename:
+  post:
+    operationId: v2_bookmark_rename
+    tags:
+    - v2-social
+    x-spectrum:
+      python: HTTP.v2_bookmark_rename
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_BOOKMARK_RENAME
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              bookmark_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              name:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                bookmark_id: '123'
+                name: New Name
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

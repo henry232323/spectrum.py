@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "guide_request.decline",
+  "description": "Server -> client `guide_request.decline`. Required keys are the ones `Client._on_guide_request_decline_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "guide_request.decline"
+    }
+  },
+  "additionalProperties": true
+}

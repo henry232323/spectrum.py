@@ -1,0 +1,316 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/message/create:
+  post:
+    operationId: send_message
+    tags:
+    - message
+    x-spectrum:
+      python: HTTP.send_message
+      auth: session
+      verified: false
+      write: true
+      constant: CREATE_MESSAGE_ENDPOINT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data:
+                    $ref: ../../schemas/message.json
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/message/delete:
+  post:
+    operationId: delete_message
+    tags:
+    - message
+    x-spectrum:
+      python: HTTP.delete_message
+      auth: session
+      verified: false
+      write: true
+      constant: DELETE_MESSAGE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              message_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                message_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/message/edit:
+  post:
+    operationId: edit_message
+    tags:
+    - message
+    x-spectrum:
+      python: HTTP.edit_message
+      auth: session
+      verified: false
+      write: true
+      constant: EDIT_MESSAGE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data:
+                    $ref: ../../schemas/message.json
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/message/erase:
+  post:
+    operationId: message_erase
+    tags:
+    - message
+    x-spectrum:
+      python: HTTP.message_erase
+      auth: session
+      verified: false
+      write: true
+      constant: MESSAGE_ERASE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              message_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                message_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/message/history:
+  post:
+    operationId: fetch_history
+    tags:
+    - message
+    x-spectrum:
+      python: HTTP.fetch_history
+      auth: anonymous
+      verified: true
+      write: false
+      constant: FETCH_HISTORY
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              lobby_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              timeframe:
+                type:
+                - string
+                - 'null'
+              message_id: {}
+              size:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                lobby_id: '1'
+                timeframe: before
+                message_id: null
+                size: 50
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data:
+                    $ref: ../../schemas/message-history.json
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/message/removeMedia:
+  post:
+    operationId: message_remove_media
+    tags:
+    - message
+    x-spectrum:
+      python: HTTP.message_remove_media
+      auth: session
+      verified: false
+      write: true
+      constant: MESSAGE_REMOVE_MEDIA
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              message_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              media_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                message_id: '123'
+                media_id: '456'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/message/soft-erase:
+  post:
+    operationId: message_soft_erase
+    tags:
+    - message
+    x-spectrum:
+      python: HTTP.message_soft_erase
+      auth: session
+      verified: false
+      write: true
+      constant: MESSAGE_SOFT_ERASE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              message_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                message_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

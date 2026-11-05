@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "reaction.add",
+  "description": "Server -> client `reaction.add`. Required keys are the ones `Client._on_reaction_add_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "reaction"
+  ],
+  "properties": {
+    "type": {
+      "const": "reaction.add"
+    },
+    "reaction": {
+      "$ref": "../reaction.json"
+    }
+  },
+  "additionalProperties": true
+}

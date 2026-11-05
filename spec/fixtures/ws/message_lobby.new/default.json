@@ -1,0 +1,44 @@
+{
+  "source": "synthesized: payload objects taken from the recorded (redacted) HTTP fixtures; frame shape from the Client handler",
+  "expect": "on_lobby_new",
+  "event": {
+    "type": "message_lobby.new",
+    "message_lobby": {
+      "id": "22066",
+      "type": "public",
+      "community_id": "1",
+      "name": "becoming-a-citizen",
+      "description": "Interested in joining Star Citizen? Introduce yourself and ask the community questions!",
+      "color": "63A3E6",
+      "icon": null,
+      "time_created": 1487781367,
+      "subscription_key": "community:1:message_lobby:22066:fee1b8bab29762e845d3a836d1bd28142462a7f1",
+      "leader_id": null,
+      "online_members_count": 355,
+      "permissions": {
+        "4": {
+          "read": 1,
+          "send_message": 1,
+          "manage": 0
+        },
+        "5": {
+          "read": 1,
+          "manage": 0
+        },
+        "6": {
+          "read": 1
+        },
+        "137732": {
+          "manage": 0
+        }
+      },
+      "last_read": null,
+      "latest": null,
+      "members": null,
+      "new_messages": null,
+      "last_message": null,
+      "active_guide_session": null,
+      "blocked_recipients": null
+    }
+  }
+}

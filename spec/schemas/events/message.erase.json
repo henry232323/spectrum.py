@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "message.erase",
+  "description": "Server -> client `message.erase`. Required keys are the ones `Client._on_message_erase_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "message.erase"
+    },
+    "message_id": {
+      "$ref": "../id.json"
+    },
+    "lobby_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

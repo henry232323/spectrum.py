@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "community.update",
+  "description": "Server -> client `community.update`. Required keys are the ones `Client._on_community_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "community"
+  ],
+  "properties": {
+    "type": {
+      "const": "community.update"
+    },
+    "community": {}
+  },
+  "additionalProperties": true
+}

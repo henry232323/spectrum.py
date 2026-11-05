@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum.thread.replies_count.update",
+  "description": "Server -> client `forum.thread.replies_count.update`. Required keys are the ones `Client._on_forum_thread_replies_count_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum.thread.replies_count.update"
+    },
+    "thread_id": {
+      "$ref": "../id.json"
+    },
+    "replies_count": {}
+  },
+  "additionalProperties": true
+}

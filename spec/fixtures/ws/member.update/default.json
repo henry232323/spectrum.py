@@ -1,0 +1,42 @@
+{
+  "source": "synthesized: payload objects taken from the recorded (redacted) HTTP fixtures; frame shape from the Client handler",
+  "expect": "on_member_update",
+  "event": {
+    "type": "member.update",
+    "member": {
+      "id": "1000001",
+      "displayname": "Citizen1",
+      "nickname": "Citizen1",
+      "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+      "signature": "",
+      "meta": {
+        "badges": [
+          {
+            "name": "2953 Vanduul Aggressor ",
+            "icon": "https://media.robertsspaceindustries.com/68qrnljf4aev4/heap_thumb.png"
+          },
+          {
+            "name": "Example Org",
+            "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+            "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+          }
+        ]
+      },
+      "isGM": false,
+      "spoken_languages": [
+        "en"
+      ],
+      "presence": {
+        "info": "In Menus",
+        "since": 1793840429,
+        "status": "playing"
+      },
+      "roles": {
+        "1": [
+          "11",
+          "4"
+        ]
+      }
+    }
+  }
+}

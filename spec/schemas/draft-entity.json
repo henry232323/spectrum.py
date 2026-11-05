@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DraftEntity",
+  "description": "Draft.js entity, e.g. LINK or MENTION",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "mutability": {
+      "type": "string"
+    },
+    "data": {
+      "oneOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "array",
+          "maxItems": 0
+        }
+      ],
+      "description": "PHP-style: an empty object comes back as []"
+    }
+  },
+  "additionalProperties": true
+}

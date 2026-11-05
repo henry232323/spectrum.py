@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "message_lobby.leave",
+  "description": "Server -> client `message_lobby.leave`. Required keys are the ones `Client._on_lobby_leave_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "message_lobby.leave"
+    },
+    "member_id": {
+      "$ref": "../id.json"
+    },
+    "lobby_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

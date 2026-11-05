@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Badge",
+  "description": "Member badge. `url` is set for organisation badges.",
+  "type": "object",
+  "required": [
+    "name",
+    "icon"
+  ],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

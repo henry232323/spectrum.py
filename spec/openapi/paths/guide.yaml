@@ -1,0 +1,721 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/guide/deregister:
+  post:
+    operationId: guide_deregister
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_deregister
+      auth: unknown
+      verified: false
+      write: false
+      constant: GUIDE_DEREGISTER
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/endorsement/create:
+  post:
+    operationId: guide_endorsement_create
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_endorsement_create
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_ENDORSEMENT_CREATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              guide_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              comment:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                guide_id: '123'
+                comment: Great guide
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/endorsement/decline:
+  post:
+    operationId: guide_endorsement_decline
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_endorsement_decline
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_ENDORSEMENT_DECLINE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              endorsement_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                endorsement_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/profile/update:
+  post:
+    operationId: guide_profile_update
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_profile_update
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_PROFILE_UPDATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              bio:
+                type:
+                - string
+                - 'null'
+              topics:
+                type: array
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                bio: Experienced pilot
+                topics:
+                - combat
+                - trading
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/register:
+  post:
+    operationId: guide_register
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_register
+      auth: unknown
+      verified: false
+      write: false
+      constant: GUIDE_REGISTER
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              topics:
+                type: array
+              bio:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                topics:
+                - combat
+                - trading
+                bio: I can help
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/registration/criteria:
+  post:
+    operationId: guide_registration_criteria
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_registration_criteria
+      auth: unknown
+      verified: false
+      write: false
+      constant: GUIDE_REGISTRATION_CRITERIA
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/request/accept:
+  post:
+    operationId: guide_request_accept
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_request_accept
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_REQUEST_ACCEPT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              request_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                request_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/request/cancel:
+  post:
+    operationId: guide_request_cancel
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_request_cancel
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_REQUEST_CANCEL
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              request_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                request_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/request/create:
+  post:
+    operationId: guide_request_create
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_request_create
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_REQUEST_CREATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              topic:
+                type:
+                - string
+                - 'null'
+              message:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                topic: combat
+                message: Need help with dogfighting
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/request/decline:
+  post:
+    operationId: guide_request_decline
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_request_decline
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_REQUEST_DECLINE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              request_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                request_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/request/remove:
+  post:
+    operationId: guide_request_remove
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_request_remove
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_REQUEST_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              request_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                request_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/request/removeAll:
+  post:
+    operationId: guide_request_remove_all
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_request_remove_all
+      auth: session
+      verified: false
+      write: true
+      constant: GUIDE_REQUEST_REMOVE_ALL
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/search:
+  post:
+    operationId: guide_search
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_search
+      auth: unknown
+      verified: false
+      write: false
+      constant: GUIDE_SEARCH
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              topic:
+                type:
+                - string
+                - 'null'
+              page:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                topic: combat
+                page: 1
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/session/terminate:
+  post:
+    operationId: guide_session_terminate
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_session_terminate
+      auth: unknown
+      verified: false
+      write: false
+      constant: GUIDE_SESSION_TERMINATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              session_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                session_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/guide/topics/list:
+  post:
+    operationId: guide_topics_list
+    tags:
+    - guide
+    x-spectrum:
+      python: HTTP.guide_topics_list
+      auth: unknown
+      verified: false
+      write: false
+      constant: GUIDE_TOPICS_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

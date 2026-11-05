@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Envelope",
+  "description": "Every Spectrum HTTP response. `success` is 1/0 in practice (true/false also seen).",
+  "type": "object",
+  "required": [
+    "success"
+  ],
+  "properties": {
+    "success": {
+      "enum": [
+        0,
+        1,
+        true,
+        false
+      ]
+    },
+    "code": {
+      "type": "string",
+      "examples": [
+        "OK",
+        "ErrAccessDenied"
+      ]
+    },
+    "msg": {
+      "type": "string"
+    },
+    "data": {}
+  },
+  "additionalProperties": true
+}

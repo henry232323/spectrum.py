@@ -1,0 +1,836 @@
+{
+  "operationId": "fetch_thread_nested",
+  "source": "recorded",
+  "recorded_at": "2026-11-04",
+  "auth": "anonymous",
+  "request": {
+    "slug": "redacted-thread-1",
+    "sort": "oldest",
+    "target_reply_id": null
+  },
+  "status": 200,
+  "response": {
+    "success": 1,
+    "code": "OK",
+    "msg": "OK",
+    "data": {
+      "id": "575799",
+      "time_created": 1793718000,
+      "time_modified": 1793802959,
+      "channel_id": "1",
+      "label_id": "",
+      "type": "discussion",
+      "slug": "redacted-thread-1",
+      "subject": "Redacted text 1",
+      "is_locked": false,
+      "is_reply_nesting_disabled": false,
+      "is_pinned": true,
+      "is_sinked": false,
+      "is_erased": false,
+      "erased_by": null,
+      "tracked_post_role_id": "2",
+      "content_reply_id": "9209843",
+      "annotation_plaintext": null,
+      "subscription_key": "community:1:forum_thread:575799:04bd5e1a50bde86ad1ee8a43844cc9d11f430234",
+      "content_blocks": [
+        {
+          "id": 1,
+          "type": "text",
+          "data": {
+            "blocks": [
+              {
+                "key": "4mqq5",
+                "text": "Redacted text 2.",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              },
+              {
+                "key": "ctu4",
+                "text": "",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              },
+              {
+                "key": "doln8",
+                "text": "Redacted text 3.",
+                "type": "unstyled",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              }
+            ],
+            "entityMap": []
+          }
+        },
+        {
+          "id": "mvzomxo9-j4sijjcvvrs",
+          "type": "image",
+          "data": [
+            {
+              "id": "upload:3479949",
+              "type": "upload",
+              "data": {
+                "url": "https://example.invalid/redacted",
+                "image_width": 877,
+                "image_height": 627,
+                "sizes": {
+                  "mini": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "square": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "small": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "medium": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "large": {
+                    "url": "https://example.invalid/redacted"
+                  }
+                }
+              }
+            },
+            {
+              "id": "upload:3479950",
+              "type": "upload",
+              "data": {
+                "url": "https://example.invalid/redacted",
+                "image_width": 967,
+                "image_height": 436,
+                "sizes": {
+                  "mini": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "square": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "small": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "medium": {
+                    "url": "https://example.invalid/redacted"
+                  },
+                  "large": {
+                    "url": "https://example.invalid/redacted"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "mvzonii8-1glc4lrtbnc",
+          "type": "text",
+          "data": {
+            "blocks": [
+              {
+                "key": "f2f1u",
+                "text": "Redacted text 4.",
+                "type": "header-one",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              },
+              {
+                "key": "6pe84",
+                "text": "Redacted text 5.",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              },
+              {
+                "key": "64uei",
+                "text": "Redacted text 6.",
+                "type": "unordered-list-item",
+                "depth": 0,
+                "inlineStyleRanges": [],
+                "entityRanges": [],
+                "data": []
+              }
+            ],
+            "entityMap": []
+          }
+        }
+      ],
+      "lexical_content": null,
+      "annotation": null,
+      "highlight_role_id": "2",
+      "community_id": "1",
+      "member": {
+        "id": "1000001",
+        "displayname": "Citizen1",
+        "nickname": "Citizen1",
+        "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+        "signature": "",
+        "meta": {
+          "badges": [
+            {
+              "name": "Civilian",
+              "icon": "https://media.robertsspaceindustries.com/9qvh53v4nyx8d/heap_note.png"
+            },
+            {
+              "name": "Example Org",
+              "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+              "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+            }
+          ]
+        },
+        "isGM": true,
+        "spoken_languages": [
+          "en",
+          "fr"
+        ],
+        "presence": {
+          "info": null,
+          "since": 1793840442,
+          "status": "online"
+        },
+        "roles": {
+          "1": [
+            "11",
+            "2",
+            "3",
+            "4"
+          ]
+        }
+      },
+      "replies_count": 34,
+      "views_count": 1576,
+      "latest": 9211798,
+      "latest_activity": {
+        "time_created": 1793802959,
+        "member": {
+          "id": "1000002",
+          "displayname": "Citizen2",
+          "nickname": "Citizen2",
+          "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+          "signature": "",
+          "meta": {
+            "badges": [
+              {
+                "name": "Freelancer",
+                "icon": "https://media.robertsspaceindustries.com/iq9u3x48sdl2n/heap_thumb.png"
+              }
+            ]
+          },
+          "isGM": false,
+          "spoken_languages": [
+            "en"
+          ],
+          "roles": {
+            "1": [
+              "11",
+              "4"
+            ]
+          }
+        },
+        "highlight_role_id": null
+      },
+      "votes": {
+        "count": 57,
+        "voted": 0
+      },
+      "reactions": [
+        {
+          "type": ":rocket:",
+          "count": 9,
+          "members": {
+            "1000028": "",
+            "1000029": "",
+            "1000017": ""
+          }
+        },
+        {
+          "type": ":avocado:",
+          "count": 8,
+          "members": {
+            "1000028": "",
+            "1000030": "",
+            "1000031": ""
+          }
+        },
+        {
+          "type": ":white_check_mark:",
+          "count": 7,
+          "members": {
+            "1000029": "",
+            "1000032": "",
+            "1000033": ""
+          }
+        }
+      ],
+      "tracked_replies_references": [
+        {
+          "id": "9210720",
+          "label": "Citizen1"
+        }
+      ],
+      "children_replies_references": [],
+      "notification_subscription": "all",
+      "aspect": "full",
+      "nested_replies_ids": [
+        "9210716",
+        "9210719",
+        "9210730",
+        "9210732",
+        "9210745",
+        "9210749",
+        "9210759",
+        "9210770",
+        "9210772",
+        "9210790",
+        "9210819",
+        "9210832",
+        "9210856",
+        "9210928",
+        "9211027",
+        "9211039",
+        "9211042",
+        "9211046",
+        "9211060",
+        "9211064",
+        "9211087",
+        "9211138",
+        "9211204",
+        "9211320",
+        "9211513",
+        "9211798"
+      ],
+      "replies": [
+        {
+          "id": "9210716",
+          "time_created": 1793721547,
+          "time_modified": 1793721547,
+          "thread_id": "575799",
+          "content_blocks": [
+            {
+              "id": 1,
+              "type": "text",
+              "data": {
+                "blocks": [
+                  {
+                    "key": "4uu74",
+                    "text": "Redacted text 7.",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  },
+                  {
+                    "key": "bcq1k",
+                    "text": "",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  },
+                  {
+                    "key": "7id7t",
+                    "text": "Redacted text 8.",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  }
+                ],
+                "entityMap": []
+              }
+            }
+          ],
+          "lexical_content": null,
+          "is_erased": false,
+          "erased_by": null,
+          "annotation_plaintext": null,
+          "member": {
+            "id": "1000003",
+            "displayname": "Citizen3",
+            "nickname": "Citizen3",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "404: Ship Not Found",
+                  "icon": "https://media.robertsspaceindustries.com/ymv23578ul3p2/heap_note.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": false,
+            "spoken_languages": [
+              "en"
+            ],
+            "roles": {
+              "1": [
+                "11",
+                "4"
+              ]
+            }
+          },
+          "votes": {
+            "count": 20,
+            "voted": 0
+          },
+          "reactions": [],
+          "parent_reply_reference": null,
+          "children_replies_references": [
+            {
+              "id": "9210720",
+              "label": "Citizen1"
+            }
+          ],
+          "tracked_replies_references": [],
+          "read": false,
+          "replies_count": 1,
+          "replies": [
+            {
+              "id": "9210720",
+              "time_created": 1793721661,
+              "time_modified": 1793721661,
+              "thread_id": "575799",
+              "content_blocks": [
+                {
+                  "id": 1,
+                  "type": "text",
+                  "data": {
+                    "blocks": [
+                      {
+                        "key": "ecf7m",
+                        "text": "Redacted text 9.",
+                        "type": "unstyled",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                        "data": []
+                      }
+                    ],
+                    "entityMap": []
+                  }
+                }
+              ],
+              "lexical_content": null,
+              "highlight_role_id": "2",
+              "is_erased": false,
+              "erased_by": null,
+              "annotation_plaintext": null,
+              "member": {
+                "id": "1000001",
+                "displayname": "Citizen1",
+                "nickname": "Citizen1",
+                "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+                "signature": "",
+                "meta": {
+                  "badges": [
+                    {
+                      "name": "Civilian",
+                      "icon": "https://media.robertsspaceindustries.com/9qvh53v4nyx8d/heap_note.png"
+                    },
+                    {
+                      "name": "Example Org",
+                      "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                      "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                    }
+                  ]
+                },
+                "isGM": true,
+                "spoken_languages": [
+                  "en",
+                  "fr"
+                ],
+                "roles": {
+                  "1": [
+                    "11",
+                    "2",
+                    "3",
+                    "4"
+                  ]
+                }
+              },
+              "votes": {
+                "count": 21,
+                "voted": 0
+              },
+              "reactions": [
+                {
+                  "type": ":sunrise:",
+                  "count": 1,
+                  "members": {
+                    "1000034": "Ferco"
+                  }
+                },
+                {
+                  "type": ":owl:",
+                  "count": 1,
+                  "members": {
+                    "1000035": "Godwin"
+                  }
+                }
+              ],
+              "parent_reply_reference": {
+                "id": "9210716",
+                "label": "Citizen3"
+              },
+              "children_replies_references": [],
+              "tracked_replies_references": [
+                {
+                  "id": "9210736",
+                  "label": "Citizen1"
+                }
+              ],
+              "read": false,
+              "replies_count": 0,
+              "replies": []
+            }
+          ]
+        },
+        {
+          "id": "9210719",
+          "time_created": 1793721661,
+          "time_modified": 1793721661,
+          "thread_id": "575799",
+          "content_blocks": [
+            {
+              "id": 1,
+              "type": "text",
+              "data": {
+                "blocks": [
+                  {
+                    "key": "189tp",
+                    "text": "Redacted text 10.",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  },
+                  {
+                    "key": "1f7m8",
+                    "text": "",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  },
+                  {
+                    "key": "4iac1",
+                    "text": "Redacted text 11.",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  }
+                ],
+                "entityMap": []
+              }
+            }
+          ],
+          "lexical_content": null,
+          "is_erased": false,
+          "erased_by": null,
+          "annotation_plaintext": null,
+          "member": {
+            "id": "1000004",
+            "displayname": "Citizen4",
+            "nickname": "Citizen4",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "Fooled!",
+                  "icon": "https://robertsspaceindustries.com/spectrum/media/4vtc13p98fzo0r/heap_note/Fooled.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": false,
+            "spoken_languages": [
+              "en",
+              "hu",
+              "nl"
+            ],
+            "roles": {
+              "1": [
+                "11",
+                "4"
+              ]
+            }
+          },
+          "votes": {
+            "count": 3,
+            "voted": 0
+          },
+          "reactions": [],
+          "parent_reply_reference": null,
+          "children_replies_references": [],
+          "tracked_replies_references": [],
+          "read": false,
+          "replies_count": 0,
+          "replies": []
+        },
+        {
+          "id": "9210730",
+          "time_created": 1793722126,
+          "time_modified": 1793722126,
+          "thread_id": "575799",
+          "content_blocks": [
+            {
+              "id": 1,
+              "type": "text",
+              "data": {
+                "blocks": [
+                  {
+                    "key": "7gijo",
+                    "text": "Redacted text 12.",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  },
+                  {
+                    "key": "c2sfe",
+                    "text": "",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  },
+                  {
+                    "key": "ft4bi",
+                    "text": "Redacted text 13.",
+                    "type": "unstyled",
+                    "depth": 0,
+                    "inlineStyleRanges": [],
+                    "entityRanges": [],
+                    "data": []
+                  }
+                ],
+                "entityMap": []
+              }
+            },
+            {
+              "id": "mw0vtc4e-bpguqeeo45s",
+              "type": "image",
+              "data": [
+                {
+                  "id": "embed:q8ta888phjfjq",
+                  "slug": "q8ta888phjfjq",
+                  "type": "embed",
+                  "data": {
+                    "embed_type": "photo",
+                    "url": "https://example.invalid/redacted",
+                    "provider_name": "Imgur",
+                    "title": "imgur.com",
+                    "description": "Discover the magic of the internet at Imgur, a community powered entertainment destination. Lift your spirits with funny jokes, trending memes, entertaining gifs, inspiring stories, viral videos, and so much more from users.",
+                    "image": "https://example.invalid/redacted",
+                    "image_width": 495,
+                    "image_height": 386,
+                    "provider_icon": "https://example.invalid/redacted",
+                    "time_fetched": 1793722082,
+                    "sizes": {
+                      "mini": {
+                        "url": "https://example.invalid/redacted",
+                        "image_width": 150,
+                        "image_height": 150
+                      },
+                      "square": {
+                        "url": "https://example.invalid/redacted",
+                        "image_width": 250,
+                        "image_height": 250
+                      },
+                      "small": {
+                        "url": "https://example.invalid/redacted",
+                        "image_width": 400,
+                        "image_height": 174
+                      },
+                      "medium": {
+                        "url": "https://example.invalid/redacted",
+                        "image_width": 400,
+                        "image_height": 311
+                      },
+                      "large": {
+                        "url": "https://example.invalid/redacted",
+                        "image_width": 1680,
+                        "image_height": 818
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "lexical_content": null,
+          "is_erased": false,
+          "erased_by": null,
+          "annotation_plaintext": null,
+          "member": {
+            "id": "1000003",
+            "displayname": "Citizen3",
+            "nickname": "Citizen3",
+            "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+            "signature": "",
+            "meta": {
+              "badges": [
+                {
+                  "name": "404: Ship Not Found",
+                  "icon": "https://media.robertsspaceindustries.com/ymv23578ul3p2/heap_note.png"
+                },
+                {
+                  "name": "Example Org",
+                  "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                  "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                }
+              ]
+            },
+            "isGM": false,
+            "spoken_languages": [
+              "en"
+            ],
+            "roles": {
+              "1": [
+                "11",
+                "4"
+              ]
+            }
+          },
+          "votes": {
+            "count": 2,
+            "voted": 0
+          },
+          "reactions": [],
+          "parent_reply_reference": null,
+          "children_replies_references": [
+            {
+              "id": "9210780",
+              "label": "Citizen3"
+            }
+          ],
+          "tracked_replies_references": [],
+          "read": false,
+          "replies_count": 1,
+          "replies": [
+            {
+              "id": "9210780",
+              "time_created": 1793724191,
+              "time_modified": 1793724191,
+              "thread_id": "575799",
+              "content_blocks": [
+                {
+                  "id": 1,
+                  "type": "text",
+                  "data": {
+                    "blocks": [
+                      {
+                        "key": "e33o",
+                        "text": "Redacted text 14.",
+                        "type": "unstyled",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                        "data": []
+                      },
+                      {
+                        "key": "fuj0o",
+                        "text": "",
+                        "type": "unstyled",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                        "data": []
+                      },
+                      {
+                        "key": "da4gh",
+                        "text": "Redacted text 15.",
+                        "type": "unstyled",
+                        "depth": 0,
+                        "inlineStyleRanges": [],
+                        "entityRanges": [],
+                        "data": []
+                      }
+                    ],
+                    "entityMap": []
+                  }
+                }
+              ],
+              "lexical_content": null,
+              "is_erased": false,
+              "erased_by": null,
+              "annotation_plaintext": null,
+              "member": {
+                "id": "1000003",
+                "displayname": "Citizen3",
+                "nickname": "Citizen3",
+                "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+                "signature": "",
+                "meta": {
+                  "badges": [
+                    {
+                      "name": "404: Ship Not Found",
+                      "icon": "https://media.robertsspaceindustries.com/ymv23578ul3p2/heap_note.png"
+                    },
+                    {
+                      "name": "Example Org",
+                      "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+                      "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+                    }
+                  ]
+                },
+                "isGM": false,
+                "spoken_languages": [
+                  "en"
+                ],
+                "roles": {
+                  "1": [
+                    "11",
+                    "4"
+                  ]
+                }
+              },
+              "votes": {
+                "count": 1,
+                "voted": 0
+              },
+              "reactions": [],
+              "parent_reply_reference": {
+                "id": "9210730",
+                "label": "Citizen3"
+              },
+              "children_replies_references": [],
+              "tracked_replies_references": [],
+              "read": false,
+              "replies_count": 0,
+              "replies": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

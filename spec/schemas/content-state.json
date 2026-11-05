@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContentState",
+  "description": "Draft.js raw content. Note: spectrum.models.ContentState(**payload) accepts only these two keys.",
+  "type": "object",
+  "required": [
+    "blocks",
+    "entityMap"
+  ],
+  "properties": {
+    "blocks": {
+      "type": "array",
+      "items": {
+        "$ref": "draft-block.json"
+      }
+    },
+    "entityMap": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "draft-entity.json"
+          }
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "draft-entity.json"
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "friendship.init_presences",
+  "description": "Server -> client `friendship.init_presences`. Required keys are the ones `Client._on_friendship_init_presences_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "friendship.init_presences"
+    },
+    "presences": {}
+  },
+  "additionalProperties": true
+}

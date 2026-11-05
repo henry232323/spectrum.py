@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "role.update",
+  "description": "Server -> client `role.update`. Required keys are the ones `Client._on_role_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "role"
+  ],
+  "properties": {
+    "type": {
+      "const": "role.update"
+    },
+    "role": {},
+    "community_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

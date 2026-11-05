@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "member.update",
+  "description": "Server -> client `member.update`. Required keys are the ones `Client._on_member_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "member"
+  ],
+  "properties": {
+    "type": {
+      "const": "member.update"
+    },
+    "member": {
+      "$ref": "../member.json"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,617 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/v2/community/emoji/create:
+  post:
+    operationId: v2_community_emoji_create
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_emoji_create
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_COMMUNITY_EMOJI_CREATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              name:
+                type:
+                - string
+                - 'null'
+              media_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                name: emoji_name
+                media_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/emoji/remove:
+  post:
+    operationId: v2_community_emoji_remove
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_emoji_remove
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_COMMUNITY_EMOJI_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              emoji_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                emoji_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/emoji/upload:
+  post:
+    operationId: v2_community_emoji_upload
+    tags:
+    - v2-community
+    summary: Upload an emoji image via FormData. Returns the media data dict.
+    x-spectrum:
+      python: HTTP.v2_community_emoji_upload
+      auth: session
+      verified: false
+      write: true
+      since: v2
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+            - file
+            properties:
+              file:
+                type: string
+                format: binary
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/emojis:
+  post:
+    operationId: v2_community_emojis
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_emojis
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_COMMUNITY_EMOJIS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/list:
+  post:
+    operationId: v2_community_list
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_list
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_COMMUNITY_LIST
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+          examples:
+            sample1:
+              value: {}
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/members:
+  post:
+    operationId: v2_community_members
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_members
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_COMMUNITY_MEMBERS
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              page:
+                type:
+                - integer
+                - 'null'
+              pagesize:
+                type:
+                - integer
+                - 'null'
+              sort:
+                type:
+                - string
+                - 'null'
+              sort_descending:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                page: 1
+                pagesize: 12
+                sort: displayname
+                sort_descending: 0
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/my-roles:
+  post:
+    operationId: v2_community_my_roles
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_my_roles
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_COMMUNITY_MY_ROLES
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/role/create:
+  post:
+    operationId: v2_community_role_create
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_role_create
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_COMMUNITY_ROLE_CREATE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/role/edit:
+  post:
+    operationId: v2_community_role_edit
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_role_edit
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_COMMUNITY_ROLE_EDIT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/role/remove:
+  post:
+    operationId: v2_community_role_remove
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_role_remove
+      auth: session
+      verified: false
+      write: true
+      since: v2
+      constant: V2_COMMUNITY_ROLE_REMOVE
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                role_id: '123'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/role/reorder:
+  post:
+    operationId: v2_community_role_reorder
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_role_reorder
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_COMMUNITY_ROLE_REORDER
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              source_role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              target_role_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                source_role_id: '123'
+                target_role_id: '456'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/roles:
+  post:
+    operationId: v2_community_roles
+    tags:
+    - v2-community
+    x-spectrum:
+      python: HTTP.v2_community_roles
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+      constant: V2_COMMUNITY_ROLES
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/v2/community/{community_id}/member/{nickname}/profile:
+  post:
+    operationId: v2_community_member_profile
+    tags:
+    - v2-community
+    summary: Fetch a member's community profile by nickname.
+    x-spectrum:
+      python: HTTP.v2_community_member_profile
+      auth: unknown
+      verified: false
+      write: false
+      since: v2
+    parameters:
+    - name: community_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: nickname
+      in: path
+      required: true
+      schema:
+        type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

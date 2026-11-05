@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum_channel.remove",
+  "description": "Server -> client `forum_channel.remove`. Required keys are the ones `Client._on_channel_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "forum_channel_id"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum_channel.remove"
+    },
+    "forum_channel_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

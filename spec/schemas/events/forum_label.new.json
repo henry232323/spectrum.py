@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum_label.new",
+  "description": "Server -> client `forum_label.new`. Required keys are the ones `Client._on_forum_label_new_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum_label.new"
+    }
+  },
+  "additionalProperties": true
+}

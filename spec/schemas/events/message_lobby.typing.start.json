@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "message_lobby.typing.start",
+  "description": "Server -> client `message_lobby.typing.start`. Required keys are the ones `Client._on_typing_start_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "member_id",
+    "lobby_id"
+  ],
+  "properties": {
+    "type": {
+      "const": "message_lobby.typing.start"
+    },
+    "member_id": {
+      "$ref": "../id.json"
+    },
+    "lobby_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

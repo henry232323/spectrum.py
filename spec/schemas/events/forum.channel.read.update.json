@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum.channel.read.update",
+  "description": "Server -> client `forum.channel.read.update`. Required keys are the ones `Client._on_channel_read_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum.channel.read.update"
+    },
+    "channel_id": {
+      "$ref": "../id.json"
+    },
+    "thread_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

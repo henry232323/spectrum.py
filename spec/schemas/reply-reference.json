@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ReplyReference",
+  "description": "Pointer to a reply, labelled with its author's display name",
+  "type": "object",
+  "required": [
+    "id"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "label": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

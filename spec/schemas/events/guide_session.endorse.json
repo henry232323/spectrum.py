@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "guide_session.endorse",
+  "description": "Server -> client `guide_session.endorse`. Required keys are the ones `Client._on_guide_session_endorse_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "guide_session.endorse"
+    }
+  },
+  "additionalProperties": true
+}

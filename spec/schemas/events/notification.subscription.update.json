@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "notification.subscription.update",
+  "description": "Server -> client `notification.subscription.update`. Required keys are the ones `Client._on_notification_subscription_update_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "notification.subscription.update"
+    },
+    "entity_type": {},
+    "entity_id": {
+      "$ref": "../id.json"
+    },
+    "subscription_type": {}
+  },
+  "additionalProperties": true
+}

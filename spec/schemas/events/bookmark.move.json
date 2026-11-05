@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "bookmark.move",
+  "description": "Server -> client `bookmark.move`. Required keys are the ones `Client._on_bookmark_move_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "bookmark.move"
+    }
+  },
+  "additionalProperties": true
+}

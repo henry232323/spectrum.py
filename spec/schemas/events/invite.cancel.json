@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "invite.cancel",
+  "description": "Server -> client `invite.cancel`. Required keys are the ones `Client._on_invite_cancel_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "invite.cancel"
+    }
+  },
+  "additionalProperties": true
+}

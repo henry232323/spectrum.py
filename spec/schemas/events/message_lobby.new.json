@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "message_lobby.new",
+  "description": "Server -> client `message_lobby.new`. Required keys are the ones `Client._on_lobby_new_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type",
+    "message_lobby"
+  ],
+  "properties": {
+    "type": {
+      "const": "message_lobby.new"
+    },
+    "message_lobby": {
+      "$ref": "../lobby.json"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "custom_emoji.remove",
+  "description": "Server -> client `custom_emoji.remove`. Required keys are the ones `Client._on_custom_emoji_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "custom_emoji.remove"
+    }
+  },
+  "additionalProperties": true
+}

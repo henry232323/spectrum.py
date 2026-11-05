@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Role",
+  "description": "spectrum.models.Role",
+  "type": "object",
+  "required": [
+    "id",
+    "community_id",
+    "type",
+    "order",
+    "visible",
+    "highlightable",
+    "tracked",
+    "name",
+    "description",
+    "color",
+    "member_count",
+    "members_count",
+    "permissions"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "community_id": {
+      "$ref": "id.json"
+    },
+    "type": {
+      "type": "string"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "visible": {
+      "type": "boolean"
+    },
+    "highlightable": {
+      "type": "boolean"
+    },
+    "tracked": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "color": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "member_count": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "members_count": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "permissions": {
+      "$ref": "permissions.json"
+    }
+  },
+  "additionalProperties": true
+}

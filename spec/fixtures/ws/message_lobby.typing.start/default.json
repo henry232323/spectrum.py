@@ -1,0 +1,64 @@
+{
+  "source": "synthesized: payload objects taken from the recorded (redacted) HTTP fixtures; frame shape from the Client handler",
+  "expect": "on_typing_start",
+  "setup": {
+    "members": [
+      {
+        "id": "1000001",
+        "displayname": "Citizen1",
+        "nickname": "Citizen1",
+        "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+        "signature": "",
+        "meta": {
+          "badges": [
+            {
+              "name": "2953 Vanduul Aggressor ",
+              "icon": "https://media.robertsspaceindustries.com/68qrnljf4aev4/heap_thumb.png"
+            },
+            {
+              "name": "Example Org",
+              "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+              "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+            }
+          ]
+        },
+        "isGM": false,
+        "spoken_languages": [
+          "en"
+        ],
+        "presence": {
+          "info": "In Menus",
+          "since": 1793840429,
+          "status": "playing"
+        },
+        "roles": {
+          "1": [
+            "11",
+            "4"
+          ]
+        }
+      }
+    ],
+    "lobbies": [
+      {
+        "id": "1",
+        "type": "public",
+        "community_id": "1",
+        "name": "general",
+        "description": "Public place to discuss all things Star Citizen",
+        "color": "4aa3c9",
+        "icon": null,
+        "time_created": 1487370827,
+        "leader_id": "",
+        "order": 1,
+        "last_read": null,
+        "latest": 67438609
+      }
+    ]
+  },
+  "event": {
+    "type": "message_lobby.typing.start",
+    "member_id": "1000001",
+    "lobby_id": "1"
+  }
+}

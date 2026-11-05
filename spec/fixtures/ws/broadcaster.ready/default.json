@@ -1,0 +1,7 @@
+{
+  "source": "synthesized: payload objects taken from the recorded (redacted) HTTP fixtures; frame shape from the Client handler",
+  "expect": "on_ready",
+  "event": {
+    "type": "broadcaster.ready"
+  }
+}

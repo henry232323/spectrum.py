@@ -1,0 +1,46 @@
+{
+  "operationId": "fetch_member_by_handle",
+  "source": "recorded",
+  "recorded_at": "2026-11-04",
+  "auth": "anonymous",
+  "request": {
+    "nickname": "Citizen1"
+  },
+  "status": 200,
+  "response": {
+    "success": 1,
+    "code": "OK",
+    "msg": "OK",
+    "data": {
+      "member": {
+        "id": "1000001",
+        "displayname": "Citizen1",
+        "nickname": "Citizen1",
+        "avatar": "https://cdn.robertsspaceindustries.com/static/images/account/avatar_default_big.jpg",
+        "signature": "",
+        "meta": {
+          "badges": [
+            {
+              "name": "Most Valuable Poster",
+              "icon": "https://media.robertsspaceindustries.com/4q7o91j3lo6rt/heap_note.png"
+            },
+            {
+              "name": "Example Org",
+              "icon": "https://cdn.robertsspaceindustries.com/static/images/organization/defaults/thumbnail/generic.png",
+              "url": "https://robertsspaceindustries.com/orgs/EXAMPLE"
+            }
+          ]
+        },
+        "isGM": false,
+        "spoken_languages": [
+          "en"
+        ],
+        "presence": {
+          "info": null,
+          "since": 1755375873,
+          "status": "offline"
+        }
+      }
+    }
+  }
+}

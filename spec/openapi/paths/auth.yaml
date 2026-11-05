@@ -1,0 +1,36 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/auth/identify:
+  post:
+    operationId: identify
+    tags:
+    - auth
+    description: Uses its own session. Returns the bootstrap state and a JWT for the websocket.
+    x-spectrum:
+      python: HTTP.identify
+      auth: anonymous
+      verified: true
+      write: false
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data:
+                    $ref: ../../schemas/identify.json
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

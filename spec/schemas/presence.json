@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Presence",
+  "description": "spectrum.models.Presence",
+  "type": "object",
+  "required": [
+    "status",
+    "info"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "examples": [
+        "online",
+        "playing",
+        "away",
+        "dnd",
+        "invisible",
+        "offline"
+      ]
+    },
+    "info": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "since": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Activity",
+  "description": "spectrum.models.Activity(**payload): accepts only time_created, highlight_role_id, member_id, member.",
+  "type": "object",
+  "required": [
+    "time_created",
+    "highlight_role_id"
+  ],
+  "properties": {
+    "time_created": {
+      "type": "integer",
+      "description": "Unix seconds"
+    },
+    "highlight_role_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "member_id": {
+      "$ref": "id.json"
+    },
+    "member": {
+      "$ref": "member.json"
+    }
+  },
+  "additionalProperties": true
+}

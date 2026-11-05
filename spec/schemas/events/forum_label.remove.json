@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "forum_label.remove",
+  "description": "Server -> client `forum_label.remove`. Required keys are the ones `Client._on_forum_label_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "forum_label.remove"
+    }
+  },
+  "additionalProperties": true
+}

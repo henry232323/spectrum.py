@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "server.stop",
+  "description": "Server -> client `server.stop`. Required keys are the ones `Client._on_server_stop_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "server.stop"
+    }
+  },
+  "additionalProperties": true
+}

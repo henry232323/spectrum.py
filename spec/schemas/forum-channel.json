@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ForumChannel",
+  "description": "spectrum.models.Channel",
+  "type": "object",
+  "required": [
+    "id",
+    "community_id",
+    "group_id",
+    "order",
+    "name",
+    "description",
+    "color",
+    "sort_filter",
+    "label_required",
+    "subscription_key"
+  ],
+  "properties": {
+    "id": {
+      "$ref": "id.json"
+    },
+    "community_id": {
+      "$ref": "id.json"
+    },
+    "group_id": {
+      "$ref": "id.json"
+    },
+    "order": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "color": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sort_filter": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "label_required": {
+      "type": "boolean"
+    },
+    "subscription_key": {
+      "type": "string"
+    },
+    "threads_count": {
+      "type": "integer"
+    },
+    "labels": {
+      "type": "array",
+      "items": {
+        "$ref": "forum-label.json"
+      }
+    },
+    "threads": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

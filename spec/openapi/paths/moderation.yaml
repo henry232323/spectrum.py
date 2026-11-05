@@ -1,0 +1,123 @@
+# Bootstrapped by scripts/bootstrap_spec.py, then maintained by hand.
+/api/spectrum/flag/:
+  post:
+    operationId: flag_content
+    tags:
+    - moderation
+    x-spectrum:
+      python: HTTP.flag_content
+      auth: session
+      verified: false
+      write: true
+      constant: FLAG_CONTENT
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              entity_type:
+                type:
+                - string
+                - 'null'
+              entity_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              reason:
+                type:
+                - string
+                - 'null'
+              comment:
+                type:
+                - string
+                - 'null'
+          examples:
+            sample1:
+              value:
+                entity_type: message
+                entity_id: '123'
+                reason: spam
+                comment: Spam message
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json
+/api/spectrum/moderation/kickban:
+  post:
+    operationId: moderation_kickban
+    tags:
+    - moderation
+    x-spectrum:
+      python: HTTP.moderation_kickban
+      auth: unknown
+      verified: false
+      write: false
+      constant: MODERATION_KICKBAN
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties: true
+            properties:
+              community_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              member_id:
+                type:
+                - string
+                - integer
+                - 'null'
+                pattern: ^\d+$
+              reason:
+                type:
+                - string
+                - 'null'
+              duration:
+                type:
+                - integer
+                - 'null'
+          examples:
+            sample1:
+              value:
+                community_id: '1'
+                member_id: '1000001'
+                reason: Violating rules
+                duration: 86400
+    responses:
+      '200':
+        description: Envelope. `success` is 1 on success; `data` holds the result.
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: ../../schemas/envelope.json
+              - properties:
+                  data: {}
+      default:
+        description: Error envelope (`success` 0, `code` e.g. ErrAccessDenied), or a non-JSON error page.
+        content:
+          application/json:
+            schema:
+              $ref: ../../schemas/envelope.json

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "role.remove",
+  "description": "Server -> client `role.remove`. Required keys are the ones `Client._on_role_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "role.remove"
+    },
+    "community_id": {
+      "$ref": "../id.json"
+    },
+    "role_id": {
+      "$ref": "../id.json"
+    }
+  },
+  "additionalProperties": true
+}

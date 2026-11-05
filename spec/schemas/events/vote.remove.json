@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "vote.remove",
+  "description": "Server -> client `vote.remove`. Required keys are the ones `Client._on_vote_remove_raw` indexes directly.",
+  "type": "object",
+  "required": [
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "const": "vote.remove"
+    }
+  },
+  "additionalProperties": true
+}
