@@ -107,3 +107,13 @@ client = HTTPClient(user_agent="my-tool/1.0 (+https://example.com)")
 transport: it emits an `ExperimentalTransportWarning`, its protocol is partly inferred, and it may break or change
 in any release. Don't rely on it.
 
+
+## Spec and tests
+`spec/` holds a machine-readable description of the Spectrum HTTP API (OpenAPI 3.1), the websocket events
+(AsyncAPI 3.0), shared JSON Schemas and redacted fixtures. See [`spec/README.md`](spec/README.md).
+Run the tests with:
+
+```shell
+python -m pip install -e ".[dev]"
+python -m pytest
+```
