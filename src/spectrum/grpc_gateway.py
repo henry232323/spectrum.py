@@ -1,6 +1,12 @@
 """
 ConnectRPC/gRPC push client for Spectrum.
 
+.. warning::
+   **Experimental.** ``Client(transport='grpc')`` is not part of the stable API.
+   The wire protocol below is partly inferred, it may stop working without
+   notice, and it can change or be removed in any release. Use the default
+   websocket transport (``transport='ws'``) unless you are testing this one.
+
 This module provides an alternative to the WebSocket gateway using the
 ConnectRPC bidi-streaming endpoint at:
     https://robertsspaceindustries.com/grpc/spectrum/ws
@@ -36,6 +42,17 @@ if TYPE_CHECKING:
     from . import httpclient
 
 log = logging.getLogger(__name__)
+
+
+class ExperimentalTransportWarning(UserWarning):
+    """Emitted when an experimental transport (``transport='grpc'``) is selected."""
+
+
+GRPC_EXPERIMENTAL_MESSAGE = (
+    "transport='grpc' is experimental: its protocol is partly inferred, it may stop "
+    "working without notice, and it may change or be removed in any release. "
+    "Use the default transport='ws' for anything you rely on."
+)
 
 
 class GRPCGatewayError(Exception):

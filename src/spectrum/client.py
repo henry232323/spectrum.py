@@ -2,10 +2,11 @@ from __future__ import annotations
 
 import asyncio
 import traceback
+import warnings
 from typing import TYPE_CHECKING, Literal
 
 from .gateway import Gateway
-from .grpc_gateway import GRPCGateway
+from .grpc_gateway import GRPCGateway, ExperimentalTransportWarning, GRPC_EXPERIMENTAL_MESSAGE
 from .httpclient import HTTPClient
 from .models import Object
 from .models.channel import Channel
@@ -29,9 +30,16 @@ if TYPE_CHECKING:
 class Client(HTTPClient, EventDispatchType):
     def __init__(self, *, rsi_token: str = None, device_id: str = None,
                  transport: Literal['ws', 'grpc'] = 'ws', **kwargs):
+        """
+        :param transport: ``'ws'`` (default) uses the Spectrum websocket.
+            ``'grpc'`` is **experimental**: it emits an
+            :class:`~spectrum.grpc_gateway.ExperimentalTransportWarning` and may
+            break or change in any release.
+        """
         super().__init__(rsi_token=rsi_token, device_id=device_id, **kwargs)
         self._transport = transport
         if transport == 'grpc':
+            warnings.warn(GRPC_EXPERIMENTAL_MESSAGE, ExperimentalTransportWarning, stacklevel=2)
             self._gateway: Gateway | GRPCGateway = GRPCGateway(client=self, rsi_token=rsi_token, device_id=device_id)
         else:
             self._gateway: Gateway | GRPCGateway = Gateway(client=self, rsi_token=rsi_token, device_id=device_id)

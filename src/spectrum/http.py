@@ -7,7 +7,12 @@ import os
 import aiohttp
 import yarl
 
+from ._version import __version__
 from .errors import HTTPError, NullResponseError, exception_map
+
+#: Default ``User-Agent`` sent with every Spectrum request. Override it with
+#: ``HTTPClient(user_agent=...)`` / ``Client(user_agent=...)``.
+DEFAULT_USER_AGENT = f"spectrum.py/{__version__} (+https://github.com/henry232323/spectrum.py)"
 
 IDENTIFY_URL = yarl.URL("https://robertsspaceindustries.com/api/spectrum/auth/identify")
 SPECTRUM_API_BASE = "https://robertsspaceindustries.com/"
@@ -242,7 +247,7 @@ class HTTP:
     MAX_RETRIES = 3
     RETRY_BACKOFF = 1.0
 
-    def __init__(self, client, rsi_token, device_id):
+    def __init__(self, client, rsi_token, device_id, user_agent=None):
         self._client = client
         self._rsi_token = rsi_token
         self._gateway_token = None
@@ -257,7 +262,7 @@ class HTTP:
         }
 
         self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:120.0) Gecko/20100101 Firefox/120.0',
+            'User-Agent': user_agent or DEFAULT_USER_AGENT,
             'Accept': 'application/json',
             'Accept-Language': 'en-US,en;q=0.5',
             'Referer': 'https://robertsspaceindustries.com/spectrum/community/SC/lobby/1',
@@ -280,7 +285,7 @@ class HTTP:
         {"thread_id":"396239","parent_reply_id":"6452173","content_blocks":[{"id":1,"type":"text","data":{"blocks":[{"key":"6eoc5","text":"Replying","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}],"plaintext":"Replying","highlight_role_id":null}
         {"thread_id":"396239","parent_reply_id":null,"content_blocks":[{"id":1,"type":"text","data":{"blocks":[{"key":"5eehk","text":"Top level reply","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}}],"plaintext":"Top level reply","highlight_role_id":null}
         """
-        return await self.make_request(CREATE_MESSAGE_ENDPOINT, payload)
+        return await self.make_request(CREATE_REPLY, payload)
 
     async def create_thread(self, payload: dict):
         """
