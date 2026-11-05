@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,25 +8,58 @@ dynamic = ["version"]
 authors = [
   { name="henry232323" },
 ]
-description = "spectrum.py is a [discord.py](https://github.com/Rapptz/discord.py) style proof-of-concept library for making chatbots for Star Citizen's [Spectrum](https://robertsspaceindustries.com/spectrum/community/SC) chat client."
+description = "Unofficial async Python client for RSI Spectrum, the Star Citizen community platform: read lobbies, forums and members, and receive live events."
 readme = "README.md"
-license = { file="LICENSE" }
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
+keywords = [
+    "star-citizen", "starcitizen", "spectrum", "rsi", "roberts-space-industries",
+    "api-client", "asyncio", "websocket", "community", "chat",
+]
 classifiers = [
-    'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 3',
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Framework :: AsyncIO",
+    "Topic :: Communications :: Chat",
+    "Topic :: Games/Entertainment",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
 ]
-dependencies = ['aiohttp']
+dependencies = ["aiohttp"]
 
-[options.extras_require]
-community-hub = [
-    'aiographql-client'
-]
-
-[tool.setuptools.dynamic]
-version = {attr = "spectrum.__version__"}
+[project.optional-dependencies]
+# GraphQL clients for the Community Hub and the RSI Store.
+community-hub = ["aiographql-client"]
+all = ["aiographql-client"]
+# Local development: tests and spec validation.
+dev = ["pytest", "pytest-asyncio", "jsonschema", "pyyaml", "openapi-spec-validator", "build"]
 
 [project.urls]
-"Homepage" = "http://github.com/henry232323/spectrum.py"
-"Bug Tracker" = "http://github.com/henry232323/spectrum.py/issues"
+Homepage = "https://github.com/henry232323/spectrum.py"
+Documentation = "https://github.com/henry232323/spectrum.py#readme"
+Changelog = "https://github.com/henry232323/spectrum.py/releases"
+Issues = "https://github.com/henry232323/spectrum.py/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "spectrum._version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+# The GraphQL clients load their .graphql documents and schema dumps at runtime.
+"*" = ["*.graphql", "**/*.graphql", "*.json", "**/*.json"]
+
+[tool.setuptools.exclude-package-data]
+# macOS AppleDouble files (exFAT volumes).
+"*" = ["._*", "**/._*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"

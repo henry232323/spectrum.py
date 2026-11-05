@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import asyncio
 import logging
-import sys
 import traceback
 from collections.abc import AsyncIterator
 from typing import Optional
@@ -17,14 +16,17 @@ from .util.event_dispatch import EventDispatchType
 from .util.limited_size_dict import LimitedSizeDict
 
 log = logging.getLogger(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 
 
 @event_dispatch
 class HTTPClient(EventDispatchType):
     def __init__(self, *, rsi_token: str = None, device_id: str = None, log_handler=log,
-                 message_cache_size=500):
-        self._http: HTTP = HTTP(self, rsi_token=rsi_token, device_id=device_id)
+                 message_cache_size=500, user_agent: str = None):
+        """
+        :param user_agent: ``User-Agent`` header for Spectrum requests. Defaults to
+            ``spectrum.py/<version> (+https://github.com/henry232323/spectrum.py)``.
+        """
+        self._http: HTTP = HTTP(self, rsi_token=rsi_token, device_id=device_id, user_agent=user_agent)
         self._ready_event = asyncio.Event()
         self._lobbies: dict[int, Lobby] = {}
         self._private_messages: dict[int, Lobby] = {}
@@ -106,7 +108,7 @@ class HTTPClient(EventDispatchType):
 
             return lobby
         except Exception as e:
-            logging.error("Error occurred replacing lobby: %s\nFailing Payload: %s",
+            log.error("Error occurred replacing lobby: %s\nFailing Payload: %s",
                           traceback.format_exception_only(e),
                           payload)
             raise e
